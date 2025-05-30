@@ -1,0 +1,13 @@
+targets:
+  $default:
+    builders:
+      myoro_flutter_annotations|myoro_model_generator:
+        enabled: true
+
+builders:
+  myoro_model_generator: # This is a unique name for your builder
+    import: "package:myoro_flutter_annotations/myoro_flutter_annotations.dart"
+    builder_factories: ["myoroModelBuilder"]
+    build_extensions: {".dart": ["myoro.g.part"]} # This maps .dart inputs to .g.part outputs
+    auto_apply: dependents # Or root_package, depending on your needs
+    applies_builders: ["source_gen|combining_builder"] # Crucial: tells source_gen to combine .part files
