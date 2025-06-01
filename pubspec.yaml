@@ -4,8 +4,8 @@ version: 1.0.0
 repository: https://github.com/antonkoetzler/myoro_flutter_annotations
 
 environment:
-  sdk: ^3.9.0-172.0.dev
-
+  sdk: ^3.7.0
+  
 dependencies:
   build_runner: ^2.4.15
   source_gen: ^2.0.0
@@ -15,5 +15,6 @@ dependencies:
   pub_semver: ^2.2.0
 
 dev_dependencies:
-  lints: ^5.0.0
+  lints: ^2.0.0
   test: ^1.24.0
+  build_test: ^2.2.3
