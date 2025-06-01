@@ -4,5 +4,5 @@ import 'package:source_gen/source_gen.dart';
 
 /// Builder of [MyoroThemeExtension].
 Builder myoroThemeExtensionBuilder(BuilderOptions option) {
-  return SharedPartBuilder(const [MyoroThemeExtensionGenerator()], kPartId);
+  return SharedPartBuilder(const [MyoroThemeExtensionGenerator()], 'myoro_theme_extension');
 }

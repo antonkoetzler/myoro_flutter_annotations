@@ -59,7 +59,7 @@ void buildCopyWith(
           '$parameterName: ${parameterName}Provided ? ($parameterName ?? this.$parameterName) : null,',
         )
         : buffer.writeln(
-          '$parameterName: $parameterName ?? this.$parameterName,',
+          '$parameterName: $parameterName ?? ${isOverride ? 'self' : 'this'}.$parameterName,',
         );
   }
   buffer.writeln(');');

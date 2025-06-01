@@ -4,11 +4,13 @@ import 'package:analyzer/dart/element/element.dart';
 void buildMixin(
   StringBuffer buffer,
   ClassElement element,
-  void Function() body,
+  void Function() body, {
+    String? onClass,
+  }
 ) {
   final className = element.name;
 
-  final mixinName = 'mixin \$${className}Mixin {';
+  final mixinName = 'mixin \$${className}Mixin ${onClass != null ? 'on $onClass ' : ''}{';
   buffer.writeln(
     '/// Apply this mixin to [$className] once the code is generated.',
   );

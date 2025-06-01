@@ -28,7 +28,7 @@ final class MyoroThemeExtensionGenerator
       buildCopyWith(buffer, element, isOverride: true);
       buildHashCode(buffer, element);
       buildToString(buffer, element);
-    });
+    }, onClass: 'ThemeExtension<${element.name}>');
 
     return formatter.format(buffer.toString());
   }

@@ -3,11 +3,20 @@ targets:
     builders:
       myoro_flutter_annotations|myoro_model_generator:
         enabled: true
+      myoro_flutter_annotations|myoro_theme_extension_generator:
+        enabled: true
 
 builders:
-  myoro_model_generator: # This is a unique name for your builder
-    import: "package:myoro_flutter_annotations/myoro_flutter_annotations.dart"
+  myoro_model_generator:
+    import: "package:myoro_flutter_annotations/src/annotations/model/myoro_model_builder.dart"
     builder_factories: ["myoroModelBuilder"]
-    build_extensions: {".dart": ["myoro.g.part"]} # This maps .dart inputs to .g.part outputs
-    auto_apply: dependents # Or root_package, depending on your needs
-    applies_builders: ["source_gen|combining_builder"] # Crucial: tells source_gen to combine .part files
+    build_extensions: {".dart": ["myoro_model.g.part"]}
+    auto_apply: dependents
+    applies_builders: ["source_gen|combining_builder"]
+
+  myoro_theme_extension_generator:
+    import: "package:myoro_flutter_annotations/src/annotations/theme_extension/myoro_theme_extension_builder.dart"
+    builder_factories: ["myoroThemeExtensionBuilder"]
+    build_extensions: {".dart": ["myoro_theme_extension.g.part"]}
+    auto_apply: dependents
+    applies_builders: ["source_gen|combining_builder"]
