@@ -4,22 +4,14 @@ import 'package:myoro_flutter_annotations/myoro_flutter_annotations.dart';
 import 'package:source_gen/source_gen.dart';
 
 /// Code generator of [MyoroThemeExtension].
-final class MyoroThemeExtensionGenerator
-    extends GeneratorForAnnotation<MyoroThemeExtension> {
+final class MyoroThemeExtensionGenerator extends GeneratorForAnnotation<MyoroThemeExtension> {
   const MyoroThemeExtensionGenerator();
 
   @override
-  generateForAnnotatedElement(
-    Element element,
-    ConstantReader annotation,
-    BuildStep buildStep,
-  ) {
+  generateForAnnotatedElement(Element element, ConstantReader annotation, BuildStep buildStep) {
     // Check if element is a class
     if (element is! ClassElement) {
-      throw InvalidGenerationSourceError(
-        '[MyoroModelGenerator.generateForAnnotatedElement]: MyoroModel can only be applied to classes.',
-        element: element,
-      );
+      throw InvalidGenerationSourceError('[MyoroModelGenerator.generateForAnnotatedElement]: MyoroModel can only be applied to classes.', element: element);
     }
 
     final buffer = StringBuffer();

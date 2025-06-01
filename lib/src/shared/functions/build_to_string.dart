@@ -13,7 +13,7 @@ void buildToString(StringBuffer buffer, ClassElement element) {
   buffer.writeln('String toString() =>');
   buffer.writeln('\'$className(\\n\'');
   for (final field in fields) {
-    buffer.writeln('\'  ${field.name}: \$self.${field.name},\\n\'');
+    buffer.writeln('\'  ${field.name}: \${self.${field.name}},\\n\'');
   }
   buffer.writeln('\');\';');
 }
