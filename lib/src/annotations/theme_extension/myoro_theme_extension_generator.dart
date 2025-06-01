@@ -3,12 +3,13 @@ import 'package:build/build.dart';
 import 'package:myoro_flutter_annotations/myoro_flutter_annotations.dart';
 import 'package:source_gen/source_gen.dart';
 
-/// Code generator of [MyoroModel].
-final class MyoroModelGenerator extends GeneratorForAnnotation<MyoroModel> {
-  const MyoroModelGenerator();
+/// Code generator of [MyoroThemeExtension].
+final class MyoroThemeExtensionGenerator
+    extends GeneratorForAnnotation<MyoroThemeExtension> {
+  const MyoroThemeExtensionGenerator();
 
   @override
-  String generateForAnnotatedElement(
+  generateForAnnotatedElement(
     Element element,
     ConstantReader annotation,
     BuildStep buildStep,
@@ -23,10 +24,8 @@ final class MyoroModelGenerator extends GeneratorForAnnotation<MyoroModel> {
 
     final buffer = StringBuffer();
 
-    buildExtension(buffer, element, () => buildCopyWith(buffer, element));
-
     buildMixin(buffer, element, () {
-      buildEqualityOperator(buffer, element);
+      buildCopyWith(buffer, element, isOverride: true);
       buildHashCode(buffer, element);
       buildToString(buffer, element);
     });
