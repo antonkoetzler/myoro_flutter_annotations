@@ -11,24 +11,24 @@ void buildHashCode(StringBuffer buffer, ClassElement element) {
   final fields = element.fields.where((field) => !field.isStatic && !field.isSynthetic).toList();
 
   // Start the getter.
-  buffer.writeln('  @override');
-  buffer.writeln('  int get hashCode {');
+  buffer.writeln('@override');
+  buffer.writeln('int get hashCode {');
 
   // Start the return statement.
   if (fields.length > 2 && fields.length <= 20) {
-    buffer.writeln('    return Object.hash(');
+    buffer.writeln('return Object.hash(');
     writeFields(buffer, fields);
-    buffer.writeln('    );');
+    buffer.writeln(');');
   } else {
     if (fields.isEmpty) {
-      buffer.writeln('    return Object.hashAll(const []);');
+      buffer.writeln('return Object.hashAll(const []);');
     } else {
-      buffer.writeln('    return Object.hashAll([');
+      buffer.writeln('return Object.hashAll([');
       writeFields(buffer, fields);
-      buffer.writeln('    ]);');
+      buffer.writeln(']);');
     }
   }
 
   // Close the getter.
-  buffer.writeln('  }');
+  buffer.writeln('}');
 }

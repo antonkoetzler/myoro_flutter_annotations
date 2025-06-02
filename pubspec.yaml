@@ -19,3 +19,5 @@ dev_dependencies:
   test: ^1.24.0
   build_test: ^2.2.3
   source_gen_test: ^1.1.1
+  mocktail: ^1.0.4
+  faker: ^2.2.0
