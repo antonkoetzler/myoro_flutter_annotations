@@ -1,6 +1,7 @@
 import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:faker/faker.dart';
 import 'package:myoro_flutter_annotations/src/exports.dart';
+import 'package:source_gen/source_gen.dart';
 import 'package:test/test.dart';
 
 import '../../../mocks/class_element.mocks.dart';
@@ -10,8 +11,60 @@ import '../../../mocks/field_element.mocks.dart';
 import '../../../mocks/parameter_element.mocks.dart';
 
 void main() {
-  test('buildCopyWith: Error case', () {
-    expect(() => buildCopyWith(StringBuffer(), MockClassElement()), throwsException);
+  test('buildCopyWith: No unnamedConstructor error case', () {
+    final element = MockClassElement();
+    final className = element.name;
+
+    expect(
+      () => buildCopyWith(StringBuffer(), element),
+      throwsA(
+        isA<InvalidGenerationSourceError>().having(
+          (e) => e.message,
+          'Not [ClassElement] message',
+          contains('[buildCopyWith]: Class $className must have an unnamed constructor to generate copyWith.'),
+        ),
+      ),
+    );
+  });
+
+  test('buildCopyWith: unnamedConstructor with arguments that do not match field\'s names error case', () {
+    final element = MockClassElement(
+      unnamedConstructor: MockConstructorElement(parameters: [MockParameterElement(name: 'bar')]),
+      fields: [MockFieldElement(name: 'foo')],
+    );
+    final parameterName = element.unnamedConstructor!.parameters.first.name;
+    final className = element.name;
+
+    expect(
+      () => buildCopyWith(StringBuffer(), element),
+      throwsA(
+        isA<InvalidGenerationSourceError>().having(
+          (e) => e.message,
+          'Parameter message',
+          contains(
+            '[buildCopyWith]: Field for constructor parameter "$parameterName" not found in class "$className". Ensure all constructor parameters have corresponding fields.',
+          ),
+        ),
+      ),
+    );
+  });
+
+  test('buildCopyWith: [NullabilitySuffix.star] field error case', () {
+    final element = MockClassElement(
+      unnamedConstructor: MockConstructorElement(parameters: [MockParameterElement(name: 'foo')]),
+      fields: [MockFieldElement(name: 'foo', type: MockDartType(nullabilitySuffix: NullabilitySuffix.star))],
+    );
+
+    expect(
+      () => buildCopyWith(StringBuffer(), element),
+      throwsA(
+        isA<AssertionError>().having(
+          (e) => e.message,
+          '[NullabilitySuffix.star] exception',
+          '[buildCopyWith]: Legacy Dart syntax is not supported.',
+        ),
+      ),
+    );
   });
 
   test('buildCopyWith: Success case', () {

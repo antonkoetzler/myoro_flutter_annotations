@@ -9,12 +9,7 @@ void buildCopyWith(StringBuffer buffer, ClassElement element, {bool isOverride =
   final fields = element.fields.where((field) => !field.isStatic && !field.isSynthetic).toList();
 
   // Assert that an unnamed constructor exists
-  if (constructor == null) {
-    throw InvalidGenerationSourceError(
-      '[buildCopyWith]: Class $className must have an unnamed constructor to generate copyWith.',
-      element: element,
-    );
-  }
+  if (constructor == null) throw _invalidConstructorAssertion(element);
 
   // Start the function.
   if (isOverride) buffer.writeln('@override');
@@ -22,7 +17,7 @@ void buildCopyWith(StringBuffer buffer, ClassElement element, {bool isOverride =
   for (final field in fields) {
     final fieldType = field.type.name;
     final fieldName = field.name;
-    if (field.type.nullabilitySuffix == NullabilitySuffix.star) _starNullabilitySuffixAssertion();
+    if (field.type.nullabilitySuffix == NullabilitySuffix.star) throw _starNullabilitySuffixAssertion();
     buffer.writeln('$fieldType? $fieldName,');
     if (field.type.nullabilitySuffix == NullabilitySuffix.question) buffer.writeln('bool ${fieldName}Provided = true,');
   }
@@ -36,25 +31,16 @@ void buildCopyWith(StringBuffer buffer, ClassElement element, {bool isOverride =
     final parameterName = parameter.name;
     final field = fields.firstWhere(
       (f) => f.name == parameterName,
-      orElse: () {
-        throw InvalidGenerationSourceError(
-          '[buildCopyWith]: Field for constructor parameter "$parameterName" not found in '
-          'class "$className". Ensure all constructor parameters have corresponding fields.',
-          element: parameter,
-        );
-      },
+      orElse: () => throw _invalidConstructorParameterAssertion(element, parameter),
     );
-    switch (field.type.nullabilitySuffix) {
-      case NullabilitySuffix.none:
-        buffer.writeln('$parameterName: $parameterName ?? $thisOrSelf.$parameterName,');
-        break;
-      case NullabilitySuffix.question:
-        buffer.writeln(
-          '$parameterName: ${parameterName}Provided ? ($parameterName ?? $thisOrSelf.$parameterName) : null,',
-        );
-        break;
-      case NullabilitySuffix.star:
-        _starNullabilitySuffixAssertion();
+    final fieldType = field.type.nullabilitySuffix;
+    if (fieldType == NullabilitySuffix.none) {
+      buffer.writeln('$parameterName: $parameterName ?? $thisOrSelf.$parameterName,');
+    }
+    if (fieldType == NullabilitySuffix.question) {
+      buffer.writeln(
+        '$parameterName: ${parameterName}Provided ? ($parameterName ?? $thisOrSelf.$parameterName) : null,',
+      );
     }
   }
   buffer.writeln(');');
@@ -63,6 +49,21 @@ void buildCopyWith(StringBuffer buffer, ClassElement element, {bool isOverride =
   buffer.writeln('}');
 }
 
-void _starNullabilitySuffixAssertion() {
-  throw AssertionError('[buildCopyWith]: Legacy Dart syntax is not supported.');
+InvalidGenerationSourceError _invalidConstructorAssertion(ClassElement element) {
+  return InvalidGenerationSourceError(
+    '[buildCopyWith]: Class ${element.name} must have an unnamed constructor to generate copyWith.',
+    element: element,
+  );
+}
+
+AssertionError _starNullabilitySuffixAssertion() {
+  return AssertionError('[buildCopyWith]: Legacy Dart syntax is not supported.');
+}
+
+InvalidGenerationSourceError _invalidConstructorParameterAssertion(ClassElement element, ParameterElement parameter) {
+  return InvalidGenerationSourceError(
+    '[buildCopyWith]: Field for constructor parameter "${parameter.name}" not found in '
+    'class "${element.name}". Ensure all constructor parameters have corresponding fields.',
+    element: parameter,
+  );
 }
