@@ -14,7 +14,7 @@ extension $FooExtension on Foo {
 /// Apply this mixin to [Foo] once the code is generated.
 ///
 /// ```dart
-/// class Foo with mixin $FooMixin { { ... }
+/// class Foo with $FooMixin {}
 /// ```
 mixin $FooMixin {
   Foo get self => this as Foo;
@@ -29,7 +29,7 @@ mixin $FooMixin {
 
   @override
   int get hashCode {
-    return Object.hashAll([self.bar, self.baz]);
+    return Object.hash(self.bar, self.baz);
   }
 
   @override

@@ -18,7 +18,7 @@ extension $TestModelExtension on TestModel {
 /// Apply this mixin to [TestModel] once the code is generated.
 ///
 /// ```dart
-/// class TestModel with mixin $TestModelMixin { { ... }
+/// class TestModel with $TestModelMixin {}
 /// ```
 mixin $TestModelMixin {
   TestModel get self => this as TestModel;
@@ -33,7 +33,7 @@ mixin $TestModelMixin {
 
   @override
   int get hashCode {
-    return Object.hashAll([self.foo, self.bar]);
+    return Object.hash(self.foo, self.bar);
   }
 
   @override

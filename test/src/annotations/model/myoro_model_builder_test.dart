@@ -15,7 +15,7 @@ final _baseAssets = {
 };
 
 void main() {
-  test('MyoroModel annotation generates code', () async {
+  test('MyoroModelBuilder success case', () async {
     final sourceAssets = {
       ..._baseAssets,
       'myoro_flutter_annotations|lib/src/foo.dart': '''
@@ -24,7 +24,7 @@ void main() {
         part 'foo.myoro_model.g.dart';
 
         @myoroModel
-        class Foo with \$MyClassMixin {
+        class Foo with \$FooMixin {
           final dynamic foo;
 
           const Foo({this.foo});

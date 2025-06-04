@@ -8,12 +8,12 @@ void main() {
     const bodyText = 'Hello, World!';
 
     final buffer = StringBuffer();
-    final classElement = MockClassElement();
+    final element = MockClassElement();
 
-    buildExtension(buffer, classElement, () => buffer.writeln(bodyText));
+    buildExtension(buffer, element, () => buffer.writeln(bodyText));
 
     expect(buffer.toString(), '''
-extension \$${classElement.name}Extension on ${classElement.name} {
+extension \$${element.name}Extension on ${element.name} {
 $bodyText
 }
 ''');

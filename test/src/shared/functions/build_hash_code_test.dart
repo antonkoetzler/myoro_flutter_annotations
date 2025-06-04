@@ -9,8 +9,8 @@ import '../../../mocks/field_element.mocks.dart';
 void main() {
   final buffer = StringBuffer();
 
-  void testHashCode(ClassElement classElement, void Function() body) {
-    buildHashCode(buffer..clear(), classElement);
+  void testHashCode(ClassElement element, void Function() body) {
+    buildHashCode(buffer..clear(), element);
     final hashCode = buffer.toString();
 
     buffer
@@ -30,40 +30,40 @@ void main() {
   }
 
   test('buildHashCode empty case', () {
-    final classElement = MockClassElement();
-    testHashCode(classElement, () => buffer.writeln('return Object.hashAll(const []);'));
+    final element = MockClassElement();
+    testHashCode(element, () => buffer.writeln('return Object.hashAll(const []);'));
   });
 
   test('buildHashCode 1 field case', () {
-    final classElement = MockClassElement(fields: [MockFieldElement()]);
-    testHashCode(classElement, () {
+    final element = MockClassElement(fields: [MockFieldElement()]);
+    testHashCode(element, () {
       buffer.writeln('return Object.hashAll([');
-      localWriteFields(classElement.fields);
+      localWriteFields(element.fields);
       buffer.writeln(']);');
     });
   });
 
   test('buildHashCode 20 fields case', () {
-    final classElement = MockClassElement(
+    final element = MockClassElement(
       fields: List.generate(20, (int index) => MockFieldElement(name: 'field${index.toString()}')),
     );
-    testHashCode(classElement, () {
+    testHashCode(element, () {
       buffer.writeln('return Object.hashAll([');
-      localWriteFields(classElement.fields);
+      localWriteFields(element.fields);
       buffer.writeln(']);');
     });
   });
 
   test('buildHashCode multiple fields (but not 20) case', () {
-    final classElement = MockClassElement(
+    final element = MockClassElement(
       fields: List.generate(
         faker.randomGenerator.integer(19, min: 2),
         (int index) => MockFieldElement(name: 'field${index.toString()}'),
       ),
     );
-    testHashCode(classElement, () {
+    testHashCode(element, () {
       buffer.writeln('return Object.hash(');
-      localWriteFields(classElement.fields);
+      localWriteFields(element.fields);
       buffer.writeln(');');
     });
   });

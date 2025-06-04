@@ -8,21 +8,21 @@ void main() {
   const bodyText = 'Hello, World!';
 
   final buffer = StringBuffer();
-  final classElement = MockClassElement();
+  final element = MockClassElement();
 
   void testMixin([String? onClass]) {
-    buildMixin(buffer..clear(), classElement, () => buffer.writeln(bodyText), onClass: onClass);
+    buildMixin(buffer..clear(), element, () => buffer.writeln(bodyText), onClass: onClass);
     final mixinResult = buffer.toString();
 
     buffer
       ..clear()
-      ..writeln('/// Apply this mixin to [${classElement.name}] once the code is generated.')
+      ..writeln('/// Apply this mixin to [${element.name}] once the code is generated.')
       ..writeln('///')
       ..writeln('/// ```dart')
-      ..writeln('/// class ${classElement.name} with \$${classElement.name}Mixin { ... }')
+      ..writeln('/// class ${element.name} with \$${element.name}Mixin {}')
       ..writeln('/// ```')
-      ..writeln('mixin \$${classElement.name}Mixin ${onClass != null ? 'on $onClass ' : ''}{')
-      ..writeln('${classElement.name} get self => this as ${classElement.name};\n')
+      ..writeln('mixin \$${element.name}Mixin ${onClass != null ? 'on $onClass ' : ''}{')
+      ..writeln('${element.name} get self => this as ${element.name};\n')
       ..writeln(bodyText)
       ..writeln('}');
 

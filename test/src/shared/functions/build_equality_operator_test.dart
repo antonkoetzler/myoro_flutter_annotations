@@ -8,14 +8,14 @@ import '../../../mocks/field_element.mocks.dart';
 void main() {
   test('buildEqualityOperator empty case', () {
     final buffer = StringBuffer();
-    final classElement = MockClassElement();
+    final element = MockClassElement();
 
-    buildEqualityOperator(buffer, classElement);
+    buildEqualityOperator(buffer, element);
 
     expect(buffer.toString(), '''
 @override
 bool operator ==(Object other) {
-return other is ${classElement.name} &&
+return other is ${element.name} &&
 other.runtimeType == runtimeType;
 }
 ''');
@@ -25,22 +25,22 @@ other.runtimeType == runtimeType;
     late final String result;
 
     final buffer = StringBuffer();
-    final classElement = MockClassElement(
+    final element = MockClassElement(
       fields: List.generate(faker.randomGenerator.integer(10, min: 1), (_) => MockFieldElement()),
     );
 
-    buildEqualityOperator(buffer, classElement);
+    buildEqualityOperator(buffer, element);
     result = buffer.toString();
 
     buffer
       ..clear()
       ..writeln('@override')
       ..writeln('bool operator ==(Object other) {')
-      ..writeln('return other is ${classElement.name} &&')
+      ..writeln('return other is ${element.name} &&')
       ..writeln('other.runtimeType == runtimeType &&');
-    final fieldsLength = classElement.fields.length;
+    final fieldsLength = element.fields.length;
     for (int i = 0; i < fieldsLength; i++) {
-      final field = classElement.fields[i];
+      final field = element.fields[i];
       buffer.writeln('other.${field.name} == self.${field.name}${(i == fieldsLength - 1) ? ';' : ' &&'}');
     }
     buffer.writeln('}');

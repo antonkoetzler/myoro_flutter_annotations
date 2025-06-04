@@ -18,7 +18,7 @@ void main() {
     final buffer = StringBuffer();
     final nonNullField = MockFieldElement();
     final nullField = MockFieldElement(type: MockDartType(nullabilitySuffix: NullabilitySuffix.question));
-    final classElement = MockClassElement(
+    final element = MockClassElement(
       unnamedConstructor: MockConstructorElement(
         parameters: [MockParameterElement(name: nonNullField.name), MockParameterElement(name: nullField.name)],
       ),
@@ -27,15 +27,15 @@ void main() {
     final isOverride = faker.randomGenerator.boolean();
     final thisOrSelf = isOverride ? 'self' : 'this';
 
-    buildCopyWith(buffer, classElement, isOverride: isOverride);
+    buildCopyWith(buffer, element, isOverride: isOverride);
 
     expect(buffer.toString(), '''
-${isOverride ? '@override\n' : ''}${classElement.name} copyWith({
+${isOverride ? '@override\n' : ''}${element.name} copyWith({
 ${nonNullField.type.name}? ${nonNullField.name},
 ${nullField.type.name}? ${nullField.name},
 bool ${nullField.name}Provided = true,
 }) {
-return ${classElement.name}(
+return ${element.name}(
 ${nonNullField.name}: ${nonNullField.name} ?? $thisOrSelf.${nonNullField.name},
 ${nullField.name}: ${nullField.name}Provided ? (${nullField.name} ?? $thisOrSelf.${nullField.name}) : null,
 );

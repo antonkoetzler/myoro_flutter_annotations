@@ -9,7 +9,7 @@ void buildMixin(StringBuffer buffer, ClassElement element, void Function() body,
     ..writeln('/// Apply this mixin to [$className] once the code is generated.')
     ..writeln('///')
     ..writeln('/// ```dart')
-    ..writeln('/// class $className with $mixinName { ... }')
+    ..writeln('/// class $className with $mixinName {}')
     ..writeln('/// ```')
     ..writeln('mixin $mixinName ${onClass != null ? 'on $onClass ' : ''}{')
     ..writeln('$className get self => this as $className;\n');
