@@ -8,10 +8,7 @@ part of 'test_model.dart';
 
 extension $TestModelExtension on TestModel {
   TestModel copyWith({String? foo, int? bar, bool barProvided = true}) {
-    return TestModel(
-      foo: foo ?? this.foo,
-      bar: barProvided ? (bar ?? this.bar) : null,
-    );
+    return TestModel(foo: foo ?? this.foo, bar: barProvided ? (bar ?? this.bar) : null);
   }
 }
 
@@ -34,7 +31,8 @@ mixin $TestModelMixin {
   }
 
   @override
-  String toString() => 'TestModel(\n'
+  String toString() =>
+      'TestModel(\n'
       '  foo: ${self.foo},\n'
       '  bar: ${self.bar},\n'
       ');';
