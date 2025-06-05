@@ -1,13 +1,20 @@
 # Deploying
 
-1. Whenever you are commit to main, the commit must have this template: `release(major/minor/patch): <Description>`
+1. Update the version of `pubspec.yaml`
 
-- `<Description>` must always be what is after the colon of said version in `CHANGELOG.md`
-- Examples: `release(patch): Preparing to publish to pub.dev`, `release(major): Version 2!`
+- Patch: `1.0.0` --> `1.0.1`
+- Minor: `1.0.11` --> `1.1.0`
+- Major: `1.2.3` --> `2.0.0`
 
-2. After pushing with the templated commit message, deployment will start on GitHub
+2. Create a commit message with this template: `release: <Version number>` where the version number is from `pubspec.yaml`
 
-- New version tag will be created
-- `pubspec.yaml`'s version will be automatically updated
+- The only altered file in this commit should be `pubspec.yaml`; nothing else
+- Example: `release: 2.0.0`
 
-3. After `.github/workflows/deploy.yml` passes, run `dart pub publish` to update <https://pub.dev>
+3. Create a tag named `v<Version number>`, i.e. `v2.0.0`
+
+- Command: `git tag v2.0.0; git push origin v2.0.0`
+
+4. Run `dart pub publish` to update <https://pub.dev/packages/myoro_flutter_annotations>
+
+- Check if it updated around 10 minutes after running the command
