@@ -69,9 +69,6 @@ jobs:
       - name: Update pubspec.yaml version
         run: |
           sed -i "s/^version: .*/version: $NEW_VERSION/" pubspec.yaml
-          rm pubspec.lock
-          flutter clean
-          flutter pub get
 
       - name: Deploy
         run: |
