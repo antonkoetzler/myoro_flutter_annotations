@@ -2,6 +2,8 @@
 
 - Fix step that was saying "MFL" (Myoro Flutter Library) instead of "MFA" (Myoro Flutter Annotations)
 - Prepare project for pub.dev publishing
+- Polish documentation
+- Polish deployment
 
 ## 1.0.1: Fixing `.github/workflows/tests.yml`
 
