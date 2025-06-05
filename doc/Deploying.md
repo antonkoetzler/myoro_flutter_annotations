@@ -8,7 +8,6 @@
 
 2. Create a commit message with this template: `release(patch/minor/major): <Version number>` where the version number is from `pubspec.yaml`
 
-- The only altered file in this commit should be `pubspec.yaml`; nothing else
 - Example: `release(major): 2.0.0`
 
 3. Create a tag named `v<Version number>`, i.e. `v2.0.0`

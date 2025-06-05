@@ -34,7 +34,7 @@ jobs:
         run: dart format --line-length 120 -o none --set-exit-if-changed .
 
       - name: Run tests and generate coverage report
-        run: bash tools/test.sh
+        run: bash tool/test.sh
 
       - name: Check coverage threshold for MFA (Must be 100%)
         run: |
