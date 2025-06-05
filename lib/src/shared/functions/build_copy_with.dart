@@ -15,7 +15,7 @@ void buildCopyWith(StringBuffer buffer, ClassElement element, {bool isOverride =
   if (isOverride) buffer.writeln('@override');
   buffer.writeln('$className copyWith({');
   for (final field in fields) {
-    final fieldType = field.type.name;
+    final fieldType = field.type.getDisplayString(withNullability: false);
     final fieldName = field.name;
     if (field.type.nullabilitySuffix == NullabilitySuffix.star) {
       throw _starNullabilitySuffixAssertion();

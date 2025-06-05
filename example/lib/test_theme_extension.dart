@@ -10,14 +10,11 @@ final class TestThemeExtension extends ThemeExtension<TestThemeExtension> with $
   const TestThemeExtension({required this.spacing, required this.padding});
 
   final double spacing;
-  final EdgeInsets? padding;
+  final double? padding;
 
   @override
   TestThemeExtension lerp(covariant ThemeExtension<ThemeExtension>? other, double t) {
     if (other is! TestThemeExtension) return this;
-    return copyWith(
-      spacing: lerpDouble(spacing, other.spacing, t),
-      padding: EdgeInsets.lerp(padding, other.padding, t),
-    );
+    return copyWith(spacing: lerpDouble(spacing, other.spacing, t), padding: lerpDouble(padding, other.padding, t));
   }
 }

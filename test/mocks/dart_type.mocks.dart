@@ -7,9 +7,12 @@ import 'package:mocktail/mocktail.dart';
 final class MockDartType extends Mock implements DartType {
   MockDartType._();
 
-  factory MockDartType({NullabilitySuffix nullabilitySuffix = NullabilitySuffix.none}) {
+  factory MockDartType({String? displayString, NullabilitySuffix nullabilitySuffix = NullabilitySuffix.none}) {
     final mock = MockDartType._();
 
+    when(
+      () => mock.getDisplayString(withNullability: any(named: 'withNullability')),
+    ).thenReturn(displayString ?? faker.lorem.word());
     when(() => mock.name).thenReturn(faker.lorem.word());
     when(() => mock.nullabilitySuffix).thenReturn(nullabilitySuffix);
 

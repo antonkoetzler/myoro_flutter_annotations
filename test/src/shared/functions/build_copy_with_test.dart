@@ -52,7 +52,12 @@ void main() {
   test('buildCopyWith: [NullabilitySuffix.star] field error case', () {
     final element = MockClassElement(
       unnamedConstructor: MockConstructorElement(parameters: [MockParameterElement(name: 'foo')]),
-      fields: [MockFieldElement(name: 'foo', type: MockDartType(nullabilitySuffix: NullabilitySuffix.star))],
+      fields: [
+        MockFieldElement(
+          name: 'foo',
+          type: MockDartType(nullabilitySuffix: NullabilitySuffix.star),
+        ),
+      ],
     );
 
     expect(
@@ -73,7 +78,10 @@ void main() {
     final nullField = MockFieldElement(type: MockDartType(nullabilitySuffix: NullabilitySuffix.question));
     final element = MockClassElement(
       unnamedConstructor: MockConstructorElement(
-        parameters: [MockParameterElement(name: nonNullField.name), MockParameterElement(name: nullField.name)],
+        parameters: [
+          MockParameterElement(name: nonNullField.name),
+          MockParameterElement(name: nullField.name),
+        ],
       ),
       fields: [nonNullField, nullField],
     );
@@ -84,8 +92,8 @@ void main() {
 
     expect(buffer.toString(), '''
 ${isOverride ? '@override\n' : ''}${element.name} copyWith({
-${nonNullField.type.name}? ${nonNullField.name},
-${nullField.type.name}? ${nullField.name},
+${nonNullField.type.getDisplayString(withNullability: false)}? ${nonNullField.name},
+${nullField.type.getDisplayString(withNullability: false)}? ${nullField.name},
 bool ${nullField.name}Provided = true,
 }) {
 return ${element.name}(

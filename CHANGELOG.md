@@ -1,3 +1,7 @@
+## 1.0.4: Fixing `MyoroModel`
+
+- Fix `lib/src/shraed/functions/build_copy_with.dart`
+
 ## 1.0.3: Post-deploy corrections
 
 - Fix `.github/workflows/deploy.yml`
