@@ -1,9 +1,10 @@
 import 'package:analyzer/dart/element/element.dart';
+import 'package:myoro_flutter_annotations/src/exports.dart';
 
 /// Function that builds the [toString] override of classes.
 void buildToString(StringBuffer buffer, ClassElement element) {
   final className = element.name;
-  final fields = element.fields.where((field) => !field.isStatic && !field.isSynthetic).toList();
+  final fields = element.mergedFields.where((field) => !field.isStatic && !field.isSynthetic).toList();
 
   // Start the function.
   buffer

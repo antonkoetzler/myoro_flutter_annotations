@@ -1,15 +1,12 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/nullability_suffix.dart';
+import 'package:myoro_flutter_annotations/src/exports.dart';
 import 'package:source_gen/source_gen.dart';
 
 /// Builds the [copyWith] function of an annotation.
 void buildCopyWith(StringBuffer buffer, ClassElement element, {bool isOverride = false}) {
   final unnamedConstructor = element.unnamedConstructor;
-  final superElement = element.supertype?.element != null ? element.supertype!.element as ClassElement : null;
-  final fields = [
-    ...?superElement?.fields,
-    ...element.fields,
-  ].where((field) => !field.isStatic && !field.isSynthetic).toList();
+  final fields = element.mergedFields.where((field) => !field.isStatic && !field.isSynthetic).toList();
 
   // Assert that an unnamed constructor exists
   if (unnamedConstructor == null) throw _invalidConstructorAssertion(element);
@@ -52,8 +49,6 @@ void _nonEmptyFieldsCase(StringBuffer buffer, ClassElement element, List<FieldEl
   final unnamedConstructorParameters = element.unnamedConstructor!.parameters;
   for (final parameter in unnamedConstructorParameters) {
     final parameterName = parameter.name;
-
-    you are here
 
     final field = fields.firstWhere(
       (f) => f.name == parameterName,

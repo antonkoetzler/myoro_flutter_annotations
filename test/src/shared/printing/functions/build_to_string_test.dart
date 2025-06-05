@@ -2,8 +2,8 @@ import 'package:faker/faker.dart';
 import 'package:myoro_flutter_annotations/src/exports.dart';
 import 'package:test/test.dart';
 
-import '../../../mocks/class_element.mocks.dart';
-import '../../../mocks/field_element.mocks.dart';
+import '../../../../mocks/class_element.mocks.dart';
+import '../../../../mocks/field_element.mocks.dart';
 
 void main() {
   test('buildToString', () {

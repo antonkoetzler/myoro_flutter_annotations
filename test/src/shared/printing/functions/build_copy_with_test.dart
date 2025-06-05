@@ -4,11 +4,11 @@ import 'package:myoro_flutter_annotations/src/exports.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:test/test.dart';
 
-import '../../../mocks/class_element.mocks.dart';
-import '../../../mocks/constructor_element.mocks.dart';
-import '../../../mocks/dart_type.mocks.dart';
-import '../../../mocks/field_element.mocks.dart';
-import '../../../mocks/parameter_element.mocks.dart';
+import '../../../../mocks/class_element.mocks.dart';
+import '../../../../mocks/constructor_element.mocks.dart';
+import '../../../../mocks/dart_type.mocks.dart';
+import '../../../../mocks/field_element.mocks.dart';
+import '../../../../mocks/parameter_element.mocks.dart';
 
 void main() {
   test('buildCopyWith: No unnamedConstructor error case', () {

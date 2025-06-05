@@ -36,18 +36,22 @@ mixin $ExtendedModelMixin {
   bool operator ==(Object other) {
     return other is ExtendedModel &&
         other.runtimeType == runtimeType &&
+        other.foo == self.foo &&
+        other.bar == self.bar &&
         other.buzz == self.buzz &&
         other.light == self.light;
   }
 
   @override
   int get hashCode {
-    return Object.hash(self.buzz, self.light);
+    return Object.hash(self.foo, self.bar, self.buzz, self.light);
   }
 
   @override
   String toString() =>
       'ExtendedModel(\n'
+      '  foo: ${self.foo},\n'
+      '  bar: ${self.bar},\n'
       '  buzz: ${self.buzz},\n'
       '  light: ${self.light},\n'
       ');';

@@ -27,6 +27,8 @@ mixin $TestModelMixin {
   bool operator ==(Object other) {
     return other is TestModel &&
         other.runtimeType == runtimeType &&
+        other.hashCode == self.hashCode &&
+        other.runtimeType == self.runtimeType &&
         other.foo == self.foo &&
         other.bar == self.bar;
   }

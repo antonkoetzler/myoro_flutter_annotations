@@ -1,2 +1,2 @@
 export 'formatter/exports.dart';
-export 'functions/exports.dart';
+export 'printing/exports.dart';

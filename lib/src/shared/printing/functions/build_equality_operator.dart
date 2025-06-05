@@ -1,9 +1,10 @@
 import 'package:analyzer/dart/element/element.dart';
+import 'package:myoro_flutter_annotations/src/exports.dart';
 
 /// Builds the == operator override of a class.
 void buildEqualityOperator(StringBuffer buffer, ClassElement element) {
   final className = element.name;
-  final fields = element.fields.where((field) => !field.isStatic).toList();
+  final fields = element.mergedFields.where((field) => !field.isStatic).toList();
 
   // Start the function.
   buffer.writeln('@override');
