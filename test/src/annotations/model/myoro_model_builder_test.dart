@@ -10,8 +10,9 @@ final _baseAssets = {
   'myoro_flutter_annotations|lib/myoro_flutter_annotations.dart': '''
     export 'src/annotations/model/myoro_model.dart';
   ''',
-  'myoro_flutter_annotations|lib/src/annotations/model/myoro_model.dart':
-      File('lib/src/annotations/model/myoro_model.dart').readAsStringSync(),
+  'myoro_flutter_annotations|lib/src/annotations/model/myoro_model.dart': File(
+    'lib/src/annotations/model/myoro_model.dart',
+  ).readAsStringSync(),
 };
 
 void main() {

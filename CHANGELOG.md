@@ -1,3 +1,9 @@
+## 1.0.7: Removing junk from `example/`
+
+- Forgot to remove `example/lib/myoro_app_theme_extension.dart`
+- Format files
+- Create deployment script
+
 ## 1.0.6: Fixing `buildCopyWith`
 
 - Fix `lib/src/shared/functions/build_copy_with.dart`

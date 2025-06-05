@@ -10,8 +10,9 @@ final _baseAssets = {
   'myoro_flutter_annotations|lib/myoro_flutter_annotations.dart': '''
     export 'src/annotations/theme_extension/myoro_theme_extension.dart';
   ''',
-  'myoro_flutter_annotations|lib/src/annotations/theme_extension/myoro_theme_extension.dart':
-      File('lib/src/annotations/theme_extension/myoro_theme_extension.dart').readAsStringSync(),
+  'myoro_flutter_annotations|lib/src/annotations/theme_extension/myoro_theme_extension.dart': File(
+    'lib/src/annotations/theme_extension/myoro_theme_extension.dart',
+  ).readAsStringSync(),
 };
 
 void main() {
