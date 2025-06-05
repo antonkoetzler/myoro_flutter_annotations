@@ -40,8 +40,7 @@ mixin $TestThemeExtensionMixin on ThemeExtension<TestThemeExtension> {
   }
 
   @override
-  String toString() =>
-      'TestThemeExtension(\n'
+  String toString() => 'TestThemeExtension(\n'
       '  spacing: ${self.spacing},\n'
       '  padding: ${self.padding},\n'
       ');';

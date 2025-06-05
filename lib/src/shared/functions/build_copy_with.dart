@@ -17,9 +17,13 @@ void buildCopyWith(StringBuffer buffer, ClassElement element, {bool isOverride =
   for (final field in fields) {
     final fieldType = field.type.name;
     final fieldName = field.name;
-    if (field.type.nullabilitySuffix == NullabilitySuffix.star) throw _starNullabilitySuffixAssertion();
+    if (field.type.nullabilitySuffix == NullabilitySuffix.star) {
+      throw _starNullabilitySuffixAssertion();
+    }
     buffer.writeln('$fieldType? $fieldName,');
-    if (field.type.nullabilitySuffix == NullabilitySuffix.question) buffer.writeln('bool ${fieldName}Provided = true,');
+    if (field.type.nullabilitySuffix == NullabilitySuffix.question) {
+      buffer.writeln('bool ${fieldName}Provided = true,');
+    }
   }
   buffer.writeln('}) {');
 

@@ -25,10 +25,7 @@ mixin $TestModelMixin {
 
   @override
   bool operator ==(Object other) {
-    return other is TestModel &&
-        other.runtimeType == runtimeType &&
-        other.foo == self.foo &&
-        other.bar == self.bar;
+    return other is TestModel && other.runtimeType == runtimeType && other.foo == self.foo && other.bar == self.bar;
   }
 
   @override
@@ -37,8 +34,7 @@ mixin $TestModelMixin {
   }
 
   @override
-  String toString() =>
-      'TestModel(\n'
+  String toString() => 'TestModel(\n'
       '  foo: ${self.foo},\n'
       '  bar: ${self.bar},\n'
       ');';
