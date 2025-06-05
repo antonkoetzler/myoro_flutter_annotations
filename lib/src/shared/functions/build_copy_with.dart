@@ -4,58 +4,73 @@ import 'package:source_gen/source_gen.dart';
 
 /// Builds the [copyWith] function of an annotation.
 void buildCopyWith(StringBuffer buffer, ClassElement element, {bool isOverride = false}) {
-  final className = element.name;
-  final constructor = element.unnamedConstructor;
-  final fields = element.fields.where((field) => !field.isStatic && !field.isSynthetic).toList();
-  final thisOrSelf = isOverride ? 'self' : 'this';
+  final unnamedConstructor = element.unnamedConstructor;
+  final superElement = element.supertype?.element != null ? element.supertype!.element as ClassElement : null;
+  final fields = [
+    ...?superElement?.fields,
+    ...element.fields,
+  ].where((field) => !field.isStatic && !field.isSynthetic).toList();
 
   // Assert that an unnamed constructor exists
-  if (constructor == null) throw _invalidConstructorAssertion(element);
+  if (unnamedConstructor == null) throw _invalidConstructorAssertion(element);
 
   // Start the function.
   if (isOverride) buffer.writeln('@override');
 
   if (fields.isEmpty) {
-    buffer.writeln('$className copyWith() {');
-    buffer.writeln('return $thisOrSelf;');
-    buffer.writeln('}');
+    _emptyFieldsCase(buffer, element, isOverride);
   } else {
-    buffer.writeln('$className copyWith({');
-    for (final field in fields) {
-      final fieldType = field.type.getDisplayString(withNullability: false);
-      final fieldName = field.name;
-      if (field.type.nullabilitySuffix == NullabilitySuffix.star) {
-        throw _starNullabilitySuffixAssertion();
-      }
-      buffer.writeln('$fieldType? $fieldName,');
-      if (field.type.nullabilitySuffix == NullabilitySuffix.question) {
-        buffer.writeln('bool ${fieldName}Provided = true,');
-      }
-    }
-    buffer.writeln('}) {');
-
-    // Start of the return statement.
-    buffer.writeln('return $className(');
-    final constructorParameters = constructor.parameters;
-    for (final parameter in constructorParameters) {
-      final parameterName = parameter.name;
-      final field = fields.firstWhere(
-        (f) => f.name == parameterName,
-        orElse: () => throw _invalidConstructorParameterAssertion(element, parameter),
-      );
-      final fieldType = field.type.nullabilitySuffix;
-      if (fieldType == NullabilitySuffix.none) {
-        buffer.writeln('$parameterName: $parameterName ?? $thisOrSelf.$parameterName,');
-      }
-      if (fieldType == NullabilitySuffix.question) {
-        buffer.writeln(
-          '$parameterName: ${parameterName}Provided ? ($parameterName ?? $thisOrSelf.$parameterName) : null,',
-        );
-      }
-    }
-    buffer.writeln(');');
-    buffer.writeln('}');
+    _nonEmptyFieldsCase(buffer, element, fields, isOverride);
   }
+}
+
+String thisOrSelf(bool isOverride) => isOverride ? 'self' : 'this';
+
+void _emptyFieldsCase(StringBuffer buffer, ClassElement element, bool isOverride) {
+  buffer.writeln('${element.name} copyWith() {');
+  buffer.writeln('return ${thisOrSelf(isOverride)};');
+  buffer.writeln('}');
+}
+
+void _nonEmptyFieldsCase(StringBuffer buffer, ClassElement element, List<FieldElement> fields, bool isOverride) {
+  buffer.writeln('${element.name} copyWith({');
+  for (final field in fields) {
+    final fieldType = field.type.getDisplayString(withNullability: false);
+    final fieldName = field.name;
+    if (field.type.nullabilitySuffix == NullabilitySuffix.star) {
+      throw _starNullabilitySuffixAssertion();
+    }
+    buffer.writeln('$fieldType? $fieldName,');
+    if (field.type.nullabilitySuffix == NullabilitySuffix.question) {
+      buffer.writeln('bool ${fieldName}Provided = true,');
+    }
+  }
+  buffer.writeln('}) {');
+
+  // Start of the return statement.
+  buffer.writeln('return ${element.name}(');
+  final unnamedConstructorParameters = element.unnamedConstructor!.parameters;
+  for (final parameter in unnamedConstructorParameters) {
+    final parameterName = parameter.name;
+
+    you are here
+
+    final field = fields.firstWhere(
+      (f) => f.name == parameterName,
+      orElse: () => throw _invalidConstructorParameterAssertion(element, parameter),
+    );
+    final fieldType = field.type.nullabilitySuffix;
+    if (fieldType == NullabilitySuffix.none) {
+      buffer.writeln('$parameterName: $parameterName ?? ${thisOrSelf(isOverride)}.$parameterName,');
+    }
+    if (fieldType == NullabilitySuffix.question) {
+      buffer.writeln(
+        '$parameterName: ${parameterName}Provided ? ($parameterName ?? ${thisOrSelf(isOverride)}.$parameterName) : null,',
+      );
+    }
+  }
+  buffer.writeln(');');
+  buffer.writeln('}');
 }
 
 InvalidGenerationSourceError _invalidConstructorAssertion(ClassElement element) {
