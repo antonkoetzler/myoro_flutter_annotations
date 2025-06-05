@@ -1,3 +1,12 @@
-## 1.0.0
+## 1.0.2: Preparing to publish to pub.dev
 
-- Initial version.
+- Fix step that was saying "MFL" (Myoro Flutter Library) instead of "MFA" (Myoro Flutter Annotations)
+- Prepare project for pub.dev publishing
+
+## 1.0.1: Fixing `.github/workflows/tests.yml`
+
+- Fix title of `.github/workflows/tests.yml`
+
+## 1.0.0: Initial version
+
+- Initial version

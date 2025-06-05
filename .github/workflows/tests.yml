@@ -36,7 +36,7 @@ jobs:
       - name: Run tests and generate coverage report
         run: bash tools/test.sh
 
-      - name: Check coverage threshold for MFL (Must be 100%)
+      - name: Check coverage threshold for MFA (Must be 100%)
         run: |
           COVERAGE=$(lcov --summary coverage/lcov.info | grep lines | awk '{print $2}' | sed 's/%//')
           echo "Coverage: $COVERAGE%"
