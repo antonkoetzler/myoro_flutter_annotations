@@ -18,12 +18,6 @@ jobs:
       - name: Install LCOV for code coverage report generation
         run: sudo apt-get install lcov
 
-      - name: Install flutter using stable channel
-        uses: subosito/flutter-action@v2
-        with:
-          channel: 'stable'
-          cache: true
-
       - name: Setup Dart
         uses: dart-lang/setup-dart@v1
 
