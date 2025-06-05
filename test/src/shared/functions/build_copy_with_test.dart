@@ -72,7 +72,21 @@ void main() {
     );
   });
 
-  test('buildCopyWith: Success case', () {
+  test('buildCopyWith: Class with 0 fields success case', () {
+    final buffer = StringBuffer();
+    final element = MockClassElement(unnamedConstructor: MockConstructorElement());
+    final isOverride = faker.randomGenerator.boolean();
+
+    buildCopyWith(buffer, element, isOverride: isOverride);
+
+    expect(buffer.toString(), '''
+${isOverride ? '@override\n' : ''}${element.name} copyWith() {
+return this;
+}
+''');
+  });
+
+  test('buildCopyWith: Class with multiple fields success case', () {
     final buffer = StringBuffer();
     final nonNullField = MockFieldElement();
     final nullField = MockFieldElement(type: MockDartType(nullabilitySuffix: NullabilitySuffix.question));

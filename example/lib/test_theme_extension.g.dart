@@ -15,8 +15,15 @@ mixin $TestThemeExtensionMixin on ThemeExtension<TestThemeExtension> {
   TestThemeExtension get self => this as TestThemeExtension;
 
   @override
-  TestThemeExtension copyWith({double? spacing, double? padding}) {
-    return TestThemeExtension(spacing: spacing ?? self.spacing, padding: padding ?? self.padding);
+  TestThemeExtension copyWith({
+    double? spacing,
+    double? padding,
+    bool paddingProvided = true,
+  }) {
+    return TestThemeExtension(
+      spacing: spacing ?? self.spacing,
+      padding: paddingProvided ? (padding ?? self.padding) : null,
+    );
   }
 
   @override

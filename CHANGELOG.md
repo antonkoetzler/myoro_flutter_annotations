@@ -1,4 +1,8 @@
-## 1.0.4: Fixing `MyoroModel`
+## 1.0.5: Fixing `buildCopyWith`
+
+- Fix `lib/src/shared/functions/build_copy_with.dart` to be able to generate for a class without any fields
+
+## 1.0.4: Fixing `buildCopyWith`
 
 - Fix `lib/src/shraed/functions/build_copy_with.dart`
 
