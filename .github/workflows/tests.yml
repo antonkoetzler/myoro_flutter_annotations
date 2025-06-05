@@ -18,13 +18,14 @@ jobs:
       - name: Install LCOV for code coverage report generation
         run: sudo apt-get install lcov
 
-      - name: Setup Dart SDK
-        uses: dart-lang/setup-dart@v1
+      - name: Install flutter using stable channel
+        uses: subosito/flutter-action@v2
         with:
-          sdk: 'stable'
+          channel: 'stable'
+          cache: true
 
       - name: Install dependencies
-        run: dart pub get
+        run: flutter pub get
 
       - name: Dart fix check (fails if fixes exists)Add commentMore actions
         run: dart fix --dry-run .
