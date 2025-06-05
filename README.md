@@ -4,5 +4,5 @@ Is boilerplate starting to get super annoying to write by hand? Do you want basi
 
 # Documentation Table of Contents
 
-1. [`Deploying.md`](https://github.com/antonkoetzler/myoro_flutter_annotations/blob/main/doc/Deploying.md);
-2. [`Standards.md`](https://github.com/antonkoetzler/myoro_flutter_annotations/blob/main/doc/Standards.md).
+1. [`Deploying.md`](https://github.com/antonkoetzler/myoro_flutter_annotations/blob/main/doc/Deploying.md)
+2. [`Standards.md`](https://github.com/antonkoetzler/myoro_flutter_annotations/blob/main/doc/Standards.md)
