@@ -7,6 +7,7 @@ void buildCopyWith(StringBuffer buffer, ClassElement element, {bool isOverride =
   final className = element.name;
   final constructor = element.unnamedConstructor;
   final fields = element.fields.where((field) => !field.isStatic && !field.isSynthetic).toList();
+  final thisOrSelf = isOverride ? 'self' : 'this';
 
   // Assert that an unnamed constructor exists
   if (constructor == null) throw _invalidConstructorAssertion(element);
@@ -16,7 +17,7 @@ void buildCopyWith(StringBuffer buffer, ClassElement element, {bool isOverride =
 
   if (fields.isEmpty) {
     buffer.writeln('$className copyWith() {');
-    buffer.writeln('return this;');
+    buffer.writeln('return $thisOrSelf;');
     buffer.writeln('}');
   } else {
     buffer.writeln('$className copyWith({');
@@ -36,7 +37,6 @@ void buildCopyWith(StringBuffer buffer, ClassElement element, {bool isOverride =
     // Start of the return statement.
     buffer.writeln('return $className(');
     final constructorParameters = constructor.parameters;
-    final thisOrSelf = isOverride ? 'self' : 'this';
     for (final parameter in constructorParameters) {
       final parameterName = parameter.name;
       final field = fields.firstWhere(

@@ -1,3 +1,7 @@
+## 1.0.6: Fixing `buildCopyWith`
+
+- Fix `lib/src/shared/functions/build_copy_with.dart`
+
 ## 1.0.5: Fixing `buildCopyWith`
 
 - Fix `lib/src/shared/functions/build_copy_with.dart` to be able to generate for a class without any fields

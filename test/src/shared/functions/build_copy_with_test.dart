@@ -76,12 +76,13 @@ void main() {
     final buffer = StringBuffer();
     final element = MockClassElement(unnamedConstructor: MockConstructorElement());
     final isOverride = faker.randomGenerator.boolean();
+    final thisOrSelf = isOverride ? 'self' : 'this';
 
     buildCopyWith(buffer, element, isOverride: isOverride);
 
     expect(buffer.toString(), '''
 ${isOverride ? '@override\n' : ''}${element.name} copyWith() {
-return this;
+return $thisOrSelf;
 }
 ''');
   });
