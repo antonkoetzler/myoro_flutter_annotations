@@ -4,6 +4,10 @@
 
 - Remove `tool/foo.sh`
 
+## 1.0.9
+
+- No changes
+
 ## 1.0.8
 
 - feature: Support for type parameters
