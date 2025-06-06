@@ -8,12 +8,10 @@ void buildMixin(StringBuffer buffer, ClassElement element, void Function() body,
     ..writeln('/// Apply this mixin to [${element.name}] once the code is generated.')
     ..writeln('///')
     ..writeln('/// ```dart')
-    ..writeln('/// class ${element.name}${element.formattedTypeParameters} with $mixinName {}')
+    ..writeln('/// class ${element.nameWithTypeParameters} with $mixinName {}')
     ..writeln('/// ```')
     ..writeln('mixin $mixinName ${onClass != null ? 'on $onClass ' : ''}{')
-    ..writeln(
-      '${element.name}${element.formattedTypeParameters} get self => this as ${element.name}${element.formattedTypeParameters};\n',
-    );
+    ..writeln('${element.nameWithTypeParameters} get self => this as ${element.nameWithTypeParameters};\n');
   body.call();
   buffer.writeln('}');
 }

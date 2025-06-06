@@ -21,7 +21,7 @@ void main() {
           (e) => e.message,
           'Not [ClassElement] message',
           contains(
-            '[buildCopyWith]: Class ${element.name}${element.formattedTypeParameters} must have an unnamed constructor to generate copyWith.',
+            '[buildCopyWith]: Class ${element.nameWithTypeParameters} must have an unnamed constructor to generate copyWith.',
           ),
         ),
       ),
@@ -81,7 +81,7 @@ void main() {
     buildCopyWith(buffer, element, isThemeExtension: isThemeExtension);
 
     expect(buffer.toString(), '''
-${isThemeExtension ? '@override\n' : ''}${element.name}${element.formattedTypeParameters} copyWith() {
+${isThemeExtension ? '@override\n' : ''}${element.nameWithTypeParameters} copyWith() {
 return $thisOrSelf;
 }
 ''');
@@ -106,9 +106,9 @@ return $thisOrSelf;
     buildCopyWith(buffer, element, isThemeExtension: isThemeExtension);
 
     expect(buffer.toString(), '''
-${isThemeExtension ? '@override\n' : ''}${element.name}${element.formattedTypeParameters} copyWith({
-${nonNullField.type.getDisplayString(withNullability: false)}? ${nonNullField.name},
-${nullField.type.getDisplayString(withNullability: false)}? ${nullField.name},
+${isThemeExtension ? '@override\n' : ''}${element.nameWithTypeParameters} copyWith({
+${nonNullField.type.getDisplayString(withNullability: true)}? ${nonNullField.name},
+${nullField.type.getDisplayString(withNullability: true)} ${nullField.name},
 bool ${nullField.name}Provided = true,
 }) {
 return ${element.name}(

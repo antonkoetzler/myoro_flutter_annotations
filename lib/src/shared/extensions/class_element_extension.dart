@@ -20,4 +20,9 @@ extension ClassElementExtension on ClassElement {
   String get formattedTypeParameters {
     return typeParameters.isNotEmpty ? '<${typeParameters.map((t) => t.name).join(', ')}>' : '';
   }
+
+  /// [name] + [formattedTypeParameters].
+  String get nameWithTypeParameters {
+    return '$name$formattedTypeParameters';
+  }
 }

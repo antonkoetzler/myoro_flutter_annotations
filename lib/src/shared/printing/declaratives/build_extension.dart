@@ -6,7 +6,7 @@ void buildExtension(StringBuffer buffer, ClassElement element, void Function() b
   final name = element.name;
   final formattedTypeParameters = element.formattedTypeParameters;
 
-  buffer.writeln('extension \$${name}Extension$formattedTypeParameters on $name$formattedTypeParameters {');
+  buffer.writeln('extension \$${name}Extension$formattedTypeParameters on ${element.nameWithTypeParameters} {');
   body.call();
   buffer.writeln('}');
 }

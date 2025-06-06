@@ -10,7 +10,6 @@ void main() {
   final buffer = StringBuffer();
   final element = MockClassElement();
   final mixinName = '\$${element.name}Mixin${element.formattedTypeParameters}';
-  final formattedTypeParameters = element.formattedTypeParameters;
 
   void testMixin([String? onClass]) {
     buildMixin(buffer..clear(), element, () => buffer.writeln(bodyText), onClass: onClass);
@@ -21,10 +20,10 @@ void main() {
       ..writeln('/// Apply this mixin to [${element.name}] once the code is generated.')
       ..writeln('///')
       ..writeln('/// ```dart')
-      ..writeln('/// class ${element.name}$formattedTypeParameters with $mixinName {}')
+      ..writeln('/// class ${element.nameWithTypeParameters} with $mixinName {}')
       ..writeln('/// ```')
       ..writeln('mixin $mixinName ${onClass != null ? 'on $onClass ' : ''}{')
-      ..writeln('${element.name} get self => this as ${element.name};\n')
+      ..writeln('${element.nameWithTypeParameters} get self => this as ${element.nameWithTypeParameters};\n')
       ..writeln(bodyText)
       ..writeln('}');
 

@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.1.0
+
+- fix: typedef arguments
+
 ## 1.0.10
 
 - Remove `tool/foo.sh`

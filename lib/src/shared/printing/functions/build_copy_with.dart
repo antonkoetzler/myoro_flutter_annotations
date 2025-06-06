@@ -25,22 +25,24 @@ void buildCopyWith(StringBuffer buffer, ClassElement element, {bool isThemeExten
 String thisOrSelf(bool isThemeExtension) => isThemeExtension ? 'self' : 'this';
 
 void _emptyFieldsCase(StringBuffer buffer, ClassElement element, bool isThemeExtension) {
-  buffer.writeln('${element.name}${element.formattedTypeParameters} copyWith() {');
+  buffer.writeln('${element.nameWithTypeParameters} copyWith() {');
   buffer.writeln('return ${thisOrSelf(isThemeExtension)};');
   buffer.writeln('}');
 }
 
 void _nonEmptyFieldsCase(StringBuffer buffer, ClassElement element, List<FieldElement> fields, bool isThemeExtension) {
-  buffer.writeln('${element.name}${element.formattedTypeParameters} copyWith({');
+  buffer.writeln('${element.nameWithTypeParameters} copyWith({');
   for (final field in fields) {
     final fieldType = field.type.getDisplayString(withNullability: true);
     final fieldName = field.name;
-    if (field.type.nullabilitySuffix == NullabilitySuffix.star) {
-      throw _starNullabilitySuffixAssertion();
-    }
-    buffer.writeln('$fieldType? $fieldName,');
-    if (field.type.nullabilitySuffix == NullabilitySuffix.question) {
-      buffer.writeln('bool ${fieldName}Provided = true,');
+    switch (field.type.nullabilitySuffix) {
+      case NullabilitySuffix.star:
+        throw _starNullabilitySuffixAssertion();
+      case NullabilitySuffix.question:
+        buffer.writeln('$fieldType $fieldName,');
+        buffer.writeln('bool ${fieldName}Provided = true,');
+      case NullabilitySuffix.none:
+        buffer.writeln('$fieldType? $fieldName,');
     }
   }
   buffer.writeln('}) {');
@@ -71,7 +73,7 @@ void _nonEmptyFieldsCase(StringBuffer buffer, ClassElement element, List<FieldEl
 
 InvalidGenerationSourceError _invalidConstructorAssertion(ClassElement element) {
   return InvalidGenerationSourceError(
-    '[buildCopyWith]: Class ${element.name}${element.formattedTypeParameters} must have an unnamed constructor to generate copyWith.',
+    '[buildCopyWith]: Class ${element.nameWithTypeParameters} must have an unnamed constructor to generate copyWith.',
     element: element,
   );
 }
