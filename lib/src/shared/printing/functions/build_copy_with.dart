@@ -33,7 +33,7 @@ void _emptyFieldsCase(StringBuffer buffer, ClassElement element, bool isThemeExt
 void _nonEmptyFieldsCase(StringBuffer buffer, ClassElement element, List<FieldElement> fields, bool isThemeExtension) {
   buffer.writeln('${element.name}${element.formattedTypeParameters} copyWith({');
   for (final field in fields) {
-    final fieldType = field.type.getDisplayString(withNullability: false);
+    final fieldType = field.type.getDisplayString(withNullability: true);
     final fieldName = field.name;
     if (field.type.nullabilitySuffix == NullabilitySuffix.star) {
       throw _starNullabilitySuffixAssertion();
