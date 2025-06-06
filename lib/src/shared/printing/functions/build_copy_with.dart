@@ -1,10 +1,11 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:myoro_flutter_annotations/src/exports.dart';
+import 'package:myoro_flutter_annotations/src/shared/exports.dart';
 import 'package:source_gen/source_gen.dart';
 
 /// Builds the [copyWith] function of an annotation.
-void buildCopyWith(StringBuffer buffer, ClassElement element, {bool isOverride = false}) {
+void buildCopyWith(StringBuffer buffer, ClassElement element, {bool isThemeExtension = false}) {
   final unnamedConstructor = element.unnamedConstructor;
   final fields = element.mergedFields.where((field) => !field.isStatic && !field.isSynthetic).toList();
 
@@ -12,25 +13,25 @@ void buildCopyWith(StringBuffer buffer, ClassElement element, {bool isOverride =
   if (unnamedConstructor == null) throw _invalidConstructorAssertion(element);
 
   // Start the function.
-  if (isOverride) buffer.writeln('@override');
+  if (isThemeExtension) buffer.writeln('@override');
 
   if (fields.isEmpty) {
-    _emptyFieldsCase(buffer, element, isOverride);
+    _emptyFieldsCase(buffer, element, isThemeExtension);
   } else {
-    _nonEmptyFieldsCase(buffer, element, fields, isOverride);
+    _nonEmptyFieldsCase(buffer, element, fields, isThemeExtension);
   }
 }
 
-String thisOrSelf(bool isOverride) => isOverride ? 'self' : 'this';
+String thisOrSelf(bool isThemeExtension) => isThemeExtension ? 'self' : 'this';
 
-void _emptyFieldsCase(StringBuffer buffer, ClassElement element, bool isOverride) {
-  buffer.writeln('${element.name} copyWith() {');
-  buffer.writeln('return ${thisOrSelf(isOverride)};');
+void _emptyFieldsCase(StringBuffer buffer, ClassElement element, bool isThemeExtension) {
+  buffer.writeln('${element.name}${element.formattedTypeParameters} copyWith() {');
+  buffer.writeln('return ${thisOrSelf(isThemeExtension)};');
   buffer.writeln('}');
 }
 
-void _nonEmptyFieldsCase(StringBuffer buffer, ClassElement element, List<FieldElement> fields, bool isOverride) {
-  buffer.writeln('${element.name} copyWith({');
+void _nonEmptyFieldsCase(StringBuffer buffer, ClassElement element, List<FieldElement> fields, bool isThemeExtension) {
+  buffer.writeln('${element.name}${element.formattedTypeParameters} copyWith({');
   for (final field in fields) {
     final fieldType = field.type.getDisplayString(withNullability: false);
     final fieldName = field.name;
@@ -56,11 +57,11 @@ void _nonEmptyFieldsCase(StringBuffer buffer, ClassElement element, List<FieldEl
     );
     final fieldType = field.type.nullabilitySuffix;
     if (fieldType == NullabilitySuffix.none) {
-      buffer.writeln('$parameterName: $parameterName ?? ${thisOrSelf(isOverride)}.$parameterName,');
+      buffer.writeln('$parameterName: $parameterName ?? ${thisOrSelf(isThemeExtension)}.$parameterName,');
     }
     if (fieldType == NullabilitySuffix.question) {
       buffer.writeln(
-        '$parameterName: ${parameterName}Provided ? ($parameterName ?? ${thisOrSelf(isOverride)}.$parameterName) : null,',
+        '$parameterName: ${parameterName}Provided ? ($parameterName ?? ${thisOrSelf(isThemeExtension)}.$parameterName) : null,',
       );
     }
   }
@@ -70,7 +71,7 @@ void _nonEmptyFieldsCase(StringBuffer buffer, ClassElement element, List<FieldEl
 
 InvalidGenerationSourceError _invalidConstructorAssertion(ClassElement element) {
   return InvalidGenerationSourceError(
-    '[buildCopyWith]: Class ${element.name} must have an unnamed constructor to generate copyWith.',
+    '[buildCopyWith]: Class ${element.name}${element.formattedTypeParameters} must have an unnamed constructor to generate copyWith.',
     element: element,
   );
 }

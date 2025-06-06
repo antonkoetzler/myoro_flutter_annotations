@@ -12,7 +12,7 @@ final class MyoroThemeExtensionGenerator extends GeneratorForAnnotation<MyoroThe
     // Check if element is a class
     if (element is! ClassElement) {
       throw InvalidGenerationSourceError(
-        '[MyoroModelGenerator.generateForAnnotatedElement]: MyoroModel can only be applied to classes.',
+        '[MyoroModelGenerator.generateForAnnotatedElement]: [MyoroThemeExtension] can only be applied to classes.',
         element: element,
       );
     }
@@ -20,7 +20,7 @@ final class MyoroThemeExtensionGenerator extends GeneratorForAnnotation<MyoroThe
     final buffer = StringBuffer();
 
     buildMixin(buffer, element, () {
-      buildCopyWith(buffer, element, isOverride: true);
+      buildCopyWith(buffer, element, isThemeExtension: true);
       buildEqualityOperator(buffer, element);
       buildHashCode(buffer, element);
       buildToString(buffer, element);

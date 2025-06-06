@@ -9,11 +9,12 @@ void main() {
 
     final buffer = StringBuffer();
     final element = MockClassElement();
+    final formattedTypeParameters = element.formattedTypeParameters;
 
     buildExtension(buffer, element, () => buffer.writeln(bodyText));
 
     expect(buffer.toString(), '''
-extension \$${element.name}Extension on ${element.name} {
+extension \$${element.name}Extension$formattedTypeParameters on ${element.name}$formattedTypeParameters {
 $bodyText
 }
 ''');

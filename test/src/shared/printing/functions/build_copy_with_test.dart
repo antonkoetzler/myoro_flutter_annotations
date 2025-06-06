@@ -13,7 +13,6 @@ import '../../../../mocks/parameter_element.mocks.dart';
 void main() {
   test('buildCopyWith: No unnamedConstructor error case', () {
     final element = MockClassElement();
-    final className = element.name;
 
     expect(
       () => buildCopyWith(StringBuffer(), element),
@@ -21,7 +20,9 @@ void main() {
         isA<InvalidGenerationSourceError>().having(
           (e) => e.message,
           'Not [ClassElement] message',
-          contains('[buildCopyWith]: Class $className must have an unnamed constructor to generate copyWith.'),
+          contains(
+            '[buildCopyWith]: Class ${element.name}${element.formattedTypeParameters} must have an unnamed constructor to generate copyWith.',
+          ),
         ),
       ),
     );
@@ -33,7 +34,6 @@ void main() {
       fields: [MockFieldElement(name: 'foo')],
     );
     final parameterName = element.unnamedConstructor!.parameters.first.name;
-    final className = element.name;
 
     expect(
       () => buildCopyWith(StringBuffer(), element),
@@ -42,7 +42,7 @@ void main() {
           (e) => e.message,
           'Parameter message',
           contains(
-            '[buildCopyWith]: Field for constructor parameter "$parameterName" not found in class "$className". Ensure all constructor parameters have corresponding fields.',
+            '[buildCopyWith]: Field for constructor parameter "$parameterName" not found in class "${element.name}". Ensure all constructor parameters have corresponding fields.',
           ),
         ),
       ),
@@ -75,13 +75,13 @@ void main() {
   test('buildCopyWith: Class with 0 fields success case', () {
     final buffer = StringBuffer();
     final element = MockClassElement(unnamedConstructor: MockConstructorElement());
-    final isOverride = faker.randomGenerator.boolean();
-    final thisOrSelf = isOverride ? 'self' : 'this';
+    final isThemeExtension = faker.randomGenerator.boolean();
+    final thisOrSelf = isThemeExtension ? 'self' : 'this';
 
-    buildCopyWith(buffer, element, isOverride: isOverride);
+    buildCopyWith(buffer, element, isThemeExtension: isThemeExtension);
 
     expect(buffer.toString(), '''
-${isOverride ? '@override\n' : ''}${element.name} copyWith() {
+${isThemeExtension ? '@override\n' : ''}${element.name}${element.formattedTypeParameters} copyWith() {
 return $thisOrSelf;
 }
 ''');
@@ -100,13 +100,13 @@ return $thisOrSelf;
       ),
       fields: [nonNullField, nullField],
     );
-    final isOverride = faker.randomGenerator.boolean();
-    final thisOrSelf = isOverride ? 'self' : 'this';
+    final isThemeExtension = faker.randomGenerator.boolean();
+    final thisOrSelf = isThemeExtension ? 'self' : 'this';
 
-    buildCopyWith(buffer, element, isOverride: isOverride);
+    buildCopyWith(buffer, element, isThemeExtension: isThemeExtension);
 
     expect(buffer.toString(), '''
-${isOverride ? '@override\n' : ''}${element.name} copyWith({
+${isThemeExtension ? '@override\n' : ''}${element.name}${element.formattedTypeParameters} copyWith({
 ${nonNullField.type.getDisplayString(withNullability: false)}? ${nonNullField.name},
 ${nullField.type.getDisplayString(withNullability: false)}? ${nullField.name},
 bool ${nullField.name}Provided = true,

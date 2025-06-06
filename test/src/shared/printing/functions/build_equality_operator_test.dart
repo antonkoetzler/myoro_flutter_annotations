@@ -36,7 +36,7 @@ other.runtimeType == runtimeType;
       ..clear()
       ..writeln('@override')
       ..writeln('bool operator ==(Object other) {')
-      ..writeln('return other is ${element.name} &&')
+      ..writeln('return other is ${element.name}${element.formattedTypeParameters} &&')
       ..writeln('other.runtimeType == runtimeType &&');
     final fieldsLength = element.fields.length;
     for (int i = 0; i < fieldsLength; i++) {

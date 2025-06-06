@@ -1,31 +1,31 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'test_model.dart';
+part of 'generic_model.dart';
 
 // **************************************************************************
 // MyoroModelGenerator
 // **************************************************************************
 
-extension $TestModelExtension on TestModel {
-  TestModel copyWith({String? foo, int? bar, bool barProvided = true}) {
-    return TestModel(
+extension $GenericModelExtension<T> on GenericModel<T> {
+  GenericModel<T> copyWith({T? foo, int? bar, bool barProvided = true}) {
+    return GenericModel(
       foo: foo ?? this.foo,
       bar: barProvided ? (bar ?? this.bar) : null,
     );
   }
 }
 
-/// Apply this mixin to [TestModel] once the code is generated.
+/// Apply this mixin to [GenericModel] once the code is generated.
 ///
 /// ```dart
-/// class TestModel with $TestModelMixin {}
+/// class GenericModel<T> with $GenericModelMixin<T> {}
 /// ```
-mixin $TestModelMixin {
-  TestModel get self => this as TestModel;
+mixin $GenericModelMixin<T> {
+  GenericModel<T> get self => this as GenericModel<T>;
 
   @override
   bool operator ==(Object other) {
-    return other is TestModel &&
+    return other is GenericModel<T> &&
         other.runtimeType == runtimeType &&
         other.foo == self.foo &&
         other.bar == self.bar;
@@ -38,7 +38,7 @@ mixin $TestModelMixin {
 
   @override
   String toString() =>
-      'TestModel(\n'
+      'GenericModel<T>(\n'
       '  foo: ${self.foo},\n'
       '  bar: ${self.bar},\n'
       ');';

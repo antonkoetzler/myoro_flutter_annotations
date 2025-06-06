@@ -1,37 +1,44 @@
-## 1.0.7: Removing junk from `example/`
+# CHANGELOG
 
-- Forgot to remove `example/lib/myoro_app_theme_extension.dart`
-- Format files
-- Create deployment script
+## 1.0.8
 
-## 1.0.6: Fixing `buildCopyWith`
+- feature: Support for type parameters
+- feature: Support for abstracted classes
 
-- Fix `lib/src/shared/functions/build_copy_with.dart`
+## 1.0.7
 
-## 1.0.5: Fixing `buildCopyWith`
+- fix: Forgot to remove `example/lib/myoro_app_theme_extension.dart`
+- fix: Format files
+- feature: Create deployment script
 
-- Fix `lib/src/shared/functions/build_copy_with.dart` to be able to generate for a class without any fields
+## 1.0.6
 
-## 1.0.4: Fixing `buildCopyWith`
+- fix: `lib/src/shared/functions/build_copy_with.dart`
 
-- Fix `lib/src/shraed/functions/build_copy_with.dart`
+## 1.0.5
 
-## 1.0.3: Post-deploy corrections
+- fix: `lib/src/shared/functions/build_copy_with.dart` to be able to generate for a class without any fields
 
-- Fix `.github/workflows/deploy.yml`
-- Upgrade `lints` in `pubspec.yaml`
+## 1.0.4
 
-## 1.0.2: Preparing to publish to pub.dev
+- fix: `lib/src/shared/functions/build_copy_with.dart`
 
-- Fix step that was saying "MFL" (Myoro Flutter Library) instead of "MFA" (Myoro Flutter Annotations)
-- Prepare project for pub.dev publishing
-- Polish documentation
-- Polish deployment
+## 1.0.3
 
-## 1.0.1: Fixing `.github/workflows/tests.yml`
+- fix: `.github/workflows/deploy.yml`
+- feature: Upgrade `lints` in `pubspec.yaml`
 
-- Fix title of `.github/workflows/tests.yml`
+## 1.0.2
 
-## 1.0.0: Initial version
+- fix: Fix step that was saying "MFL" (Myoro Flutter Library) instead of "MFA" (Myoro Flutter Annotations)
+- spike: Prepare project for pub.dev publishing
+- chore: Polish documentation
+- chore: Polish deployment
+
+## 1.0.1
+
+- fix: Title of `.github/workflows/tests.yml`
+
+## 1.0.0
 
 - Initial version

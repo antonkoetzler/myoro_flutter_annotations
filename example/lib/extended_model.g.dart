@@ -8,12 +8,12 @@ part of 'extended_model.dart';
 
 extension $ExtendedModelExtension on ExtendedModel {
   ExtendedModel copyWith({
-    int? foo,
-    String? bar,
-    bool barProvided = true,
     int? buzz,
     String? light,
     bool lightProvided = true,
+    int? foo,
+    String? bar,
+    bool barProvided = true,
   }) {
     return ExtendedModel(
       foo: foo ?? this.foo,
@@ -36,23 +36,23 @@ mixin $ExtendedModelMixin {
   bool operator ==(Object other) {
     return other is ExtendedModel &&
         other.runtimeType == runtimeType &&
-        other.foo == self.foo &&
-        other.bar == self.bar &&
         other.buzz == self.buzz &&
-        other.light == self.light;
+        other.light == self.light &&
+        other.foo == self.foo &&
+        other.bar == self.bar;
   }
 
   @override
   int get hashCode {
-    return Object.hash(self.foo, self.bar, self.buzz, self.light);
+    return Object.hash(self.buzz, self.light, self.foo, self.bar);
   }
 
   @override
   String toString() =>
       'ExtendedModel(\n'
-      '  foo: ${self.foo},\n'
-      '  bar: ${self.bar},\n'
       '  buzz: ${self.buzz},\n'
       '  light: ${self.light},\n'
+      '  foo: ${self.foo},\n'
+      '  bar: ${self.bar},\n'
       ');';
 }

@@ -16,7 +16,7 @@ final _baseAssets = {
 };
 
 void main() {
-  test('MyoroModelBuilder success case', () async {
+  test('MyoroThemeExtensionBuilder success case', () async {
     final sourceAssets = {
       ..._baseAssets,
       'myoro_flutter_annotations|lib/src/foo_theme_extension.dart': '''
@@ -52,7 +52,7 @@ void main() {
     );
   });
 
-  test('MyoroModel annotation throws error on non-class elements', () async {
+  test('MyoroThemeExtension annotation throws error on non-class elements', () async {
     final sourceAssets = {
       ..._baseAssets,
       'myoro_flutter_annotations|lib/src/my_function.dart': '''

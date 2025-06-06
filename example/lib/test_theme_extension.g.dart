@@ -30,8 +30,6 @@ mixin $TestThemeExtensionMixin on ThemeExtension<TestThemeExtension> {
   bool operator ==(Object other) {
     return other is TestThemeExtension &&
         other.runtimeType == runtimeType &&
-        other.hashCode == self.hashCode &&
-        other.runtimeType == self.runtimeType &&
         other.spacing == self.spacing &&
         other.padding == self.padding;
   }
