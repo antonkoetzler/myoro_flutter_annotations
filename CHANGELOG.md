@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.0.10
+
+- Remove `tool/foo.sh`
+
 ## 1.0.8
 
 - feature: Support for type parameters
