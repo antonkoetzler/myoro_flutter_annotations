@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.1.1
+
+- Fix deploy script to format when deploying
+
 ## 1.1.0
 
 - fix: typedef arguments

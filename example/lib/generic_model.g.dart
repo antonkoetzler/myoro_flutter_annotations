@@ -8,10 +8,7 @@ part of 'generic_model.dart';
 
 extension $GenericModelExtension<T> on GenericModel<T> {
   GenericModel<T> copyWith({T? foo, int? bar, bool barProvided = true}) {
-    return GenericModel(
-      foo: foo ?? this.foo,
-      bar: barProvided ? (bar ?? this.bar) : null,
-    );
+    return GenericModel(foo: foo ?? this.foo, bar: barProvided ? (bar ?? this.bar) : null);
   }
 }
 
