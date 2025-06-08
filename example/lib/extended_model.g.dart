@@ -6,8 +6,14 @@ part of 'extended_model.dart';
 // MyoroModelGenerator
 // **************************************************************************
 
-extension _$ExtendedModelExtension on ExtendedModel {
-  // ignore: unused_element
+/// Apply this mixin to [ExtendedModel] once the code is generated.
+///
+/// ```dart
+/// class ExtendedModel with _$ExtendedModelMixin {}
+/// ```
+mixin _$ExtendedModelMixin {
+  ExtendedModel get self => this as ExtendedModel;
+
   ExtendedModel copyWith({
     int? buzz,
     String? light,
@@ -17,21 +23,12 @@ extension _$ExtendedModelExtension on ExtendedModel {
     bool barProvided = true,
   }) {
     return ExtendedModel(
-      foo: foo ?? this.foo,
-      bar: barProvided ? (bar ?? this.bar) : null,
-      buzz: buzz ?? this.buzz,
-      light: lightProvided ? (light ?? this.light) : null,
+      foo: foo ?? self.foo,
+      bar: barProvided ? (bar ?? self.bar) : null,
+      buzz: buzz ?? self.buzz,
+      light: lightProvided ? (light ?? self.light) : null,
     );
   }
-}
-
-/// Apply this mixin to [ExtendedModel] once the code is generated.
-///
-/// ```dart
-/// class ExtendedModel with _$ExtendedModelMixin {}
-/// ```
-mixin _$ExtendedModelMixin {
-  ExtendedModel get self => this as ExtendedModel;
 
   @override
   bool operator ==(Object other) {

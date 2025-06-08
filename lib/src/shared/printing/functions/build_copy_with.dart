@@ -13,20 +13,16 @@ void buildCopyWith(StringBuffer buffer, ClassElement element, {bool isThemeExten
   if (unnamedConstructor == null) throw _invalidConstructorAssertion(element);
 
   // Start the function.
-  isThemeExtension ? buffer.writeln('@override') : buffer.writeln('// ignore: unused_element');
+  if (isThemeExtension) buffer.writeln('@override');
 
-  if (fields.isEmpty) {
-    _emptyFieldsCase(buffer, element, isThemeExtension);
-  } else {
-    _nonEmptyFieldsCase(buffer, element, fields, isThemeExtension);
-  }
+  fields.isEmpty
+      ? _emptyFieldsCase(buffer, element, isThemeExtension)
+      : _nonEmptyFieldsCase(buffer, element, fields, isThemeExtension);
 }
-
-String thisOrSelf(bool isThemeExtension) => isThemeExtension ? 'self' : 'this';
 
 void _emptyFieldsCase(StringBuffer buffer, ClassElement element, bool isThemeExtension) {
   buffer.writeln('${element.nameWithTypeParameters} copyWith() {');
-  buffer.writeln('return ${thisOrSelf(isThemeExtension)};');
+  buffer.writeln('return self;');
   buffer.writeln('}');
 }
 
@@ -59,12 +55,10 @@ void _nonEmptyFieldsCase(StringBuffer buffer, ClassElement element, List<FieldEl
     );
     final fieldType = field.type.nullabilitySuffix;
     if (fieldType == NullabilitySuffix.none) {
-      buffer.writeln('$parameterName: $parameterName ?? ${thisOrSelf(isThemeExtension)}.$parameterName,');
+      buffer.writeln('$parameterName: $parameterName ?? self.$parameterName,');
     }
     if (fieldType == NullabilitySuffix.question) {
-      buffer.writeln(
-        '$parameterName: ${parameterName}Provided ? ($parameterName ?? ${thisOrSelf(isThemeExtension)}.$parameterName) : null,',
-      );
+      buffer.writeln('$parameterName: ${parameterName}Provided ? ($parameterName ?? self.$parameterName) : null,');
     }
   }
   buffer.writeln(');');

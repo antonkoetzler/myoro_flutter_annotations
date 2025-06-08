@@ -2,16 +2,6 @@ import 'package:myoro_flutter_annotations/src/exports.dart';
 import 'package:source_gen_test/source_gen_test.dart';
 
 @ShouldGenerate(r'''
-extension _$FooExtension on Foo {
-  // ignore: unused_element
-  Foo copyWith({int? bar, String? baz, bool bazProvided = true}) {
-    return Foo(
-      bar: bar ?? this.bar,
-      baz: bazProvided ? (baz ?? this.baz) : null,
-    );
-  }
-}
-
 /// Apply this mixin to [Foo] once the code is generated.
 ///
 /// ```dart
@@ -19,6 +9,13 @@ extension _$FooExtension on Foo {
 /// ```
 mixin _$FooMixin {
   Foo get self => this as Foo;
+
+  Foo copyWith({int? bar, String? baz, bool bazProvided = true}) {
+    return Foo(
+      bar: bar ?? self.bar,
+      baz: bazProvided ? (baz ?? self.baz) : null,
+    );
+  }
 
   @override
   bool operator ==(Object other) {

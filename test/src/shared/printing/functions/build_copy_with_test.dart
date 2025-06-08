@@ -76,13 +76,12 @@ void main() {
     final buffer = StringBuffer();
     final element = MockClassElement(unnamedConstructor: MockConstructorElement());
     final isThemeExtension = faker.randomGenerator.boolean();
-    final thisOrSelf = isThemeExtension ? 'self' : 'this';
 
     buildCopyWith(buffer, element, isThemeExtension: isThemeExtension);
 
     expect(buffer.toString(), '''
-${isThemeExtension ? '@override' : '// ignore: unused_element'}\n${element.nameWithTypeParameters} copyWith() {
-return $thisOrSelf;
+${isThemeExtension ? '@override\n' : ''}${element.nameWithTypeParameters} copyWith() {
+return self;
 }
 ''');
   });
@@ -101,19 +100,18 @@ return $thisOrSelf;
       fields: [nonNullField, nullField],
     );
     final isThemeExtension = faker.randomGenerator.boolean();
-    final thisOrSelf = isThemeExtension ? 'self' : 'this';
 
     buildCopyWith(buffer, element, isThemeExtension: isThemeExtension);
 
     expect(buffer.toString(), '''
-${isThemeExtension ? '@override' : '// ignore: unused_element'}\n${element.nameWithTypeParameters} copyWith({
+${isThemeExtension ? '@override\n' : ''}${element.nameWithTypeParameters} copyWith({
 ${nonNullField.type.getDisplayString(withNullability: true)}? ${nonNullField.name},
 ${nullField.type.getDisplayString(withNullability: true)} ${nullField.name},
 bool ${nullField.name}Provided = true,
 }) {
 return ${element.name}(
-${nonNullField.name}: ${nonNullField.name} ?? $thisOrSelf.${nonNullField.name},
-${nullField.name}: ${nullField.name}Provided ? (${nullField.name} ?? $thisOrSelf.${nullField.name}) : null,
+${nonNullField.name}: ${nonNullField.name} ?? self.${nonNullField.name},
+${nullField.name}: ${nullField.name}Provided ? (${nullField.name} ?? self.${nullField.name}) : null,
 );
 }
 ''');

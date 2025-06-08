@@ -6,13 +6,6 @@ part of 'generic_model.dart';
 // MyoroModelGenerator
 // **************************************************************************
 
-extension _$GenericModelExtension<T> on GenericModel<T> {
-  // ignore: unused_element
-  GenericModel<T> copyWith({T? foo, int? bar, bool barProvided = true}) {
-    return GenericModel(foo: foo ?? this.foo, bar: barProvided ? (bar ?? this.bar) : null);
-  }
-}
-
 /// Apply this mixin to [GenericModel] once the code is generated.
 ///
 /// ```dart
@@ -20,6 +13,10 @@ extension _$GenericModelExtension<T> on GenericModel<T> {
 /// ```
 mixin _$GenericModelMixin<T> {
   GenericModel<T> get self => this as GenericModel<T>;
+
+  GenericModel<T> copyWith({T? foo, int? bar, bool barProvided = true}) {
+    return GenericModel(foo: foo ?? self.foo, bar: barProvided ? (bar ?? self.bar) : null);
+  }
 
   @override
   bool operator ==(Object other) {

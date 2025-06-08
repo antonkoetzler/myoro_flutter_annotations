@@ -19,9 +19,8 @@ final class MyoroModelGenerator extends GeneratorForAnnotation<MyoroModel> {
 
     final buffer = StringBuffer();
 
-    buildExtension(buffer, element, () => buildCopyWith(buffer, element));
-
     buildMixin(buffer, element, () {
+      buildCopyWith(buffer, element);
       buildEqualityOperator(buffer, element);
       buildHashCode(buffer, element);
       buildToString(buffer, element);
