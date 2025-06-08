@@ -3,7 +3,7 @@ import 'package:myoro_flutter_annotations/src/shared/exports.dart';
 
 /// Builds a mixin of a class.
 void buildMixin(StringBuffer buffer, ClassElement element, void Function() body, {String? onClass}) {
-  final mixinName = '\$${element.name}Mixin${element.formattedTypeParameters}';
+  final mixinName = '_\$${element.name}Mixin${element.formattedTypeParameters}';
   buffer
     ..writeln('/// Apply this mixin to [${element.name}] once the code is generated.')
     ..writeln('///')

@@ -9,9 +9,9 @@ part of 'test_theme_extension.dart';
 /// Apply this mixin to [TestThemeExtension] once the code is generated.
 ///
 /// ```dart
-/// class TestThemeExtension with $TestThemeExtensionMixin {}
+/// class TestThemeExtension with _$TestThemeExtensionMixin {}
 /// ```
-mixin $TestThemeExtensionMixin on ThemeExtension<TestThemeExtension> {
+mixin _$TestThemeExtensionMixin on ThemeExtension<TestThemeExtension> {
   TestThemeExtension get self => this as TestThemeExtension;
 
   @override

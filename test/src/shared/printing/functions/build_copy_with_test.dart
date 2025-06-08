@@ -81,7 +81,7 @@ void main() {
     buildCopyWith(buffer, element, isThemeExtension: isThemeExtension);
 
     expect(buffer.toString(), '''
-${isThemeExtension ? '@override\n' : ''}${element.nameWithTypeParameters} copyWith() {
+${isThemeExtension ? '@override' : '// ignore: unused_element'}\n${element.nameWithTypeParameters} copyWith() {
 return $thisOrSelf;
 }
 ''');
@@ -106,7 +106,7 @@ return $thisOrSelf;
     buildCopyWith(buffer, element, isThemeExtension: isThemeExtension);
 
     expect(buffer.toString(), '''
-${isThemeExtension ? '@override\n' : ''}${element.nameWithTypeParameters} copyWith({
+${isThemeExtension ? '@override' : '// ignore: unused_element'}\n${element.nameWithTypeParameters} copyWith({
 ${nonNullField.type.getDisplayString(withNullability: true)}? ${nonNullField.name},
 ${nullField.type.getDisplayString(withNullability: true)} ${nullField.name},
 bool ${nullField.name}Provided = true,

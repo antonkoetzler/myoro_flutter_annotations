@@ -4,7 +4,7 @@ part 'abstract_model.dart';
 part 'extended_model.g.dart';
 
 @myoroModel
-final class ExtendedModel extends AbstractModel {
+final class ExtendedModel extends AbstractModel with _$ExtendedModelMixin {
   const ExtendedModel({required super.foo, super.bar, required this.buzz, this.light});
 
   final int buzz;

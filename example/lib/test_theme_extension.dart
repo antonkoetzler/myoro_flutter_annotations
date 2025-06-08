@@ -6,7 +6,7 @@ import 'package:myoro_flutter_annotations/myoro_flutter_annotations.dart';
 part 'test_theme_extension.g.dart';
 
 @myoroThemeExtension
-final class TestThemeExtension extends ThemeExtension<TestThemeExtension> with $TestThemeExtensionMixin {
+final class TestThemeExtension extends ThemeExtension<TestThemeExtension> with _$TestThemeExtensionMixin {
   const TestThemeExtension({required this.spacing, required this.padding});
 
   final double spacing;

@@ -9,7 +9,7 @@ void main() {
 
   final buffer = StringBuffer();
   final element = MockClassElement();
-  final mixinName = '\$${element.name}Mixin${element.formattedTypeParameters}';
+  final mixinName = '_\$${element.name}Mixin${element.formattedTypeParameters}';
 
   void testMixin([String? onClass]) {
     buildMixin(buffer..clear(), element, () => buffer.writeln(bodyText), onClass: onClass);

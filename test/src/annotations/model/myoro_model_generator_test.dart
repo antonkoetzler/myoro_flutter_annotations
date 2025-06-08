@@ -2,7 +2,8 @@ import 'package:myoro_flutter_annotations/src/exports.dart';
 import 'package:source_gen_test/source_gen_test.dart';
 
 @ShouldGenerate(r'''
-extension $FooExtension on Foo {
+extension _$FooExtension on Foo {
+  // ignore: unused_element
   Foo copyWith({int? bar, String? baz, bool bazProvided = true}) {
     return Foo(
       bar: bar ?? this.bar,
@@ -14,9 +15,9 @@ extension $FooExtension on Foo {
 /// Apply this mixin to [Foo] once the code is generated.
 ///
 /// ```dart
-/// class Foo with $FooMixin {}
+/// class Foo with _$FooMixin {}
 /// ```
-mixin $FooMixin {
+mixin _$FooMixin {
   Foo get self => this as Foo;
 
   @override

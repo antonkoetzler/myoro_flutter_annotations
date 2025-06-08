@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.1.2
+
+- improvement: Make generated extensions and mixins private
+
 ## 1.1.1
 
 - Fix deploy script to format when deploying

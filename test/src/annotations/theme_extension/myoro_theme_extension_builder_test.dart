@@ -25,7 +25,7 @@ void main() {
         part 'foo_theme_extension.myoro_theme_extension.g.dart';
 
         @myoroThemeExtension
-        class FooThemeExtension extends ThemeExtension<FooThemeExtension> with \$FooThemeExtensionMixin {
+        class FooThemeExtension extends ThemeExtension<FooThemeExtension> with _\$FooThemeExtensionMixin {
           final dynamic foo;
 
           const FooThemeExtension({this.foo});
@@ -37,7 +37,7 @@ void main() {
       'myoro_flutter_annotations|lib/src/foo_theme_extension.myoro_theme_extension.g.part': decodedMatches(
         allOf([
           contains('FooThemeExtension copyWith({'),
-          contains('mixin \$FooThemeExtensionMixin'),
+          contains('mixin _\$FooThemeExtensionMixin'),
           contains('bool operator ==(Object other)'),
           contains('int get hashCode'),
         ]),

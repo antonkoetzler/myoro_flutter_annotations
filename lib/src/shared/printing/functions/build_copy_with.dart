@@ -13,7 +13,7 @@ void buildCopyWith(StringBuffer buffer, ClassElement element, {bool isThemeExten
   if (unnamedConstructor == null) throw _invalidConstructorAssertion(element);
 
   // Start the function.
-  if (isThemeExtension) buffer.writeln('@override');
+  isThemeExtension ? buffer.writeln('@override') : buffer.writeln('// ignore: unused_element');
 
   if (fields.isEmpty) {
     _emptyFieldsCase(buffer, element, isThemeExtension);

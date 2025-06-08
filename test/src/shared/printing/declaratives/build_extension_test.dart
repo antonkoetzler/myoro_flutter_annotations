@@ -14,7 +14,7 @@ void main() {
     buildExtension(buffer, element, () => buffer.writeln(bodyText));
 
     expect(buffer.toString(), '''
-extension \$${element.name}Extension$formattedTypeParameters on ${element.nameWithTypeParameters} {
+extension _\$${element.name}Extension$formattedTypeParameters on ${element.nameWithTypeParameters} {
 $bodyText
 }
 ''');

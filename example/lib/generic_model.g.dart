@@ -6,7 +6,8 @@ part of 'generic_model.dart';
 // MyoroModelGenerator
 // **************************************************************************
 
-extension $GenericModelExtension<T> on GenericModel<T> {
+extension _$GenericModelExtension<T> on GenericModel<T> {
+  // ignore: unused_element
   GenericModel<T> copyWith({T? foo, int? bar, bool barProvided = true}) {
     return GenericModel(foo: foo ?? this.foo, bar: barProvided ? (bar ?? this.bar) : null);
   }
@@ -15,9 +16,9 @@ extension $GenericModelExtension<T> on GenericModel<T> {
 /// Apply this mixin to [GenericModel] once the code is generated.
 ///
 /// ```dart
-/// class GenericModel<T> with $GenericModelMixin<T> {}
+/// class GenericModel<T> with _$GenericModelMixin<T> {}
 /// ```
-mixin $GenericModelMixin<T> {
+mixin _$GenericModelMixin<T> {
   GenericModel<T> get self => this as GenericModel<T>;
 
   @override

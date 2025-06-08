@@ -6,7 +6,8 @@ part of 'test_model.dart';
 // MyoroModelGenerator
 // **************************************************************************
 
-extension $TestModelExtension on TestModel {
+extension _$TestModelExtension on TestModel {
+  // ignore: unused_element
   TestModel copyWith({String? foo, int? bar, bool barProvided = true}) {
     return TestModel(foo: foo ?? this.foo, bar: barProvided ? (bar ?? this.bar) : null);
   }
@@ -15,9 +16,9 @@ extension $TestModelExtension on TestModel {
 /// Apply this mixin to [TestModel] once the code is generated.
 ///
 /// ```dart
-/// class TestModel with $TestModelMixin {}
+/// class TestModel with _$TestModelMixin {}
 /// ```
-mixin $TestModelMixin {
+mixin _$TestModelMixin {
   TestModel get self => this as TestModel;
 
   @override

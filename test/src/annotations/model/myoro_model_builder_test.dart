@@ -25,7 +25,7 @@ void main() {
         part 'foo.myoro_model.g.dart';
 
         @myoroModel
-        class Foo with \$FooMixin {
+        class Foo with _\$FooMixin {
           final dynamic foo;
 
           const Foo({this.foo});
@@ -37,7 +37,7 @@ void main() {
       'myoro_flutter_annotations|lib/src/foo.myoro_model.g.part': decodedMatches(
         allOf([
           contains('Foo copyWith({'),
-          contains('mixin \$FooMixin'),
+          contains('mixin _\$FooMixin'),
           contains('bool operator ==(Object other)'),
           contains('int get hashCode'),
         ]),

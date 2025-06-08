@@ -6,7 +6,8 @@ part of 'extended_model.dart';
 // MyoroModelGenerator
 // **************************************************************************
 
-extension $ExtendedModelExtension on ExtendedModel {
+extension _$ExtendedModelExtension on ExtendedModel {
+  // ignore: unused_element
   ExtendedModel copyWith({
     int? buzz,
     String? light,
@@ -27,9 +28,9 @@ extension $ExtendedModelExtension on ExtendedModel {
 /// Apply this mixin to [ExtendedModel] once the code is generated.
 ///
 /// ```dart
-/// class ExtendedModel with $ExtendedModelMixin {}
+/// class ExtendedModel with _$ExtendedModelMixin {}
 /// ```
-mixin $ExtendedModelMixin {
+mixin _$ExtendedModelMixin {
   ExtendedModel get self => this as ExtendedModel;
 
   @override
