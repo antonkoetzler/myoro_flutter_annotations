@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.2.1
+
+- fix: `buildHashCode` # of fields to use `Object.hash` or `Object.hashAll`
+
 ## 1.2.0
 
 - chore: Upgrade dependencies and fix what broke

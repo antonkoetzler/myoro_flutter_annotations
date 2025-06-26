@@ -12,7 +12,7 @@ void buildHashCode(StringBuffer buffer, ClassElement element) {
   // Start the return statement.
   if (fields.isEmpty) {
     buffer.writeln('return Object.hashAll(const []);');
-  } else if (fields.length == 1 || fields.length == 20) {
+  } else if (fields.length == 1 || fields.length > 20) {
     buffer.writeln('return Object.hashAll([');
     _writeFields(buffer, fields);
     buffer.writeln(']);');
