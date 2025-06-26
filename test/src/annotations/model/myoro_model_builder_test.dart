@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:build/build.dart';
 import 'package:build_test/build_test.dart';
+import 'package:logging/logging.dart';
 import 'package:myoro_flutter_annotations/src/annotations/exports.dart';
-import 'package:source_gen/source_gen.dart';
 import 'package:test/test.dart';
 
 final _baseAssets = {
@@ -44,12 +44,7 @@ void main() {
       ),
     };
 
-    await testBuilder(
-      myoroModelBuilder(BuilderOptions({})),
-      sourceAssets,
-      outputs: expectedOutput,
-      reader: InMemoryAssetReader(),
-    );
+    await testBuilder(myoroModelBuilder(BuilderOptions({})), sourceAssets, outputs: expectedOutput);
   });
 
   test('MyoroModel annotation throws error on non-class elements', () async {
@@ -57,15 +52,25 @@ void main() {
       ..._baseAssets,
       'myoro_flutter_annotations|lib/src/my_function.dart': '''
         import 'package:myoro_flutter_annotations/src/annotations/model/myoro_model.dart';
-        
+
         @myoroModel
         void foo() {}
       ''',
     };
 
-    expectLater(
-      () async => await testBuilder(myoroModelBuilder(BuilderOptions({})), sourceAssets),
-      throwsA(isA<InvalidGenerationSourceError>()),
+    bool errorTriggered = false;
+    const errorMessage =
+        '[MyoroModelGenerator.generateForAnnotatedElement]: MyoroModel can only be applied to classes.';
+
+    await testBuilder(
+      myoroModelBuilder(BuilderOptions({})),
+      sourceAssets,
+      onLog: (logRecord) {
+        if (errorTriggered) return;
+        errorTriggered = logRecord.level == Level.SEVERE && logRecord.message.contains(errorMessage);
+      },
     );
+
+    expect(errorTriggered, isTrue);
   });
 }

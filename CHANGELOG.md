@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.2.0
+
+- chore: Upgrade dependencies and fix what broke
+
 ## 1.1.3
 
 - refactor: Remove extensions and only use mixins

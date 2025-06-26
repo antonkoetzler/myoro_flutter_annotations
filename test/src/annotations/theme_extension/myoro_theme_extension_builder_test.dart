@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:build/build.dart';
 import 'package:build_test/build_test.dart';
+import 'package:logging/logging.dart';
 import 'package:myoro_flutter_annotations/src/exports.dart';
-import 'package:source_gen/source_gen.dart';
 import 'package:test/test.dart';
 
 final _baseAssets = {
@@ -44,12 +44,7 @@ void main() {
       ),
     };
 
-    await testBuilder(
-      myoroThemeExtensionBuilder(BuilderOptions({})),
-      sourceAssets,
-      outputs: expectedOutput,
-      reader: InMemoryAssetReader(),
-    );
+    await testBuilder(myoroThemeExtensionBuilder(BuilderOptions({})), sourceAssets, outputs: expectedOutput);
   });
 
   test('MyoroThemeExtension annotation throws error on non-class elements', () async {
@@ -63,9 +58,19 @@ void main() {
       ''',
     };
 
-    expectLater(
-      () async => await testBuilder(myoroThemeExtensionBuilder(BuilderOptions({})), sourceAssets),
-      throwsA(isA<InvalidGenerationSourceError>()),
+    bool errorTriggered = false;
+    const errorMessage =
+        '[MyoroModelGenerator.generateForAnnotatedElement]: [MyoroThemeExtension] can only be applied to classes.';
+
+    await testBuilder(
+      myoroThemeExtensionBuilder(BuilderOptions({})),
+      sourceAssets,
+      onLog: (logRecord) {
+        if (errorTriggered) return;
+        errorTriggered = logRecord.level == Level.SEVERE && logRecord.message.contains(errorMessage);
+      },
     );
+
+    expect(errorTriggered, isTrue);
   });
 }
