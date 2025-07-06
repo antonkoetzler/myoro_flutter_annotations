@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.2.2
+
+- chore: Added some more notes in `README.md`
+
 ## 1.2.1
 
 - fix: `buildHashCode` # of fields to use `Object.hash` or `Object.hashAll`
