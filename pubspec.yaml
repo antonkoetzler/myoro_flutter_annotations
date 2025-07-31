@@ -20,6 +20,7 @@ dependencies:
   build: ^2.4.2
   dart_style: ^3.1.0
   pub_semver: ^2.2.0
+  collection: ^1.19.1
 
 dev_dependencies:
   lints: ^6.0.0

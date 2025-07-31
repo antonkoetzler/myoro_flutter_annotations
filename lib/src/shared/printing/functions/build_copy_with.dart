@@ -1,5 +1,6 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/nullability_suffix.dart';
+import 'package:collection/collection.dart';
 import 'package:myoro_flutter_annotations/src/exports.dart';
 import 'package:myoro_flutter_annotations/src/shared/exports.dart';
 import 'package:source_gen/source_gen.dart';
@@ -49,16 +50,15 @@ void _nonEmptyFieldsCase(StringBuffer buffer, ClassElement element, List<FieldEl
   for (final parameter in unnamedConstructorParameters) {
     final parameterName = parameter.name;
 
-    final field = fields.firstWhere(
-      (f) => f.name == parameterName,
-      orElse: () => throw _invalidConstructorParameterAssertion(element, parameter),
-    );
-    final fieldType = field.type.nullabilitySuffix;
-    if (fieldType == NullabilitySuffix.none) {
-      buffer.writeln('$parameterName: $parameterName ?? self.$parameterName,');
-    }
-    if (fieldType == NullabilitySuffix.question) {
-      buffer.writeln('$parameterName: ${parameterName}Provided ? ($parameterName ?? self.$parameterName) : null,');
+    final field = fields.firstWhereOrNull((f) => f.name == parameterName);
+    if (field != null) {
+      final fieldType = field.type.nullabilitySuffix;
+      if (fieldType == NullabilitySuffix.none) {
+        buffer.writeln('$parameterName: $parameterName ?? self.$parameterName,');
+      }
+      if (fieldType == NullabilitySuffix.question) {
+        buffer.writeln('$parameterName: ${parameterName}Provided ? ($parameterName ?? self.$parameterName) : null,');
+      }
     }
   }
   buffer.writeln(');');
@@ -74,12 +74,4 @@ InvalidGenerationSourceError _invalidConstructorAssertion(ClassElement element) 
 
 AssertionError _starNullabilitySuffixAssertion() {
   return AssertionError('[buildCopyWith]: Legacy Dart syntax is not supported.');
-}
-
-InvalidGenerationSourceError _invalidConstructorParameterAssertion(ClassElement element, ParameterElement parameter) {
-  return InvalidGenerationSourceError(
-    '[buildCopyWith]: Field for constructor parameter "${parameter.name}" not found in '
-    'class "${element.name}". Ensure all constructor parameters have corresponding fields.',
-    element: parameter,
-  );
 }
