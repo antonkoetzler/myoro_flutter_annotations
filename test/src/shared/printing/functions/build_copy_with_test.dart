@@ -28,27 +28,6 @@ void main() {
     );
   });
 
-  test('buildCopyWith: unnamedConstructor with arguments that do not match field\'s names error case', () {
-    final element = MockClassElement(
-      unnamedConstructor: MockConstructorElement(parameters: [MockParameterElement(name: 'bar')]),
-      fields: [MockFieldElement(name: 'foo')],
-    );
-    final parameterName = element.unnamedConstructor!.parameters.first.name;
-
-    expect(
-      () => buildCopyWith(StringBuffer(), element),
-      throwsA(
-        isA<InvalidGenerationSourceError>().having(
-          (e) => e.message,
-          'Parameter message',
-          contains(
-            '[buildCopyWith]: Field for constructor parameter "$parameterName" not found in class "${element.name}". Ensure all constructor parameters have corresponding fields.',
-          ),
-        ),
-      ),
-    );
-  });
-
   test('buildCopyWith: [NullabilitySuffix.star] field error case', () {
     final element = MockClassElement(
       unnamedConstructor: MockConstructorElement(parameters: [MockParameterElement(name: 'foo')]),

@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.2.3
+
+- fix: Fix error caused when building `copyWith` function with a constructor argument that is not a field
+
 ## 1.2.2
 
 - chore: Added some more notes in `README.md`
