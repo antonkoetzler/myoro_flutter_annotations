@@ -14,8 +14,8 @@ part of 'generic_model.dart';
 mixin _$GenericModelMixin<T> {
   GenericModel<T> get self => this as GenericModel<T>;
 
-  GenericModel<T> copyWith({T? foo, int? bar, bool barProvided = true}) {
-    return GenericModel(foo: foo ?? self.foo, bar: barProvided ? (bar ?? self.bar) : null);
+  GenericModel<T> copyWith({required void Function() callback, T? foo, int? bar, bool barProvided = true}) {
+    return GenericModel(callback: callback, foo: foo ?? self.foo, bar: barProvided ? (bar ?? self.bar) : null);
   }
 
   @override

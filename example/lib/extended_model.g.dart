@@ -15,12 +15,12 @@ mixin _$ExtendedModelMixin {
   ExtendedModel get self => this as ExtendedModel;
 
   ExtendedModel copyWith({
-    int? buzz,
-    String? light,
-    bool lightProvided = true,
     int? foo,
     String? bar,
     bool barProvided = true,
+    int? buzz,
+    String? light,
+    bool lightProvided = true,
   }) {
     return ExtendedModel(
       foo: foo ?? self.foo,

@@ -67,11 +67,13 @@ return self;
 
   test('buildCopyWith: Class with multiple fields success case', () {
     final buffer = StringBuffer();
+    final parameterWithoutField = MockParameterElement();
     final nonNullField = MockFieldElement();
     final nullField = MockFieldElement(type: MockDartType(nullabilitySuffix: NullabilitySuffix.question));
     final element = MockClassElement(
       unnamedConstructor: MockConstructorElement(
         parameters: [
+          parameterWithoutField,
           MockParameterElement(name: nonNullField.name),
           MockParameterElement(name: nullField.name),
         ],
@@ -84,11 +86,13 @@ return self;
 
     expect(buffer.toString(), '''
 ${isThemeExtension ? '@override\n' : ''}${element.nameWithTypeParameters} copyWith({
+${parameterWithoutField.isRequired ? 'required ' : ''}${parameterWithoutField.type.getDisplayString(withNullability: true)} ${parameterWithoutField.name},
 ${nonNullField.type.getDisplayString(withNullability: true)}? ${nonNullField.name},
 ${nullField.type.getDisplayString(withNullability: true)} ${nullField.name},
 bool ${nullField.name}Provided = true,
 }) {
 return ${element.name}(
+${parameterWithoutField.name}: ${parameterWithoutField.name},
 ${nonNullField.name}: ${nonNullField.name} ?? self.${nonNullField.name},
 ${nullField.name}: ${nullField.name}Provided ? (${nullField.name} ?? self.${nullField.name}) : null,
 );

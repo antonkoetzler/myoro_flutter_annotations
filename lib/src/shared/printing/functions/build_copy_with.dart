@@ -11,67 +11,73 @@ void buildCopyWith(StringBuffer buffer, ClassElement element, {bool isThemeExten
   final fields = element.mergedFields.where((field) => !field.isStatic && !field.isSynthetic).toList();
 
   // Assert that an unnamed constructor exists
-  if (unnamedConstructor == null) throw _invalidConstructorAssertion(element);
+  if (unnamedConstructor == null) {
+    throw InvalidGenerationSourceError(
+      '[buildCopyWith]: Class ${element.nameWithTypeParameters} must have an unnamed constructor to generate copyWith.',
+      element: element,
+    );
+  }
 
   // Start the function.
   if (isThemeExtension) buffer.writeln('@override');
 
-  fields.isEmpty
-      ? _emptyFieldsCase(buffer, element, isThemeExtension)
-      : _nonEmptyFieldsCase(buffer, element, fields, isThemeExtension);
+  fields.isEmpty ? _emptyFieldsCase(buffer, element) : _nonEmptyFieldsCase(buffer, element, fields);
 }
 
-void _emptyFieldsCase(StringBuffer buffer, ClassElement element, bool isThemeExtension) {
+void _emptyFieldsCase(StringBuffer buffer, ClassElement element) {
   buffer.writeln('${element.nameWithTypeParameters} copyWith() {');
   buffer.writeln('return self;');
   buffer.writeln('}');
 }
 
-void _nonEmptyFieldsCase(StringBuffer buffer, ClassElement element, List<FieldElement> fields, bool isThemeExtension) {
-  buffer.writeln('${element.nameWithTypeParameters} copyWith({');
-  for (final field in fields) {
-    final fieldType = field.type.getDisplayString(withNullability: true);
-    final fieldName = field.name;
-    switch (field.type.nullabilitySuffix) {
-      case NullabilitySuffix.star:
-        throw _starNullabilitySuffixAssertion();
-      case NullabilitySuffix.question:
-        buffer.writeln('$fieldType $fieldName,');
-        buffer.writeln('bool ${fieldName}Provided = true,');
-      case NullabilitySuffix.none:
-        buffer.writeln('$fieldType? $fieldName,');
-    }
-  }
-  buffer.writeln('}) {');
+void _nonEmptyFieldsCase(StringBuffer buffer, ClassElement element, List<FieldElement> fields) {
+  final functionArgumentStringBuffer = StringBuffer();
+  final functionReturnStringBuffer = StringBuffer();
 
-  // Start of the return statement.
-  buffer.writeln('return ${element.name}(');
-  final unnamedConstructorParameters = element.unnamedConstructor!.parameters;
-  for (final parameter in unnamedConstructorParameters) {
-    final parameterName = parameter.name;
+  for (final parameter in element.unnamedConstructor!.parameters) {
+    final field = fields.firstWhereOrNull((f) => f.name == parameter.name);
 
-    final field = fields.firstWhereOrNull((f) => f.name == parameterName);
+    // Build function args
     if (field != null) {
-      final fieldType = field.type.nullabilitySuffix;
-      if (fieldType == NullabilitySuffix.none) {
-        buffer.writeln('$parameterName: $parameterName ?? self.$parameterName,');
+      final fieldType = field.type.getDisplayString(withNullability: true);
+      final fieldName = field.name;
+      switch (field.type.nullabilitySuffix) {
+        case NullabilitySuffix.star:
+          throw AssertionError('[buildCopyWith]: Legacy Dart syntax is not supported.');
+        case NullabilitySuffix.question:
+          functionArgumentStringBuffer.writeln('$fieldType $fieldName,');
+          functionArgumentStringBuffer.writeln('bool ${fieldName}Provided = true,');
+        case NullabilitySuffix.none:
+          functionArgumentStringBuffer.writeln('$fieldType? $fieldName,');
       }
-      if (fieldType == NullabilitySuffix.question) {
-        buffer.writeln('$parameterName: ${parameterName}Provided ? ($parameterName ?? self.$parameterName) : null,');
+
+      // Return args
+      switch (field.type.nullabilitySuffix) {
+        case NullabilitySuffix.none:
+          functionReturnStringBuffer.writeln('$fieldName: $fieldName ?? self.$fieldName,');
+          break;
+        case NullabilitySuffix.question:
+          functionReturnStringBuffer.writeln(
+            '$fieldName: ${fieldName}Provided ? ($fieldName ?? self.$fieldName) : null,',
+          );
+          break;
+        default:
+          break;
       }
+    } else {
+      final parameterType = parameter.type.getDisplayString(withNullability: true);
+      final parameterName = parameter.name;
+      final parameterIsRequired = parameter.isRequired;
+      functionArgumentStringBuffer.writeln('${parameterIsRequired ? 'required ' : ''}$parameterType $parameterName,');
+      functionReturnStringBuffer.writeln('$parameterName: $parameterName,');
     }
   }
+
+  buffer.writeln('${element.nameWithTypeParameters} copyWith({');
+  buffer.write(functionArgumentStringBuffer.toString());
+  buffer.writeln('}) {');
+  buffer.writeln('return ${element.name}(');
+  buffer.write(functionReturnStringBuffer.toString());
   buffer.writeln(');');
   buffer.writeln('}');
-}
-
-InvalidGenerationSourceError _invalidConstructorAssertion(ClassElement element) {
-  return InvalidGenerationSourceError(
-    '[buildCopyWith]: Class ${element.nameWithTypeParameters} must have an unnamed constructor to generate copyWith.',
-    element: element,
-  );
-}
-
-AssertionError _starNullabilitySuffixAssertion() {
-  return AssertionError('[buildCopyWith]: Legacy Dart syntax is not supported.');
 }

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:myoro_flutter_annotations/myoro_flutter_annotations.dart';
 
 part 'generic_model.g.dart';
@@ -7,5 +8,5 @@ final class GenericModel<T> with _$GenericModelMixin<T> {
   final T foo;
   final int? bar;
 
-  const GenericModel({required this.foo, this.bar});
+  const GenericModel({required VoidCallback callback, required this.foo, this.bar});
 }
