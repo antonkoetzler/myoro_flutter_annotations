@@ -22,12 +22,11 @@ final class FooModel with _$FooModelMixin {
 ### `@myoroThemeExtension`
 
 ```dart
-part 'test_theme_extension.g.dart'; // Add the generated file as a part directive.
+part 'test_theme_extension.g.dart';
 
-@immutable                          // Doesn't effect code generation, but models are immutable by nature, so add this annotation.
+@immutable
 @myoroThemeExtension
 final class TestThemeExtension extends ThemeExtension<TestThemeExtension> with _$TestThemeExtensionMixin {
-
 ```
 
 1. Add the generated file as a `part` directive;
