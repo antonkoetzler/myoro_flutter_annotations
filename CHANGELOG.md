@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.2.5
+
+- fix: Refine the fixes implemented in 1.2.4 and 1.2.3
+
 ## 1.2.4
 
 - fix: Refine the fix provided in 1.2.3
