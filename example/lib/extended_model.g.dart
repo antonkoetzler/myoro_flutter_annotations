@@ -14,22 +14,6 @@ part of 'extended_model.dart';
 mixin _$ExtendedModelMixin {
   ExtendedModel get self => this as ExtendedModel;
 
-  ExtendedModel copyWith({
-    int? foo,
-    String? bar,
-    bool barProvided = true,
-    int? buzz,
-    String? light,
-    bool lightProvided = true,
-  }) {
-    return ExtendedModel(
-      foo: foo ?? self.foo,
-      bar: barProvided ? (bar ?? self.bar) : null,
-      buzz: buzz ?? self.buzz,
-      light: lightProvided ? (light ?? self.light) : null,
-    );
-  }
-
   @override
   bool operator ==(Object other) {
     return other is ExtendedModel &&
@@ -53,4 +37,23 @@ mixin _$ExtendedModelMixin {
       '  foo: ${self.foo},\n'
       '  bar: ${self.bar},\n'
       ');';
+}
+
+/// Extension class for @myoroModel to place the copyWith function.
+extension $ExtendedModelExtension on ExtendedModel {
+  ExtendedModel copyWith({
+    int? foo,
+    String? bar,
+    bool barProvided = true,
+    int? buzz,
+    String? light,
+    bool lightProvided = true,
+  }) {
+    return ExtendedModel(
+      foo: foo ?? self.foo,
+      bar: barProvided ? (bar ?? self.bar) : null,
+      buzz: buzz ?? self.buzz,
+      light: lightProvided ? (light ?? self.light) : null,
+    );
+  }
 }

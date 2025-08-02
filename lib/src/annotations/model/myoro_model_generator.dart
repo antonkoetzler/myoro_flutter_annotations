@@ -20,10 +20,13 @@ final class MyoroModelGenerator extends GeneratorForAnnotation<MyoroModel> {
     final buffer = StringBuffer();
 
     buildMixin(buffer, element, () {
-      buildCopyWith(buffer, element);
       buildEqualityOperator(buffer, element);
       buildHashCode(buffer, element);
       buildToString(buffer, element);
+    });
+
+    buildExtension(buffer, element, () {
+      buildCopyWith(buffer, element, isThemeExtension: false);
     });
 
     return formatter.format(buffer.toString());

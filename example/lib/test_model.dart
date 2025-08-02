@@ -1,7 +1,9 @@
+import 'package:flutter/foundation.dart';
 import 'package:myoro_flutter_annotations/myoro_flutter_annotations.dart';
 
 part 'test_model.g.dart';
 
+@immutable
 @myoroModel
 final class TestModel with _$TestModelMixin {
   final String foo;

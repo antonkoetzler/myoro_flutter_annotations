@@ -14,13 +14,12 @@ part of 'test_model.dart';
 mixin _$TestModelMixin {
   TestModel get self => this as TestModel;
 
-  TestModel copyWith({String? foo, int? bar, bool barProvided = true}) {
-    return TestModel(foo: foo ?? self.foo, bar: barProvided ? (bar ?? self.bar) : null);
-  }
-
   @override
   bool operator ==(Object other) {
-    return other is TestModel && other.runtimeType == runtimeType && other.foo == self.foo && other.bar == self.bar;
+    return other is TestModel &&
+        other.runtimeType == runtimeType &&
+        other.foo == self.foo &&
+        other.bar == self.bar;
   }
 
   @override
@@ -34,4 +33,14 @@ mixin _$TestModelMixin {
       '  foo: ${self.foo},\n'
       '  bar: ${self.bar},\n'
       ');';
+}
+
+/// Extension class for @myoroModel to place the copyWith function.
+extension $TestModelExtension on TestModel {
+  TestModel copyWith({String? foo, int? bar, bool barProvided = true}) {
+    return TestModel(
+      foo: foo ?? self.foo,
+      bar: barProvided ? (bar ?? self.bar) : null,
+    );
+  }
 }

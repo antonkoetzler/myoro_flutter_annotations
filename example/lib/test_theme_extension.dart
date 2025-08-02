@@ -5,6 +5,7 @@ import 'package:myoro_flutter_annotations/myoro_flutter_annotations.dart';
 
 part 'test_theme_extension.g.dart';
 
+@immutable
 @myoroThemeExtension
 final class TestThemeExtension extends ThemeExtension<TestThemeExtension> with _$TestThemeExtensionMixin {
   const TestThemeExtension({required this.spacing, required this.padding});
@@ -13,7 +14,7 @@ final class TestThemeExtension extends ThemeExtension<TestThemeExtension> with _
   final double? padding;
 
   @override
-  TestThemeExtension lerp(covariant ThemeExtension<ThemeExtension>? other, double t) {
+  TestThemeExtension lerp(covariant ThemeExtension<TestThemeExtension>? other, double t) {
     if (other is! TestThemeExtension) return this;
     return copyWith(spacing: lerpDouble(spacing, other.spacing, t), padding: lerpDouble(padding, other.padding, t));
   }

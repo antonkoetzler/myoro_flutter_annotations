@@ -1,7 +1,7 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:myoro_flutter_annotations/src/shared/exports.dart';
 
-/// Builds a mixin of a class.
+/// Builds the mixin of a class.
 void buildMixin(StringBuffer buffer, ClassElement element, void Function() body, {String? onClass}) {
   final mixinName = '_\$${element.name}Mixin${element.formattedTypeParameters}';
   buffer
@@ -12,6 +12,6 @@ void buildMixin(StringBuffer buffer, ClassElement element, void Function() body,
     ..writeln('/// ```')
     ..writeln('mixin $mixinName ${onClass != null ? 'on $onClass ' : ''}{')
     ..writeln('${element.nameWithTypeParameters} get self => this as ${element.nameWithTypeParameters};\n');
-  body.call();
+  body();
   buffer.writeln('}');
 }

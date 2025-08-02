@@ -3,6 +3,7 @@ import 'package:myoro_flutter_annotations/myoro_flutter_annotations.dart';
 
 part 'generic_model.g.dart';
 
+@immutable
 @myoroModel
 final class GenericModel<T> with _$GenericModelMixin<T> {
   final T foo;
