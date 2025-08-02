@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.2.6
+
+- chore: Fix documentation mistakes
+
 ## 1.2.5
 
 - fix: Refine the fixes implemented in 1.2.4 and 1.2.3
