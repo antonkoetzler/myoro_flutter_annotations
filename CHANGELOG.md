@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.4.1
+
+- feature: Add `copyWith` back to `@myoroModel`; I understand it now
+
 ## 1.4.0
 
 - improvement: Set automatic Dart versioning when formatting the result
