@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.3.0
+
+- chore: Upgrade packages in `pubspec.yaml` in order to use (`json_serializable`)[`https://pub.dev/packages/json_serializable`] with MFA
+
 ## 1.2.6
 
 - chore: Fix documentation mistakes
