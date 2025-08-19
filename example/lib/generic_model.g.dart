@@ -16,6 +16,19 @@ part of 'generic_model.dart';
 mixin _$GenericModelMixin<T> {
   GenericModel<T> get self => this as GenericModel<T>;
 
+  GenericModel<T> copyWith({
+    T? foo,
+    int? bar,
+    bool barProvided = true,
+    required void Function() callback,
+  }) {
+    return GenericModel(
+      foo: foo ?? self.foo,
+      bar: barProvided ? (bar ?? self.bar) : null,
+      callback: callback,
+    );
+  }
+
   @override
   bool operator ==(Object other) {
     return other is GenericModel<T> &&

@@ -1,4 +1,5 @@
 import 'package:analyzer/dart/element/nullability_suffix.dart';
+import 'package:faker/faker.dart';
 import 'package:myoro_flutter_annotations/src/exports.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:test/test.dart';
@@ -14,7 +15,7 @@ void main() {
     final element = MockClassElement2();
 
     expect(
-      () => buildCopyWith(StringBuffer(), element),
+      () => buildCopyWith(StringBuffer(), element, isThemeExtension: faker.randomGenerator.boolean()),
       throwsA(
         isA<InvalidGenerationSourceError>().having(
           (e) => e.message,
@@ -39,7 +40,7 @@ void main() {
     );
 
     expect(
-      () => buildCopyWith(StringBuffer(), element),
+      () => buildCopyWith(StringBuffer(), element, isThemeExtension: faker.randomGenerator.boolean()),
       throwsA(
         isA<AssertionError>().having(
           (e) => e.message,
@@ -53,11 +54,12 @@ void main() {
   test('buildCopyWith: Class with 0 fields success case', () {
     final buffer = StringBuffer();
     final element = MockClassElement2(unnamedConstructor2: MockConstructorElement2());
+    final isThemeExtension = faker.randomGenerator.boolean();
 
-    buildCopyWith(buffer, element);
+    buildCopyWith(buffer, element, isThemeExtension: isThemeExtension);
 
     expect(buffer.toString(), '''
-@override\n${element.nameWithTypeParameters} copyWith() {
+${isThemeExtension ? '@override\n' : ''}${element.nameWithTypeParameters} copyWith() {
 return self;
 }
 ''');
@@ -78,20 +80,21 @@ return self;
       ),
       fields: [nonNullField, nullField],
     );
+    final isThemeExtension = faker.randomGenerator.boolean();
 
-    buildCopyWith(buffer, element);
+    buildCopyWith(buffer, element, isThemeExtension: isThemeExtension);
 
     expect(buffer.toString(), '''
-@override\n${element.nameWithTypeParameters} copyWith({
-${parameterWithoutField.isRequired ? 'required ' : ''}${parameterWithoutField.type.getDisplayString(withNullability: true)} ${parameterWithoutField.name3},
+${isThemeExtension ? '@override\n' : ''}${element.nameWithTypeParameters} copyWith({
 ${nonNullField.type.getDisplayString(withNullability: true)}? ${nonNullField.name3},
 ${nullField.type.getDisplayString(withNullability: true)} ${nullField.name3},
 bool ${nullField.name3}Provided = true,
+${parameterWithoutField.isRequired ? 'required ' : ''}${parameterWithoutField.type.getDisplayString(withNullability: true)} ${parameterWithoutField.name3},
 }) {
 return ${element.name3}(
-${parameterWithoutField.name3}: ${parameterWithoutField.name3},
 ${nonNullField.name3}: ${nonNullField.name3} ?? self.${nonNullField.name3},
 ${nullField.name3}: ${nullField.name3}Provided ? (${nullField.name3} ?? self.${nullField.name3}) : null,
+${parameterWithoutField.name3}: ${parameterWithoutField.name3},
 );
 }
 ''');

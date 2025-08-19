@@ -20,7 +20,7 @@ final class MyoroThemeExtensionGenerator extends GeneratorForAnnotation<MyoroThe
     final buffer = StringBuffer()..writeln('// coverage:ignore-file\n');
 
     buildMixin(buffer, element, () {
-      buildCopyWith(buffer, element);
+      buildCopyWith(buffer, element, isThemeExtension: true);
       buildEqualityOperator(buffer, element);
       buildHashCode(buffer, element);
       buildToString(buffer, element);
