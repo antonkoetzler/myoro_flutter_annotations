@@ -5,10 +5,10 @@ import 'package:mocktail/mocktail.dart';
 final class MockConstructorElement extends Mock implements ConstructorElement {
   MockConstructorElement._();
 
-  factory MockConstructorElement({List<ParameterElement> parameters = const []}) {
+  factory MockConstructorElement({List<FormalParameterElement> parameters = const []}) {
     final mock = MockConstructorElement._();
 
-    when(() => mock.parameters).thenReturn(parameters);
+    when(() => mock.formalParameters).thenReturn(parameters);
 
     return mock;
   }

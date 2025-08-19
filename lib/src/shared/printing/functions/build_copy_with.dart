@@ -34,7 +34,7 @@ void _nonEmptyFieldsCase(StringBuffer buffer, ClassElement element, List<FieldEl
   final functionArgumentStringBuffer = StringBuffer();
   final functionReturnStringBuffer = StringBuffer();
 
-  for (final parameter in element.unnamedConstructor!.parameters) {
+  for (final parameter in element.unnamedConstructor!.formalParameters) {
     final field = fields.firstWhereOrNull((f) => f.name == parameter.name);
 
     // Build function args

@@ -6,11 +6,11 @@ import 'package:mocktail/mocktail.dart';
 import 'dart_type.mocks.dart';
 
 /// [ParameterElement] mock.
-final class MockParameterElement extends Mock implements ParameterElement {
-  MockParameterElement._();
+final class MockFormalParameterElement extends Mock implements FormalParameterElement {
+  MockFormalParameterElement._();
 
-  factory MockParameterElement({String? name, bool? isRequired, DartType? type}) {
-    final mock = MockParameterElement._();
+  factory MockFormalParameterElement({String? name, bool? isRequired, DartType? type}) {
+    final mock = MockFormalParameterElement._();
 
     name = name ?? faker.lorem.word();
     isRequired = isRequired ?? faker.randomGenerator.boolean();

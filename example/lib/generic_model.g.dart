@@ -37,7 +37,16 @@ mixin _$GenericModelMixin<T> {
 
 /// Extension class for @myoroModel to place the copyWith function.
 extension $GenericModelExtension<T> on GenericModel<T> {
-  GenericModel<T> copyWith({required void Function() callback, T? foo, int? bar, bool barProvided = true}) {
-    return GenericModel(callback: callback, foo: foo ?? self.foo, bar: barProvided ? (bar ?? self.bar) : null);
+  GenericModel<T> copyWith({
+    required void Function() callback,
+    T? foo,
+    int? bar,
+    bool barProvided = true,
+  }) {
+    return GenericModel(
+      callback: callback,
+      foo: foo ?? self.foo,
+      bar: barProvided ? (bar ?? self.bar) : null,
+    );
   }
 }

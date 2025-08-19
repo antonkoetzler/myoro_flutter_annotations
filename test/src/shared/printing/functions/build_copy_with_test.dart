@@ -8,7 +8,7 @@ import '../../../../mocks/class_element.mocks.dart';
 import '../../../../mocks/constructor_element.mocks.dart';
 import '../../../../mocks/dart_type.mocks.dart';
 import '../../../../mocks/field_element.mocks.dart';
-import '../../../../mocks/parameter_element.mocks.dart';
+import '../../../../mocks/formal_parameter_element.mocks.dart';
 
 void main() {
   test('buildCopyWith: No unnamedConstructor error case', () {
@@ -30,7 +30,7 @@ void main() {
 
   test('buildCopyWith: [NullabilitySuffix.star] field error case', () {
     final element = MockClassElement(
-      unnamedConstructor: MockConstructorElement(parameters: [MockParameterElement(name: 'foo')]),
+      unnamedConstructor: MockConstructorElement(parameters: [MockFormalParameterElement(name: 'foo')]),
       fields: [
         MockFieldElement(
           name: 'foo',
@@ -67,15 +67,15 @@ return self;
 
   test('buildCopyWith: Class with multiple fields success case', () {
     final buffer = StringBuffer();
-    final parameterWithoutField = MockParameterElement();
+    final parameterWithoutField = MockFormalParameterElement();
     final nonNullField = MockFieldElement();
     final nullField = MockFieldElement(type: MockDartType(nullabilitySuffix: NullabilitySuffix.question));
     final element = MockClassElement(
       unnamedConstructor: MockConstructorElement(
         parameters: [
           parameterWithoutField,
-          MockParameterElement(name: nonNullField.name),
-          MockParameterElement(name: nullField.name),
+          MockFormalParameterElement(name: nonNullField.name),
+          MockFormalParameterElement(name: nullField.name),
         ],
       ),
       fields: [nonNullField, nullField],
