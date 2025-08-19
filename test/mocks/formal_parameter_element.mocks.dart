@@ -1,4 +1,5 @@
 import 'package:analyzer/dart/element/element.dart';
+import 'package:analyzer/dart/element/element2.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:faker/faker.dart';
 import 'package:mocktail/mocktail.dart';
@@ -16,7 +17,7 @@ final class MockFormalParameterElement extends Mock implements FormalParameterEl
     isRequired = isRequired ?? faker.randomGenerator.boolean();
     type = type ?? MockDartType();
 
-    when(() => mock.name).thenReturn(name);
+    when(() => mock.name3).thenReturn(name);
     when(() => mock.isRequired).thenReturn(isRequired);
     when(() => mock.type).thenReturn(type);
 

@@ -52,7 +52,7 @@ void main() {
       ..._baseAssets,
       'myoro_flutter_annotations|lib/src/my_function.dart': '''
         import 'package:myoro_flutter_annotations/src/annotations/theme_extension/myoro_theme_extension.dart';
-        
+
         @myoroThemeExtension
         void foo() {}
       ''',

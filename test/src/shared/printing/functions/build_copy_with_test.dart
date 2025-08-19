@@ -1,18 +1,17 @@
 import 'package:analyzer/dart/element/nullability_suffix.dart';
-import 'package:faker/faker.dart';
 import 'package:myoro_flutter_annotations/src/exports.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:test/test.dart';
 
-import '../../../../mocks/class_element.mocks.dart';
-import '../../../../mocks/constructor_element.mocks.dart';
+import '../../../../mocks/class_element_2.mocks.dart';
+import '../../../../mocks/constructor_element_2.mocks.dart';
 import '../../../../mocks/dart_type.mocks.dart';
-import '../../../../mocks/field_element.mocks.dart';
+import '../../../../mocks/field_element_2.mocks.dart';
 import '../../../../mocks/formal_parameter_element.mocks.dart';
 
 void main() {
   test('buildCopyWith: No unnamedConstructor error case', () {
-    final element = MockClassElement();
+    final element = MockClassElement2();
 
     expect(
       () => buildCopyWith(StringBuffer(), element),
@@ -29,8 +28,8 @@ void main() {
   });
 
   test('buildCopyWith: [NullabilitySuffix.star] field error case', () {
-    final element = MockClassElement(
-      unnamedConstructor: MockConstructorElement(parameters: [MockFormalParameterElement(name: 'foo')]),
+    final element = MockClassElement2(
+      unnamedConstructor2: MockConstructorElement2(parameters: [MockFormalParameterElement(name: 'foo')]),
       fields: [
         MockFieldElement(
           name: 'foo',
@@ -53,13 +52,12 @@ void main() {
 
   test('buildCopyWith: Class with 0 fields success case', () {
     final buffer = StringBuffer();
-    final element = MockClassElement(unnamedConstructor: MockConstructorElement());
-    final isThemeExtension = faker.randomGenerator.boolean();
+    final element = MockClassElement2(unnamedConstructor2: MockConstructorElement2());
 
-    buildCopyWith(buffer, element, isThemeExtension: isThemeExtension);
+    buildCopyWith(buffer, element);
 
     expect(buffer.toString(), '''
-${isThemeExtension ? '@override\n' : ''}${element.nameWithTypeParameters} copyWith() {
+@override\n${element.nameWithTypeParameters} copyWith() {
 return self;
 }
 ''');
@@ -70,31 +68,30 @@ return self;
     final parameterWithoutField = MockFormalParameterElement();
     final nonNullField = MockFieldElement();
     final nullField = MockFieldElement(type: MockDartType(nullabilitySuffix: NullabilitySuffix.question));
-    final element = MockClassElement(
-      unnamedConstructor: MockConstructorElement(
+    final element = MockClassElement2(
+      unnamedConstructor2: MockConstructorElement2(
         parameters: [
           parameterWithoutField,
-          MockFormalParameterElement(name: nonNullField.name),
-          MockFormalParameterElement(name: nullField.name),
+          MockFormalParameterElement(name: nonNullField.name3),
+          MockFormalParameterElement(name: nullField.name3),
         ],
       ),
       fields: [nonNullField, nullField],
     );
-    final isThemeExtension = faker.randomGenerator.boolean();
 
-    buildCopyWith(buffer, element, isThemeExtension: isThemeExtension);
+    buildCopyWith(buffer, element);
 
     expect(buffer.toString(), '''
-${isThemeExtension ? '@override\n' : ''}${element.nameWithTypeParameters} copyWith({
-${parameterWithoutField.isRequired ? 'required ' : ''}${parameterWithoutField.type.getDisplayString(withNullability: true)} ${parameterWithoutField.name},
-${nonNullField.type.getDisplayString(withNullability: true)}? ${nonNullField.name},
-${nullField.type.getDisplayString(withNullability: true)} ${nullField.name},
-bool ${nullField.name}Provided = true,
+@override\n${element.nameWithTypeParameters} copyWith({
+${parameterWithoutField.isRequired ? 'required ' : ''}${parameterWithoutField.type.getDisplayString(withNullability: true)} ${parameterWithoutField.name3},
+${nonNullField.type.getDisplayString(withNullability: true)}? ${nonNullField.name3},
+${nullField.type.getDisplayString(withNullability: true)} ${nullField.name3},
+bool ${nullField.name3}Provided = true,
 }) {
-return ${element.name}(
-${parameterWithoutField.name}: ${parameterWithoutField.name},
-${nonNullField.name}: ${nonNullField.name} ?? self.${nonNullField.name},
-${nullField.name}: ${nullField.name}Provided ? (${nullField.name} ?? self.${nullField.name}) : null,
+return ${element.name3}(
+${parameterWithoutField.name3}: ${parameterWithoutField.name3},
+${nonNullField.name3}: ${nonNullField.name3} ?? self.${nonNullField.name3},
+${nullField.name3}: ${nullField.name3}Provided ? (${nullField.name3} ?? self.${nullField.name3}) : null,
 );
 }
 ''');

@@ -2,15 +2,15 @@ import 'package:faker/faker.dart';
 import 'package:myoro_flutter_annotations/src/exports.dart';
 import 'package:test/test.dart';
 
-import '../../../../mocks/class_element.mocks.dart';
-import '../../../../mocks/field_element.mocks.dart';
+import '../../../../mocks/class_element_2.mocks.dart';
+import '../../../../mocks/field_element_2.mocks.dart';
 
 void main() {
   test('buildToString', () {
     late final String expectedResult;
 
     final buffer = StringBuffer();
-    final element = MockClassElement(
+    final element = MockClassElement2(
       fields: List.generate(faker.randomGenerator.integer(10), (_) => MockFieldElement()),
     );
 
@@ -22,8 +22,8 @@ void main() {
       ..writeln('@override')
       ..writeln('String toString() =>')
       ..writeln('\'${element.nameWithTypeParameters}(\\n\'');
-    for (final field in element.fields) {
-      buffer.writeln('\'  ${field.name}: \${self.${field.name}},\\n\'');
+    for (final field in element.fields2) {
+      buffer.writeln('\'  ${field.name3}: \${self.${field.name3}},\\n\'');
     }
     buffer.writeln('\');\';');
 

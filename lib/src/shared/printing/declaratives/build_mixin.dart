@@ -1,11 +1,11 @@
-import 'package:analyzer/dart/element/element.dart';
-import 'package:myoro_flutter_annotations/src/shared/exports.dart';
+import 'package:analyzer/dart/element/element2.dart';
+import 'package:myoro_flutter_annotations/src/exports.dart';
 
 /// Builds the mixin of a class.
-void buildMixin(StringBuffer buffer, ClassElement element, void Function() body, {String? onClass}) {
-  final mixinName = '_\$${element.name}Mixin${element.formattedTypeParameters}';
+void buildMixin(StringBuffer buffer, ClassElement2 element, void Function() body, {String? onClass}) {
+  final mixinName = '_\$${element.name3}Mixin${element.formattedTypeParameters}';
   buffer
-    ..writeln('/// Apply this mixin to [${element.name}] once the code is generated.')
+    ..writeln('/// Apply this mixin to [${element.name3}] once the code is generated.')
     ..writeln('///')
     ..writeln('/// ```dart')
     ..writeln('/// class ${element.nameWithTypeParameters} with $mixinName {}')

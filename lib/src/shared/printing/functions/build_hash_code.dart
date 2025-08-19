@@ -1,8 +1,8 @@
-import 'package:analyzer/dart/element/element.dart';
+import 'package:analyzer/dart/element/element2.dart';
 import 'package:myoro_flutter_annotations/src/exports.dart';
 
 /// Builds the [hashCode] getter override of a class.
-void buildHashCode(StringBuffer buffer, ClassElement element) {
+void buildHashCode(StringBuffer buffer, ClassElement2 element) {
   final fields = element.mergedFields.where((field) => !field.isStatic && !field.isSynthetic).toList();
 
   // Start the getter.
@@ -26,8 +26,8 @@ void buildHashCode(StringBuffer buffer, ClassElement element) {
   buffer.writeln('}');
 }
 
-void _writeFields(StringBuffer buffer, List<FieldElement> fields) {
+void _writeFields(StringBuffer buffer, List<FieldElement2> fields) {
   for (final field in fields) {
-    buffer.writeln('self.${field.name},');
+    buffer.writeln('self.${field.name3},');
   }
 }

@@ -2,14 +2,14 @@ import 'package:faker/faker.dart';
 import 'package:myoro_flutter_annotations/src/exports.dart';
 import 'package:test/test.dart';
 
-import '../../../../mocks/class_element.mocks.dart';
+import '../../../../mocks/class_element_2.mocks.dart';
 
 void main() {
   const bodyText = 'Hello, World!';
 
   final buffer = StringBuffer();
-  final element = MockClassElement();
-  final mixinName = '_\$${element.name}Mixin${element.formattedTypeParameters}';
+  final element = MockClassElement2();
+  final mixinName = '_\$${element.name3}Mixin${element.formattedTypeParameters}';
 
   void testMixin([String? onClass]) {
     buildMixin(buffer..clear(), element, () => buffer.writeln(bodyText), onClass: onClass);
@@ -17,7 +17,7 @@ void main() {
 
     buffer
       ..clear()
-      ..writeln('/// Apply this mixin to [${element.name}] once the code is generated.')
+      ..writeln('/// Apply this mixin to [${element.name3}] once the code is generated.')
       ..writeln('///')
       ..writeln('/// ```dart')
       ..writeln('/// class ${element.nameWithTypeParameters} with $mixinName {}')

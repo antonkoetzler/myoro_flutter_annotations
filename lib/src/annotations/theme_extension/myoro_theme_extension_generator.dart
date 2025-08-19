@@ -1,4 +1,4 @@
-import 'package:analyzer/dart/element/element.dart';
+import 'package:analyzer/dart/element/element2.dart';
 import 'package:build/build.dart';
 import 'package:myoro_flutter_annotations/src/exports.dart';
 import 'package:source_gen/source_gen.dart';
@@ -8,9 +8,9 @@ final class MyoroThemeExtensionGenerator extends GeneratorForAnnotation<MyoroThe
   const MyoroThemeExtensionGenerator();
 
   @override
-  generateForAnnotatedElement(Element element, ConstantReader annotation, BuildStep buildStep) {
+  generateForAnnotatedElement(Element2 element, ConstantReader annotation, BuildStep buildStep) {
     // Check if element is a class
-    if (element is! ClassElement) {
+    if (element is! ClassElement2) {
       throw InvalidGenerationSourceError(
         '[MyoroModelGenerator.generateForAnnotatedElement]: [MyoroThemeExtension] can only be applied to classes.',
         element: element,
@@ -20,11 +20,11 @@ final class MyoroThemeExtensionGenerator extends GeneratorForAnnotation<MyoroThe
     final buffer = StringBuffer();
 
     buildMixin(buffer, element, () {
-      buildCopyWith(buffer, element, isThemeExtension: true);
+      buildCopyWith(buffer, element);
       buildEqualityOperator(buffer, element);
       buildHashCode(buffer, element);
       buildToString(buffer, element);
-    }, onClass: 'ThemeExtension<${element.name}>');
+    }, onClass: 'ThemeExtension<${element.name3}>');
 
     return formatter.format(buffer.toString());
   }

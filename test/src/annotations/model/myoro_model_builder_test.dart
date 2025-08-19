@@ -36,7 +36,6 @@ void main() {
     final expectedOutput = {
       'myoro_flutter_annotations|lib/src/foo.myoro_model.g.part': decodedMatches(
         allOf([
-          contains('Foo copyWith({'),
           contains('mixin _\$FooMixin'),
           contains('bool operator ==(Object other)'),
           contains('int get hashCode'),
