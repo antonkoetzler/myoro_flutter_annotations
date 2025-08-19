@@ -17,7 +17,7 @@ final class MyoroModelGenerator extends GeneratorForAnnotation<MyoroModel> {
       );
     }
 
-    final buffer = StringBuffer();
+    final buffer = StringBuffer()..writeln('// coverage:ignore-file\n');
 
     buildMixin(buffer, element, () {
       buildEqualityOperator(buffer, element);

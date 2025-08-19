@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 1.4.0
+
+- improvement: Set automatic Dart versioning when formatting the result
+- improvement: Remove `copyWith` from `myoroModel` as extended models are too intricate for code generation automation
+- feature: Added `// coverage:ignore-file` to results
+- fix: Rebuild examples
+
 ## 1.3.0
 
 - chore: Upgrade packages in `pubspec.yaml` in order to use (`json_serializable`)[`https://pub.dev/packages/json_serializable`] with MFA

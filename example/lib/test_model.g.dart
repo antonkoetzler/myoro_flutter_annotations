@@ -6,6 +6,8 @@ part of 'test_model.dart';
 // MyoroModelGenerator
 // **************************************************************************
 
+// coverage:ignore-file
+
 /// Apply this mixin to [TestModel] once the code is generated.
 ///
 /// ```dart
@@ -30,11 +32,4 @@ mixin _$TestModelMixin {
       '  foo: ${self.foo},\n'
       '  bar: ${self.bar},\n'
       ');';
-}
-
-/// Extension class for @myoroModel to place the copyWith function.
-extension $TestModelExtension on TestModel {
-  TestModel copyWith({String? foo, int? bar, bool barProvided = true}) {
-    return TestModel(foo: foo ?? self.foo, bar: barProvided ? (bar ?? self.bar) : null);
-  }
 }

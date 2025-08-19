@@ -25,7 +25,7 @@ void main() {
       ..writeln('mixin $mixinName ${onClass != null ? 'on $onClass ' : ''}{')
       ..writeln('${element.nameWithTypeParameters} get self => this as ${element.nameWithTypeParameters};\n')
       ..writeln(bodyText)
-      ..writeln('}');
+      ..write('}');
 
     expect(mixinResult, buffer.toString());
   }

@@ -6,6 +6,8 @@ part of 'generic_model.dart';
 // MyoroModelGenerator
 // **************************************************************************
 
+// coverage:ignore-file
+
 /// Apply this mixin to [GenericModel] once the code is generated.
 ///
 /// ```dart
@@ -33,11 +35,4 @@ mixin _$GenericModelMixin<T> {
       '  foo: ${self.foo},\n'
       '  bar: ${self.bar},\n'
       ');';
-}
-
-/// Extension class for @myoroModel to place the copyWith function.
-extension $GenericModelExtension<T> on GenericModel<T> {
-  GenericModel<T> copyWith({required void Function() callback, T? foo, int? bar, bool barProvided = true}) {
-    return GenericModel(callback: callback, foo: foo ?? self.foo, bar: barProvided ? (bar ?? self.bar) : null);
-  }
 }

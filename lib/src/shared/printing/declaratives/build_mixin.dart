@@ -13,5 +13,5 @@ void buildMixin(StringBuffer buffer, ClassElement2 element, void Function() body
     ..writeln('mixin $mixinName ${onClass != null ? 'on $onClass ' : ''}{')
     ..writeln('${element.nameWithTypeParameters} get self => this as ${element.nameWithTypeParameters};\n');
   body();
-  buffer.writeln('}');
+  buffer.write('}');
 }

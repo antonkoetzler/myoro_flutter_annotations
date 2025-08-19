@@ -36,6 +36,7 @@ void main() {
     final expectedOutput = {
       'myoro_flutter_annotations|lib/src/foo_theme_extension.myoro_theme_extension.g.part': decodedMatches(
         allOf([
+          contains('// coverage:ignore-file'),
           contains('FooThemeExtension copyWith({'),
           contains('mixin _\$FooThemeExtensionMixin'),
           contains('bool operator ==(Object other)'),
