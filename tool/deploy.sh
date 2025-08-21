@@ -65,6 +65,11 @@ head -n 1 STAGING_NOTES.md > STAGING_NOTES.tmp && mv STAGING_NOTES.tmp STAGING_N
 # Format code before pushing
 bash tool/format_and_fix.sh
 
+# Update examples before pushing
+cd example
+dart run build_runner build --delete-conflicting-outputs
+cd ..
+
 # Feedback that the deployment was successful
 echo "Updated version to $new_version"
 
