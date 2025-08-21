@@ -20,9 +20,7 @@ void main() {
         isA<InvalidGenerationSourceError>().having(
           (e) => e.message,
           'Not [ClassElement] message',
-          contains(
-            '[buildCopyWith]: Class ${element.nameWithTypeParameters} must have an unnamed constructor to generate copyWith.',
-          ),
+          contains('[buildCopyWith]: Class ${element.nameWithTypeParameters} must have an unnamed constructor to generate copyWith.'),
         ),
       ),
     );
@@ -41,13 +39,7 @@ void main() {
 
     expect(
       () => buildCopyWith(StringBuffer(), element, isThemeExtension: faker.randomGenerator.boolean()),
-      throwsA(
-        isA<AssertionError>().having(
-          (e) => e.message,
-          '[NullabilitySuffix.star] exception',
-          '[buildCopyWith]: Legacy Dart syntax is not supported.',
-        ),
-      ),
+      throwsA(isA<AssertionError>().having((e) => e.message, '[NullabilitySuffix.star] exception', '[buildCopyWith]: Legacy Dart syntax is not supported.')),
     );
   });
 
@@ -67,18 +59,20 @@ return self;
 
   test('buildCopyWith: Class with multiple fields success case', () {
     final buffer = StringBuffer();
-    final parameterWithoutField = MockFormalParameterElement();
-    final nonNullField = MockFieldElement();
-    final nullField = MockFieldElement(type: MockDartType(nullabilitySuffix: NullabilitySuffix.question));
+    final nullableParameterWithoutField = MockFormalParameterElement(type: MockDartType(nullabilitySuffix: NullabilitySuffix.question));
+    final nonNullableParameterWithoutField = MockFormalParameterElement(type: MockDartType(nullabilitySuffix: NullabilitySuffix.none));
+    final nullableField = MockFieldElement(type: MockDartType(nullabilitySuffix: NullabilitySuffix.question));
+    final nonNullableField = MockFieldElement();
     final element = MockClassElement2(
       unnamedConstructor2: MockConstructorElement2(
         parameters: [
-          parameterWithoutField,
-          MockFormalParameterElement(name: nonNullField.name3),
-          MockFormalParameterElement(name: nullField.name3),
+          nullableParameterWithoutField,
+          nonNullableParameterWithoutField,
+          MockFormalParameterElement(name: nonNullableField.name3),
+          MockFormalParameterElement(name: nullableField.name3),
         ],
       ),
-      fields: [nonNullField, nullField],
+      fields: [nonNullableField, nullableField],
     );
     final isThemeExtension = faker.randomGenerator.boolean();
 
@@ -86,15 +80,22 @@ return self;
 
     expect(buffer.toString(), '''
 ${isThemeExtension ? '@override\n' : ''}${element.nameWithTypeParameters} copyWith({
-${nonNullField.type.getDisplayString(withNullability: true)}? ${nonNullField.name3},
-${nullField.type.getDisplayString(withNullability: true)} ${nullField.name3},
-bool ${nullField.name3}Provided = true,
-${parameterWithoutField.isRequired ? 'required ' : ''}${parameterWithoutField.type.getDisplayString(withNullability: true)} ${parameterWithoutField.name3},
+${nonNullableField.type.getDisplayString(withNullability: true)}? ${nonNullableField.name3},
+${nullableField.type.getDisplayString(withNullability: true)} ${nullableField.name3},
+bool ${nullableField.name3}Provided = true,
+${nullableParameterWithoutField.type.getDisplayString(withNullability: false)}? ${nullableParameterWithoutField.name3},
+${nonNullableParameterWithoutField.type.getDisplayString(withNullability: false)}? ${nonNullableParameterWithoutField.name3},
 }) {
+assert(
+${nonNullableParameterWithoutField.name3} != null,
+'[${element.name3}.copyWith]: [${nonNullableParameterWithoutField.name3}] cannot be null.',
+);
+
 return ${element.name3}(
-${nonNullField.name3}: ${nonNullField.name3} ?? self.${nonNullField.name3},
-${nullField.name3}: ${nullField.name3}Provided ? (${nullField.name3} ?? self.${nullField.name3}) : null,
-${parameterWithoutField.name3}: ${parameterWithoutField.name3},
+${nonNullableField.name3}: ${nonNullableField.name3} ?? self.${nonNullableField.name3},
+${nullableField.name3}: ${nullableField.name3}Provided ? (${nullableField.name3} ?? self.${nullableField.name3}) : null,
+${nullableParameterWithoutField.name3}: ${nullableParameterWithoutField.name3},
+${nonNullableParameterWithoutField.name3}: ${nonNullableParameterWithoutField.name3}!,
 );
 }
 ''');
