@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.4.3
+
+- fix: Adjust parameters without fields in `buildCopyWith`
+
 ## 1.4.1
 
 - feature: Add `copyWith` back to `@myoroModel`; I understand it now

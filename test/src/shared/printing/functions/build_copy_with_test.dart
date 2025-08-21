@@ -20,7 +20,9 @@ void main() {
         isA<InvalidGenerationSourceError>().having(
           (e) => e.message,
           'Not [ClassElement] message',
-          contains('[buildCopyWith]: Class ${element.nameWithTypeParameters} must have an unnamed constructor to generate copyWith.'),
+          contains(
+            '[buildCopyWith]: Class ${element.nameWithTypeParameters} must have an unnamed constructor to generate copyWith.',
+          ),
         ),
       ),
     );
@@ -39,7 +41,13 @@ void main() {
 
     expect(
       () => buildCopyWith(StringBuffer(), element, isThemeExtension: faker.randomGenerator.boolean()),
-      throwsA(isA<AssertionError>().having((e) => e.message, '[NullabilitySuffix.star] exception', '[buildCopyWith]: Legacy Dart syntax is not supported.')),
+      throwsA(
+        isA<AssertionError>().having(
+          (e) => e.message,
+          '[NullabilitySuffix.star] exception',
+          '[buildCopyWith]: Legacy Dart syntax is not supported.',
+        ),
+      ),
     );
   });
 
@@ -59,8 +67,12 @@ return self;
 
   test('buildCopyWith: Class with multiple fields success case', () {
     final buffer = StringBuffer();
-    final nullableParameterWithoutField = MockFormalParameterElement(type: MockDartType(nullabilitySuffix: NullabilitySuffix.question));
-    final nonNullableParameterWithoutField = MockFormalParameterElement(type: MockDartType(nullabilitySuffix: NullabilitySuffix.none));
+    final nullableParameterWithoutField = MockFormalParameterElement(
+      type: MockDartType(nullabilitySuffix: NullabilitySuffix.question),
+    );
+    final nonNullableParameterWithoutField = MockFormalParameterElement(
+      type: MockDartType(nullabilitySuffix: NullabilitySuffix.none),
+    );
     final nullableField = MockFieldElement(type: MockDartType(nullabilitySuffix: NullabilitySuffix.question));
     final nonNullableField = MockFieldElement();
     final element = MockClassElement2(

@@ -38,7 +38,9 @@ void buildCopyWith(StringBuffer buffer, ClassElement2 element, {required bool is
           functionArgumentStringBuffer.writeln('$fieldTypeString $fieldName,');
           functionArgumentStringBuffer.writeln('bool ${fieldName}Provided = true,');
           if (isArgumentInUnnamedConstructor) {
-            functionReturnStringBuffer.writeln('$fieldName: ${fieldName}Provided ? ($fieldName ?? self.$fieldName) : null,');
+            functionReturnStringBuffer.writeln(
+              '$fieldName: ${fieldName}Provided ? ($fieldName ?? self.$fieldName) : null,',
+            );
           }
         case NullabilitySuffix.none:
           functionArgumentStringBuffer.writeln('$fieldTypeString? $fieldName,');
@@ -64,7 +66,9 @@ void buildCopyWith(StringBuffer buffer, ClassElement2 element, {required bool is
           assertionStringBuffer.writeln(');');
         }
         functionArgumentStringBuffer.writeln('$parameterTypeString? $parameterName,');
-        functionReturnStringBuffer.writeln('$parameterName: $parameterName${parameterNullabilitySuffix == NullabilitySuffix.none ? '!' : ''},');
+        functionReturnStringBuffer.writeln(
+          '$parameterName: $parameterName${parameterNullabilitySuffix == NullabilitySuffix.none ? '!' : ''},',
+        );
       }
     }
 
