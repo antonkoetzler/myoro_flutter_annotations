@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.4.4
+
+- chore: Update examples
+
 ## 1.4.3
 
 - fix: Adjust parameters without fields in `buildCopyWith`

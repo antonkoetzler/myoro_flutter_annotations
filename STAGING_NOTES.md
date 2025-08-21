@@ -1,3 +1,1 @@
 # STAGELOG
-
-- chore: Update examples
