@@ -11,16 +11,12 @@ final class MyoroModelGenerator extends GeneratorForAnnotation<MyoroModel> {
   String generateForAnnotatedElement(Element2 element, ConstantReader annotation, BuildStep buildStep) {
     // Check if element is a class
     if (element is! ClassElement2) {
-      throw InvalidGenerationSourceError(
-        '[MyoroModelGenerator.generateForAnnotatedElement]: MyoroModel can only be applied to classes.',
-        element: element,
-      );
+      throw InvalidGenerationSourceError('[MyoroModelGenerator.generateForAnnotatedElement]: MyoroModel can only be applied to classes.', element: element);
     }
 
     final buffer = StringBuffer()..writeln('// coverage:ignore-file\n');
 
     buildMixin(buffer, element, () {
-      buildCopyWith(buffer, element, isThemeExtension: false);
       buildEqualityOperator(buffer, element);
       buildHashCode(buffer, element);
       buildToString(buffer, element);
