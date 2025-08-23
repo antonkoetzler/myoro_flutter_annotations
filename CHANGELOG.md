@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.4.2
+
+- fix: Remove `copyWith` from `myoroModel`. It is way to dependent on context and I've decided that it is not a good practice to generate it for `myoroModel`s
+
 ## 1.4.1
 
 - feature: Add `copyWith` back to `@myoroModel`; I understand it now
