@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.4.5
+
+- fix: Remove `copyWith` from `myoroModel`
+
 ## 1.4.4
 
 - chore: Update examples
