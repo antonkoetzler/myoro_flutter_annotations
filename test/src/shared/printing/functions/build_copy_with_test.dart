@@ -20,34 +20,24 @@ void main() {
         isA<InvalidGenerationSourceError>().having(
           (e) => e.message,
           'Not [ClassElement] message',
-          contains(
-            '[buildCopyWith]: Class ${element.nameWithTypeParameters} must have an unnamed constructor to generate copyWith.',
-          ),
+          contains('[buildCopyWith]: Class ${element.nameWithTypeParameters} must have an unnamed constructor to generate copyWith.'),
         ),
       ),
     );
   });
 
   test('buildCopyWith: [NullabilitySuffix.star] field error case', () {
+    final starType = MockDartType(nullabilitySuffix: NullabilitySuffix.star);
     final element = MockClassElement2(
-      unnamedConstructor2: MockConstructorElement2(parameters: [MockFormalParameterElement(name: 'foo')]),
-      fields: [
-        MockFieldElement(
-          name: 'foo',
-          type: MockDartType(nullabilitySuffix: NullabilitySuffix.star),
-        ),
-      ],
+      unnamedConstructor2: MockConstructorElement2(
+        parameters: [MockFormalParameterElement(name: 'foo', type: starType)],
+      ),
+      fields: [MockFieldElement(name: 'foo', type: starType)],
     );
 
     expect(
       () => buildCopyWith(StringBuffer(), element, isThemeExtension: faker.randomGenerator.boolean()),
-      throwsA(
-        isA<AssertionError>().having(
-          (e) => e.message,
-          '[NullabilitySuffix.star] exception',
-          '[buildCopyWith]: Legacy Dart syntax is not supported.',
-        ),
-      ),
+      throwsA(isA<AssertionError>().having((e) => e.message, '[NullabilitySuffix.star] exception', '[buildCopyWith]: Legacy Dart syntax is not supported.')),
     );
   });
 
@@ -68,20 +58,34 @@ return self;
   test('buildCopyWith: Class with multiple fields success case', () {
     final buffer = StringBuffer();
     final nullableParameterWithoutField = MockFormalParameterElement(
-      type: MockDartType(nullabilitySuffix: NullabilitySuffix.question),
+      name: 'congue',
+      type: MockDartType(displayString: 'praesent', nullabilitySuffix: NullabilitySuffix.question),
     );
     final nonNullableParameterWithoutField = MockFormalParameterElement(
-      type: MockDartType(nullabilitySuffix: NullabilitySuffix.none),
+      name: 'cum',
+      type: MockDartType(displayString: 'bibendum', nullabilitySuffix: NullabilitySuffix.none),
     );
-    final nullableField = MockFieldElement(type: MockDartType(nullabilitySuffix: NullabilitySuffix.question));
-    final nonNullableField = MockFieldElement();
+    final nullableField = MockFieldElement(
+      name: 'ante',
+      type: MockDartType(displayString: 'fermentum ridiculus', nullabilitySuffix: NullabilitySuffix.question),
+    );
+    final nonNullableField = MockFieldElement(
+      name: 'mollis',
+      type: MockDartType(displayString: 'consequat'),
+    );
     final element = MockClassElement2(
       unnamedConstructor2: MockConstructorElement2(
         parameters: [
           nullableParameterWithoutField,
           nonNullableParameterWithoutField,
-          MockFormalParameterElement(name: nonNullableField.name3),
-          MockFormalParameterElement(name: nullableField.name3),
+          MockFormalParameterElement(
+            name: nonNullableField.name3,
+            type: MockDartType(displayString: 'consequat'),
+          ),
+          MockFormalParameterElement(
+            name: nullableField.name3,
+            type: MockDartType(displayString: 'fermentum ridiculus', nullabilitySuffix: NullabilitySuffix.question),
+          ),
         ],
       ),
       fields: [nonNullableField, nullableField],
@@ -92,22 +96,22 @@ return self;
 
     expect(buffer.toString(), '''
 ${isThemeExtension ? '@override\n' : ''}${element.nameWithTypeParameters} copyWith({
-${nonNullableField.type.getDisplayString(withNullability: true)}? ${nonNullableField.name3},
-${nullableField.type.getDisplayString(withNullability: true)} ${nullableField.name3},
-bool ${nullableField.name3}Provided = true,
-${nullableParameterWithoutField.type.getDisplayString(withNullability: false)}? ${nullableParameterWithoutField.name3},
-${nonNullableParameterWithoutField.type.getDisplayString(withNullability: false)}? ${nonNullableParameterWithoutField.name3},
+consequat? mollis,
+fermentum ridiculus ante,
+bool anteProvided = true,
+praesent? congue,
+bibendum? cum,
 }) {
 assert(
-${nonNullableParameterWithoutField.name3} != null,
-'[${element.name3}.copyWith]: [${nonNullableParameterWithoutField.name3}] cannot be null.',
+cum != null,
+'[${element.name3}.copyWith]: [cum] cannot be null.',
 );
 
 return ${element.name3}(
-${nonNullableField.name3}: ${nonNullableField.name3} ?? self.${nonNullableField.name3},
-${nullableField.name3}: ${nullableField.name3}Provided ? (${nullableField.name3} ?? self.${nullableField.name3}) : null,
-${nullableParameterWithoutField.name3}: ${nullableParameterWithoutField.name3},
-${nonNullableParameterWithoutField.name3}: ${nonNullableParameterWithoutField.name3}!,
+mollis: mollis ?? self.mollis,
+ante: anteProvided ? (ante ?? self.ante) : null,
+congue: congue,
+cum: cum!,
 );
 }
 ''');

@@ -1,5 +1,6 @@
 import 'package:analyzer/dart/element/element2.dart';
 import 'package:analyzer/dart/element/nullability_suffix.dart';
+import 'package:analyzer/dart/element/type.dart';
 import 'package:myoro_flutter_annotations/src/exports.dart';
 import 'package:myoro_flutter_annotations/src/shared/exports.dart';
 import 'package:source_gen/source_gen.dart';
@@ -24,12 +25,19 @@ void buildCopyWith(StringBuffer buffer, ClassElement2 element, {required bool is
     final unnamedConstructorParameters = elementUnnamedConstructor!.formalParameters;
 
     for (final field in fields) {
-      final fieldType = field.type;
-      final fieldTypeString = fieldType.getDisplayString(withNullability: true);
       final fieldName = field.name3;
-      final nullabilitySuffix = fieldType.nullabilitySuffix;
       // We must add the argument for extended fields. However, the field might not be apart of the constructor (aka a field that is called within the super() portion).
       final isArgumentInUnnamedConstructor = unnamedConstructorParameters.any((p) => p.name3 == field.name3);
+
+      // Use constructor parameter type for generic type parameters that need to be resolved,
+      // otherwise use field type to preserve typedef names
+      final constructorParameterType = isArgumentInUnnamedConstructor ? unnamedConstructorParameters.firstWhere((p) => p.name3 == field.name3).type : null;
+
+      final fieldType = isArgumentInUnnamedConstructor && field.type is TypeParameterType ? constructorParameterType! : field.type;
+
+      // Check if the field type has alias information (typedef) and use that for the display string
+      final fieldTypeString = fieldType.alias != null ? _getTypeAliasDisplayString(fieldType) : fieldType.getDisplayString();
+      final nullabilitySuffix = fieldType.nullabilitySuffix;
 
       switch (nullabilitySuffix) {
         case NullabilitySuffix.star:
@@ -38,9 +46,7 @@ void buildCopyWith(StringBuffer buffer, ClassElement2 element, {required bool is
           functionArgumentStringBuffer.writeln('$fieldTypeString $fieldName,');
           functionArgumentStringBuffer.writeln('bool ${fieldName}Provided = true,');
           if (isArgumentInUnnamedConstructor) {
-            functionReturnStringBuffer.writeln(
-              '$fieldName: ${fieldName}Provided ? ($fieldName ?? self.$fieldName) : null,',
-            );
+            functionReturnStringBuffer.writeln('$fieldName: ${fieldName}Provided ? ($fieldName ?? self.$fieldName) : null,');
           }
         case NullabilitySuffix.none:
           functionArgumentStringBuffer.writeln('$fieldTypeString? $fieldName,');
@@ -55,7 +61,7 @@ void buildCopyWith(StringBuffer buffer, ClassElement2 element, {required bool is
       final isNotField = !fields.any((f) => f.name3 == parameter.name3);
       if (isNotField) {
         final parameterType = parameter.type;
-        final parameterTypeString = parameterType.getDisplayString(withNullability: false);
+        final parameterTypeString = parameterType.getDisplayString();
         final parameterName = parameter.name3;
         final parameterNullabilitySuffix = parameterType.nullabilitySuffix;
         // The argument here must be nullable to not generate conflicting copyWith with extended classes.
@@ -66,9 +72,7 @@ void buildCopyWith(StringBuffer buffer, ClassElement2 element, {required bool is
           assertionStringBuffer.writeln(');');
         }
         functionArgumentStringBuffer.writeln('$parameterTypeString? $parameterName,');
-        functionReturnStringBuffer.writeln(
-          '$parameterName: $parameterName${parameterNullabilitySuffix == NullabilitySuffix.none ? '!' : ''},',
-        );
+        functionReturnStringBuffer.writeln('$parameterName: $parameterName${parameterNullabilitySuffix == NullabilitySuffix.none ? '!' : ''},');
       }
     }
 
@@ -94,4 +98,28 @@ void buildCopyWith(StringBuffer buffer, ClassElement2 element, {required bool is
   // Start the function.
   if (isThemeExtension) buffer.writeln('@override');
   fields.isEmpty ? emptyFieldsCase() : nonEmptyFieldsCase();
+}
+
+/// Gets the display string for a type alias, preserving the typedef name.
+String _getTypeAliasDisplayString(DartType type) {
+  final alias = type.alias;
+  if (alias == null) return type.getDisplayString();
+
+  // Build the typedef name with type arguments
+  final element = alias.element;
+  final typeArguments = alias.typeArguments;
+
+  var result = element.name;
+  if (typeArguments.isNotEmpty) {
+    final typeArgumentsString = typeArguments.map((arg) => arg.getDisplayString()).join(', ');
+    result += '<$typeArgumentsString>';
+  }
+
+  // Add nullability suffix if needed
+  final nullabilitySuffix = type.nullabilitySuffix;
+  if (nullabilitySuffix == NullabilitySuffix.question) {
+    result += '?';
+  }
+
+  return result;
 }

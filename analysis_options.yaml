@@ -1,4 +1,4 @@
 analyzer:
-  errors:
-    deprecated_member_use: ignore
+  # errors:
+  #   deprecated_member_use: ignore
 include: package:lints/recommended.yaml

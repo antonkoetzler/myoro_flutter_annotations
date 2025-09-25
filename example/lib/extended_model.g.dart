@@ -16,6 +16,22 @@ part of 'extended_model.dart';
 mixin _$ExtendedModelMixin {
   ExtendedModel get self => this as ExtendedModel;
 
+  ExtendedModel copyWith({
+    int? buzz,
+    String? light,
+    bool lightProvided = true,
+    int? foo,
+    String? bar,
+    bool barProvided = true,
+  }) {
+    return ExtendedModel(
+      buzz: buzz ?? self.buzz,
+      light: lightProvided ? (light ?? self.light) : null,
+      foo: foo ?? self.foo,
+      bar: barProvided ? (bar ?? self.bar) : null,
+    );
+  }
+
   @override
   bool operator ==(Object other) {
     return other is ExtendedModel &&
