@@ -9,6 +9,7 @@ import '../../../../mocks/constructor_element_2.mocks.dart';
 import '../../../../mocks/dart_type.mocks.dart';
 import '../../../../mocks/field_element_2.mocks.dart';
 import '../../../../mocks/formal_parameter_element.mocks.dart';
+import '../../../../mocks/instantiated_type_alias_element.mocks.dart';
 
 void main() {
   test('buildCopyWith: No unnamedConstructor error case', () {
@@ -20,7 +21,9 @@ void main() {
         isA<InvalidGenerationSourceError>().having(
           (e) => e.message,
           'Not [ClassElement] message',
-          contains('[buildCopyWith]: Class ${element.nameWithTypeParameters} must have an unnamed constructor to generate copyWith.'),
+          contains(
+            '[buildCopyWith]: Class ${element.nameWithTypeParameters} must have an unnamed constructor to generate copyWith.',
+          ),
         ),
       ),
     );
@@ -37,7 +40,13 @@ void main() {
 
     expect(
       () => buildCopyWith(StringBuffer(), element, isThemeExtension: faker.randomGenerator.boolean()),
-      throwsA(isA<AssertionError>().having((e) => e.message, '[NullabilitySuffix.star] exception', '[buildCopyWith]: Legacy Dart syntax is not supported.')),
+      throwsA(
+        isA<AssertionError>().having(
+          (e) => e.message,
+          '[NullabilitySuffix.star] exception',
+          '[buildCopyWith]: Legacy Dart syntax is not supported.',
+        ),
+      ),
     );
   });
 
@@ -115,5 +124,89 @@ cum: cum!,
 );
 }
 ''');
+  });
+
+  test('buildCopyWith: Type with alias (no type arguments) success case', () {
+    final buffer = StringBuffer();
+    final alias = MockInstantiatedTypeAliasElement(name: 'MyTypedef');
+    final fieldType = MockDartType(displayString: 'MyTypedef', alias: alias);
+    final field = MockFieldElement(name: 'testField', type: fieldType);
+    final element = MockClassElement2(
+      unnamedConstructor2: MockConstructorElement2(
+        parameters: [MockFormalParameterElement(name: 'testField', type: fieldType)],
+      ),
+      fields: [field],
+    );
+    final isThemeExtension = faker.randomGenerator.boolean();
+
+    buildCopyWith(buffer, element, isThemeExtension: isThemeExtension);
+
+    expect(buffer.toString(), contains('MyTypedef? testField,'));
+  });
+
+  test('buildCopyWith: Type with alias (with type arguments) success case', () {
+    final buffer = StringBuffer();
+    final typeArg1 = MockDartType(displayString: 'String');
+    final typeArg2 = MockDartType(displayString: 'int');
+    final alias = MockInstantiatedTypeAliasElement(name: 'MyTypedef', typeArguments: [typeArg1, typeArg2]);
+    final fieldType = MockDartType(displayString: 'MyTypedef<String, int>', alias: alias);
+    final field = MockFieldElement(name: 'testField', type: fieldType);
+    final element = MockClassElement2(
+      unnamedConstructor2: MockConstructorElement2(
+        parameters: [MockFormalParameterElement(name: 'testField', type: fieldType)],
+      ),
+      fields: [field],
+    );
+    final isThemeExtension = faker.randomGenerator.boolean();
+
+    buildCopyWith(buffer, element, isThemeExtension: isThemeExtension);
+
+    expect(buffer.toString(), contains('MyTypedef<String, int>? testField,'));
+  });
+
+  test('buildCopyWith: Type with nullable alias success case', () {
+    final buffer = StringBuffer();
+    final alias = MockInstantiatedTypeAliasElement(name: 'MyTypedef');
+    final fieldType = MockDartType(
+      displayString: 'MyTypedef?',
+      alias: alias,
+      nullabilitySuffix: NullabilitySuffix.question,
+    );
+    final field = MockFieldElement(name: 'testField', type: fieldType);
+    final element = MockClassElement2(
+      unnamedConstructor2: MockConstructorElement2(
+        parameters: [MockFormalParameterElement(name: 'testField', type: fieldType)],
+      ),
+      fields: [field],
+    );
+    final isThemeExtension = faker.randomGenerator.boolean();
+
+    buildCopyWith(buffer, element, isThemeExtension: isThemeExtension);
+
+    expect(buffer.toString(), contains('MyTypedef? testField,'));
+  });
+
+  test('buildCopyWith: Type with nullable alias with type arguments success case', () {
+    final buffer = StringBuffer();
+    final typeArg1 = MockDartType(displayString: 'String');
+    final typeArg2 = MockDartType(displayString: 'int');
+    final alias = MockInstantiatedTypeAliasElement(name: 'MyTypedef', typeArguments: [typeArg1, typeArg2]);
+    final fieldType = MockDartType(
+      displayString: 'MyTypedef<String, int>?',
+      alias: alias,
+      nullabilitySuffix: NullabilitySuffix.question,
+    );
+    final field = MockFieldElement(name: 'testField', type: fieldType);
+    final element = MockClassElement2(
+      unnamedConstructor2: MockConstructorElement2(
+        parameters: [MockFormalParameterElement(name: 'testField', type: fieldType)],
+      ),
+      fields: [field],
+    );
+    final isThemeExtension = faker.randomGenerator.boolean();
+
+    buildCopyWith(buffer, element, isThemeExtension: isThemeExtension);
+
+    expect(buffer.toString(), contains('MyTypedef<String, int>? testField,'));
   });
 }

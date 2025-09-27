@@ -31,12 +31,18 @@ void buildCopyWith(StringBuffer buffer, ClassElement2 element, {required bool is
 
       // Use constructor parameter type for generic type parameters that need to be resolved,
       // otherwise use field type to preserve typedef names
-      final constructorParameterType = isArgumentInUnnamedConstructor ? unnamedConstructorParameters.firstWhere((p) => p.name3 == field.name3).type : null;
+      final constructorParameterType = isArgumentInUnnamedConstructor
+          ? unnamedConstructorParameters.firstWhere((p) => p.name3 == field.name3).type
+          : null;
 
-      final fieldType = isArgumentInUnnamedConstructor && field.type is TypeParameterType ? constructorParameterType! : field.type;
+      final fieldType = isArgumentInUnnamedConstructor && field.type is TypeParameterType
+          ? constructorParameterType!
+          : field.type;
 
       // Check if the field type has alias information (typedef) and use that for the display string
-      final fieldTypeString = fieldType.alias != null ? _getTypeAliasDisplayString(fieldType) : fieldType.getDisplayString();
+      final fieldTypeString = fieldType.alias != null
+          ? _getTypeAliasDisplayString(fieldType)
+          : fieldType.getDisplayString();
       final nullabilitySuffix = fieldType.nullabilitySuffix;
 
       switch (nullabilitySuffix) {
@@ -46,7 +52,9 @@ void buildCopyWith(StringBuffer buffer, ClassElement2 element, {required bool is
           functionArgumentStringBuffer.writeln('$fieldTypeString $fieldName,');
           functionArgumentStringBuffer.writeln('bool ${fieldName}Provided = true,');
           if (isArgumentInUnnamedConstructor) {
-            functionReturnStringBuffer.writeln('$fieldName: ${fieldName}Provided ? ($fieldName ?? self.$fieldName) : null,');
+            functionReturnStringBuffer.writeln(
+              '$fieldName: ${fieldName}Provided ? ($fieldName ?? self.$fieldName) : null,',
+            );
           }
         case NullabilitySuffix.none:
           functionArgumentStringBuffer.writeln('$fieldTypeString? $fieldName,');
@@ -72,7 +80,9 @@ void buildCopyWith(StringBuffer buffer, ClassElement2 element, {required bool is
           assertionStringBuffer.writeln(');');
         }
         functionArgumentStringBuffer.writeln('$parameterTypeString? $parameterName,');
-        functionReturnStringBuffer.writeln('$parameterName: $parameterName${parameterNullabilitySuffix == NullabilitySuffix.none ? '!' : ''},');
+        functionReturnStringBuffer.writeln(
+          '$parameterName: $parameterName${parameterNullabilitySuffix == NullabilitySuffix.none ? '!' : ''},',
+        );
       }
     }
 
@@ -102,8 +112,7 @@ void buildCopyWith(StringBuffer buffer, ClassElement2 element, {required bool is
 
 /// Gets the display string for a type alias, preserving the typedef name.
 String _getTypeAliasDisplayString(DartType type) {
-  final alias = type.alias;
-  if (alias == null) return type.getDisplayString();
+  final alias = type.alias!; // We know alias is not null because this function is only called when alias != null
 
   // Build the typedef name with type arguments
   final element = alias.element;

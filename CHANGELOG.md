@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.4.6
+
+- feature: `copyWith` generation in `@myoroModel` is back from the dead 🧟
+
 ## 1.4.5
 
 - fix: Remove `copyWith` from `myoroModel`
