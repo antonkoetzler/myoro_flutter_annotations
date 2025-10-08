@@ -1,10 +1,9 @@
-import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/element2.dart';
 import 'package:faker/faker.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:myoro_flutter_annotations/src/exports.dart';
 
-/// [ClassElement] mock.
+/// [ClassElement2] mock.
 final class MockClassElement2 extends Mock implements ClassElement2 {
   MockClassElement2._();
 

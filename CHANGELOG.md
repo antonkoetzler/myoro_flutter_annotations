@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.4.7
+
+- chore: Improving pub.dev score
+
 ## 1.4.6
 
 - feature: `copyWith` generation in `@myoroModel` is back from the dead 🧟

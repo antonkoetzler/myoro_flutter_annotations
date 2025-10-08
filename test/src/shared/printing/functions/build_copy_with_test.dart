@@ -20,7 +20,7 @@ void main() {
       throwsA(
         isA<InvalidGenerationSourceError>().having(
           (e) => e.message,
-          'Not [ClassElement] message',
+          'Not [ClassElement2] message',
           contains(
             '[buildCopyWith]: Class ${element.nameWithTypeParameters} must have an unnamed constructor to generate copyWith.',
           ),

@@ -1,9 +1,8 @@
-import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/element2.dart';
 
-/// Extension on [ClassElement].
+/// Extension on [ClassElement2].
 extension ClassElementExtension on ClassElement2 {
-  /// Merges the [ClassElement]'s [FieldElement]s and it's parent's [FieldElement]s.
+  /// Merges the [ClassElement2]'s [FieldElement2]s and it's parent's [FieldElement2]s.
   List<FieldElement2> get mergedFields {
     final fields = <FieldElement2>[...fields2];
 
