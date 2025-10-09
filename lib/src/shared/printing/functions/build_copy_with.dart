@@ -131,8 +131,23 @@ void buildCopyWith(StringBuffer buffer, ClassElement2 element, {required bool is
 
 /// Gets the display string for a type alias, preserving the typedef name.
 String _getTypeAliasDisplayString(DartType type) {
-  // For type aliases, we should use the original getDisplayString() method
-  // which already handles nullability correctly, rather than manually building
-  // the type name and adding the ? suffix which can cause double question marks.
-  return type.getDisplayString();
+  final alias = type.alias!; // We know alias is not null because this function is only called when alias != null
+
+  // Build the typedef name with type arguments
+  final element = alias.element;
+  final typeArguments = alias.typeArguments;
+
+  var result = element.name;
+  if (typeArguments.isNotEmpty) {
+    final typeArgumentsString = typeArguments.map((arg) => arg.getDisplayString()).join(', ');
+    result += '<$typeArgumentsString>';
+  }
+
+  // Add nullability suffix if needed
+  final nullabilitySuffix = type.nullabilitySuffix;
+  if (nullabilitySuffix == NullabilitySuffix.question) {
+    result += '?';
+  }
+
+  return result;
 }

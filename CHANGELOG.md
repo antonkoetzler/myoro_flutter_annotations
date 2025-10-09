@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.4.9
+
+- fix: Fixed double question mark bug in copyWith parameter generation while preserving typedef names for better import handling and code quality
+
 ## 1.4.8
 
 - fix: Fixed double question mark bug in copyWith parameter generation for constructor parameters that are not fields
