@@ -69,9 +69,28 @@ void buildCopyWith(StringBuffer buffer, ClassElement2 element, {required bool is
       final isNotField = !fields.any((f) => f.name3 == parameter.name3);
       if (isNotField) {
         final parameterType = parameter.type;
-        final parameterTypeString = parameterType.getDisplayString();
         final parameterName = parameter.name3;
         final parameterNullabilitySuffix = parameterType.nullabilitySuffix;
+
+        // For non-field parameters, get the base type string WITHOUT nullability suffix
+        // and then add ? manually to make them nullable in copyWith
+        String parameterTypeString;
+        if (parameterType.alias != null) {
+          // For type aliases, get the alias name without nullability
+          final alias = parameterType.alias!;
+          final element = alias.element;
+          final typeArguments = alias.typeArguments;
+
+          parameterTypeString = element.name;
+          if (typeArguments.isNotEmpty) {
+            final typeArgumentsString = typeArguments.map((arg) => arg.getDisplayString()).join(', ');
+            parameterTypeString += '<$typeArgumentsString>';
+          }
+        } else {
+          // For regular types, use getDisplayString but remove any existing ? suffix
+          parameterTypeString = parameterType.getDisplayString().replaceAll('?', '');
+        }
+
         // The argument here must be nullable to not generate conflicting copyWith with extended classes.
         if (parameterNullabilitySuffix == NullabilitySuffix.none) {
           assertionStringBuffer.writeln('assert(');
@@ -112,23 +131,8 @@ void buildCopyWith(StringBuffer buffer, ClassElement2 element, {required bool is
 
 /// Gets the display string for a type alias, preserving the typedef name.
 String _getTypeAliasDisplayString(DartType type) {
-  final alias = type.alias!; // We know alias is not null because this function is only called when alias != null
-
-  // Build the typedef name with type arguments
-  final element = alias.element;
-  final typeArguments = alias.typeArguments;
-
-  var result = element.name;
-  if (typeArguments.isNotEmpty) {
-    final typeArgumentsString = typeArguments.map((arg) => arg.getDisplayString()).join(', ');
-    result += '<$typeArgumentsString>';
-  }
-
-  // Add nullability suffix if needed
-  final nullabilitySuffix = type.nullabilitySuffix;
-  if (nullabilitySuffix == NullabilitySuffix.question) {
-    result += '?';
-  }
-
-  return result;
+  // For type aliases, we should use the original getDisplayString() method
+  // which already handles nullability correctly, rather than manually building
+  // the type name and adding the ? suffix which can cause double question marks.
+  return type.getDisplayString();
 }

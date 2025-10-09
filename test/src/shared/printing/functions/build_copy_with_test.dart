@@ -209,4 +209,70 @@ cum: cum!,
 
     expect(buffer.toString(), contains('MyTypedef<String, int>? testField,'));
   });
+
+  test('buildCopyWith: Constructor parameter with type alias (not a field) success case', () {
+    final buffer = StringBuffer();
+    final alias = MockInstantiatedTypeAliasElement(name: 'MyTypedef');
+    final parameterType = MockDartType(
+      displayString: 'MyTypedef?',
+      alias: alias,
+      nullabilitySuffix: NullabilitySuffix.question,
+    );
+    final parameter = MockFormalParameterElement(name: 'testParam', type: parameterType);
+    final field = MockFieldElement(
+      name: 'testField',
+      type: MockDartType(displayString: 'String'),
+    );
+    final element = MockClassElement2(
+      unnamedConstructor2: MockConstructorElement2(
+        parameters: [
+          parameter, // This parameter is not a field
+          MockFormalParameterElement(
+            name: 'testField',
+            type: MockDartType(displayString: 'String'),
+          ),
+        ],
+      ),
+      fields: [field], // Has one field to trigger nonEmptyFieldsCase
+    );
+    final isThemeExtension = faker.randomGenerator.boolean();
+
+    buildCopyWith(buffer, element, isThemeExtension: isThemeExtension);
+
+    expect(buffer.toString(), contains('MyTypedef? testParam,'));
+  });
+
+  test('buildCopyWith: Constructor parameter with type alias with type arguments (not a field) success case', () {
+    final buffer = StringBuffer();
+    final typeArg1 = MockDartType(displayString: 'String');
+    final typeArg2 = MockDartType(displayString: 'int');
+    final alias = MockInstantiatedTypeAliasElement(name: 'MyTypedef', typeArguments: [typeArg1, typeArg2]);
+    final parameterType = MockDartType(
+      displayString: 'MyTypedef<String, int>?',
+      alias: alias,
+      nullabilitySuffix: NullabilitySuffix.question,
+    );
+    final parameter = MockFormalParameterElement(name: 'testParam', type: parameterType);
+    final field = MockFieldElement(
+      name: 'testField',
+      type: MockDartType(displayString: 'String'),
+    );
+    final element = MockClassElement2(
+      unnamedConstructor2: MockConstructorElement2(
+        parameters: [
+          parameter, // This parameter is not a field
+          MockFormalParameterElement(
+            name: 'testField',
+            type: MockDartType(displayString: 'String'),
+          ),
+        ],
+      ),
+      fields: [field], // Has one field to trigger nonEmptyFieldsCase
+    );
+    final isThemeExtension = faker.randomGenerator.boolean();
+
+    buildCopyWith(buffer, element, isThemeExtension: isThemeExtension);
+
+    expect(buffer.toString(), contains('MyTypedef<String, int>? testParam,'));
+  });
 }

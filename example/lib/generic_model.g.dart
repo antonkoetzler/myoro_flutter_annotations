@@ -20,7 +20,7 @@ mixin _$GenericModelMixin<T> {
     T? foo,
     int? bar,
     bool barProvided = true,
-    void Function()? callback,
+    VoidCallback? callback,
   }) {
     assert(
       callback != null,

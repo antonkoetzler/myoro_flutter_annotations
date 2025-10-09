@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.4.8
+
+- fix: Fixed double question mark bug in copyWith parameter generation for constructor parameters that are not fields
+
 ## 1.4.7
 
 - chore: Improving pub.dev score
