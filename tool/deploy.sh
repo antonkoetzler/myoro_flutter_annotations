@@ -62,13 +62,13 @@ BEGIN { inserted = 0 }
 # Preserve first two lines of STAGELOG.md
 head -n 1 STAGELOG.md > STAGELOG.tmp && mv STAGELOG.tmp STAGELOG.md
 
-# Format code before pushing
-bash tool/format_and_fix.sh
-
 # Update examples before pushing
 cd example
 dart run build_runner build --delete-conflicting-outputs
 cd ..
+
+# Format code.
+bash tool/format_and_fix.sh
 
 # Feedback that the deployment was successful
 echo "Updated version to $new_version"

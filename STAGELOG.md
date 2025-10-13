@@ -1,1 +1,3 @@
 # STAGELOG
+
+- fix: Formatting
