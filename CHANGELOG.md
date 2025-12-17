@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.4.11
+
+- chore: Migrated markdown documentation to Notion
+
 ## 1.4.10
 
 - fix: Formatting
