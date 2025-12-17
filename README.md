@@ -11,11 +11,10 @@ Is boilerplate starting to get super annoying to write by hand? Do you want basi
 - `==` operator and `hashCode` to be able to compare to classes
 - `toString` for better debugging
 
-## Documentation Table of Contents
-
-1. [`Deploying.md`](https://github.com/antonkoetzler/myoro_flutter_annotations/blob/main/doc/Deploying.md)
-2. [`Standards.md`](https://github.com/antonkoetzler/myoro_flutter_annotations/blob/main/doc/Standards.md)
-
 ## Want to see the generated code?
 
 Check `example/lib` to see the generated code that MFA produces.
+
+## Documentation
+
+All documentation is stored on this [Notion website](https://tough-shoemaker-cbd.notion.site/Myoro-Flutter-Annotations-2b5d7dcd55248067a842c041a0182fcb?pvs=74).
