@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 1.4.12
+
+- chore: Update dependencies and deprecations
+- improvement: Failsafe `deploy.sh`
+
 ## 1.4.11
 
 - chore: Migrated markdown documentation to Notion

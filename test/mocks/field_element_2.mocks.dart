@@ -1,5 +1,4 @@
 import 'package:analyzer/dart/element/element.dart';
-import 'package:analyzer/dart/element/element2.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:faker/faker.dart';
 import 'package:mocktail/mocktail.dart';
@@ -7,7 +6,7 @@ import 'package:mocktail/mocktail.dart';
 import 'dart_type.mocks.dart';
 
 /// [FieldElement] mock.
-final class MockFieldElement extends Mock implements FieldElement2 {
+final class MockFieldElement extends Mock implements FieldElement {
   MockFieldElement._();
 
   factory MockFieldElement({String? name, DartType? type, bool isStatic = false, bool isSynthetic = false}) {
@@ -16,9 +15,10 @@ final class MockFieldElement extends Mock implements FieldElement2 {
     final effectiveType = type ?? MockDartType();
     registerFallbackValue(effectiveType);
 
-    when(() => mock.name3).thenReturn(name ?? faker.lorem.word());
+    when(() => mock.name).thenReturn(name ?? faker.lorem.word());
     when(() => mock.type).thenReturn(effectiveType);
     when(() => mock.isStatic).thenReturn(isStatic);
+    // ignore: deprecated_member_use — mock for analyzer 8.x compatibility
     when(() => mock.isSynthetic).thenReturn(isSynthetic);
 
     return mock;

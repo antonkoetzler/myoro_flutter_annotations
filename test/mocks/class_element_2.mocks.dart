@@ -1,23 +1,22 @@
-import 'package:analyzer/dart/element/element2.dart';
+import 'package:analyzer/dart/element/element.dart';
 import 'package:faker/faker.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:myoro_flutter_annotations/src/exports.dart';
 
-/// [ClassElement2] mock.
-final class MockClassElement2 extends Mock implements ClassElement2 {
+/// [ClassElement] mock.
+final class MockClassElement2 extends Mock implements ClassElement {
   MockClassElement2._();
 
   factory MockClassElement2({
-    ConstructorElement2? unnamedConstructor2,
-    List<TypeParameterElement2> typeParameters2 = const [],
-    List<FieldElement2> fields = const [],
+    ConstructorElement? unnamedConstructor,
+    List<TypeParameterElement> typeParameters = const [],
+    List<FieldElement> fields = const [],
   }) {
     final mock = MockClassElement2._();
 
-    when(() => mock.unnamedConstructor2).thenReturn(unnamedConstructor2);
-    when(() => mock.name3).thenReturn(faker.lorem.word());
-    when(() => mock.mergedFields).thenReturn(fields);
-    when(() => mock.typeParameters2).thenReturn(typeParameters2);
+    when(() => mock.unnamedConstructor).thenReturn(unnamedConstructor);
+    when(() => mock.name).thenReturn(faker.lorem.word());
+    when(() => mock.fields).thenReturn(fields);
+    when(() => mock.typeParameters).thenReturn(typeParameters);
 
     return mock;
   }

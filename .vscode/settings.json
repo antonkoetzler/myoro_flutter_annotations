@@ -1,4 +1,5 @@
 {
   "dart.flutterSdkPath": ".fvm/versions/stable",
   "dart.lineLength": 120,
+  "cmake.ignoreCMakeListsMissing": true,
 }

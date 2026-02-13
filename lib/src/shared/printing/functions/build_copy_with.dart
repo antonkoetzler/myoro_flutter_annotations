@@ -1,4 +1,4 @@
-import 'package:analyzer/dart/element/element2.dart';
+import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:myoro_flutter_annotations/src/exports.dart';
@@ -6,11 +6,12 @@ import 'package:myoro_flutter_annotations/src/shared/exports.dart';
 import 'package:source_gen/source_gen.dart';
 
 /// Builds the [copyWith] function of an annotation.
-void buildCopyWith(StringBuffer buffer, ClassElement2 element, {required bool isThemeExtension}) {
+void buildCopyWith(StringBuffer buffer, ClassElement element, {required bool isThemeExtension}) {
+  // ignore: deprecated_member_use — isSynthetic kept for analyzer 8.x; use isOrigin* when min analyzer is 10+
   final fields = element.mergedFields.where((field) => !field.isStatic && !field.isSynthetic).toList();
-  final elementUnnamedConstructor = element.unnamedConstructor2;
+  final elementUnnamedConstructor = element.unnamedConstructor;
   final elementNameWithTypeParameters = element.nameWithTypeParameters;
-  final elementName = element.name3;
+  final elementName = element.name ?? '';
 
   void emptyFieldsCase() {
     buffer.writeln('$elementNameWithTypeParameters copyWith() {');
@@ -25,14 +26,14 @@ void buildCopyWith(StringBuffer buffer, ClassElement2 element, {required bool is
     final unnamedConstructorParameters = elementUnnamedConstructor!.formalParameters;
 
     for (final field in fields) {
-      final fieldName = field.name3;
+      final fieldName = field.name ?? '';
       // We must add the argument for extended fields. However, the field might not be apart of the constructor (aka a field that is called within the super() portion).
-      final isArgumentInUnnamedConstructor = unnamedConstructorParameters.any((p) => p.name3 == field.name3);
+      final isArgumentInUnnamedConstructor = unnamedConstructorParameters.any((p) => p.name == field.name);
 
       // Use constructor parameter type for generic type parameters that need to be resolved,
       // otherwise use field type to preserve typedef names
       final constructorParameterType = isArgumentInUnnamedConstructor
-          ? unnamedConstructorParameters.firstWhere((p) => p.name3 == field.name3).type
+          ? unnamedConstructorParameters.firstWhere((p) => p.name == field.name).type
           : null;
 
       final fieldType = isArgumentInUnnamedConstructor && field.type is TypeParameterType
@@ -66,10 +67,10 @@ void buildCopyWith(StringBuffer buffer, ClassElement2 element, {required bool is
 
     // For parameters that are not fields.
     for (final parameter in unnamedConstructorParameters) {
-      final isNotField = !fields.any((f) => f.name3 == parameter.name3);
+      final isNotField = !fields.any((f) => f.name == parameter.name);
       if (isNotField) {
         final parameterType = parameter.type;
-        final parameterName = parameter.name3;
+        final parameterName = parameter.name ?? '';
         final parameterNullabilitySuffix = parameterType.nullabilitySuffix;
 
         // For non-field parameters, get the base type string WITHOUT nullability suffix
@@ -81,7 +82,7 @@ void buildCopyWith(StringBuffer buffer, ClassElement2 element, {required bool is
           final element = alias.element;
           final typeArguments = alias.typeArguments;
 
-          parameterTypeString = element.name;
+          parameterTypeString = element.name ?? '';
           if (typeArguments.isNotEmpty) {
             final typeArgumentsString = typeArguments.map((arg) => arg.getDisplayString()).join(', ');
             parameterTypeString += '<$typeArgumentsString>';
@@ -137,7 +138,7 @@ String _getTypeAliasDisplayString(DartType type) {
   final element = alias.element;
   final typeArguments = alias.typeArguments;
 
-  var result = element.name;
+  var result = element.name ?? '';
   if (typeArguments.isNotEmpty) {
     final typeArgumentsString = typeArguments.map((arg) => arg.getDisplayString()).join(', ');
     result += '<$typeArgumentsString>';

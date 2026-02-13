@@ -15,7 +15,6 @@ final class MockDartType extends Mock implements DartType {
     final mock = MockDartType._();
 
     when(() => mock.getDisplayString()).thenReturn(displayString ?? faker.lorem.word());
-    when(() => mock.name).thenReturn(faker.lorem.word());
     when(() => mock.nullabilitySuffix).thenReturn(nullabilitySuffix);
     when(() => mock.alias).thenReturn(alias);
 

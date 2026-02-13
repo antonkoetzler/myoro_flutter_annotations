@@ -20,7 +20,7 @@ void main() {
       throwsA(
         isA<InvalidGenerationSourceError>().having(
           (e) => e.message,
-          'Not [ClassElement2] message',
+          'Not [ClassElement] message',
           contains(
             '[buildCopyWith]: Class ${element.nameWithTypeParameters} must have an unnamed constructor to generate copyWith.',
           ),
@@ -32,7 +32,7 @@ void main() {
   test('buildCopyWith: [NullabilitySuffix.star] field error case', () {
     final starType = MockDartType(nullabilitySuffix: NullabilitySuffix.star);
     final element = MockClassElement2(
-      unnamedConstructor2: MockConstructorElement2(
+      unnamedConstructor: MockConstructorElement2(
         parameters: [MockFormalParameterElement(name: 'foo', type: starType)],
       ),
       fields: [MockFieldElement(name: 'foo', type: starType)],
@@ -52,7 +52,7 @@ void main() {
 
   test('buildCopyWith: Class with 0 fields success case', () {
     final buffer = StringBuffer();
-    final element = MockClassElement2(unnamedConstructor2: MockConstructorElement2());
+    final element = MockClassElement2(unnamedConstructor: MockConstructorElement2());
     final isThemeExtension = faker.randomGenerator.boolean();
 
     buildCopyWith(buffer, element, isThemeExtension: isThemeExtension);
@@ -83,16 +83,16 @@ return self;
       type: MockDartType(displayString: 'consequat'),
     );
     final element = MockClassElement2(
-      unnamedConstructor2: MockConstructorElement2(
+      unnamedConstructor: MockConstructorElement2(
         parameters: [
           nullableParameterWithoutField,
           nonNullableParameterWithoutField,
           MockFormalParameterElement(
-            name: nonNullableField.name3,
+            name: nonNullableField.name,
             type: MockDartType(displayString: 'consequat'),
           ),
           MockFormalParameterElement(
-            name: nullableField.name3,
+            name: nullableField.name,
             type: MockDartType(displayString: 'fermentum ridiculus', nullabilitySuffix: NullabilitySuffix.question),
           ),
         ],
@@ -113,10 +113,10 @@ bibendum? cum,
 }) {
 assert(
 cum != null,
-'[${element.name3}.copyWith]: [cum] cannot be null.',
+'[${element.name}.copyWith]: [cum] cannot be null.',
 );
 
-return ${element.name3}(
+return ${element.name}(
 mollis: mollis ?? self.mollis,
 ante: anteProvided ? (ante ?? self.ante) : null,
 congue: congue,
@@ -132,7 +132,7 @@ cum: cum!,
     final fieldType = MockDartType(displayString: 'MyTypedef', alias: alias);
     final field = MockFieldElement(name: 'testField', type: fieldType);
     final element = MockClassElement2(
-      unnamedConstructor2: MockConstructorElement2(
+      unnamedConstructor: MockConstructorElement2(
         parameters: [MockFormalParameterElement(name: 'testField', type: fieldType)],
       ),
       fields: [field],
@@ -152,7 +152,7 @@ cum: cum!,
     final fieldType = MockDartType(displayString: 'MyTypedef<String, int>', alias: alias);
     final field = MockFieldElement(name: 'testField', type: fieldType);
     final element = MockClassElement2(
-      unnamedConstructor2: MockConstructorElement2(
+      unnamedConstructor: MockConstructorElement2(
         parameters: [MockFormalParameterElement(name: 'testField', type: fieldType)],
       ),
       fields: [field],
@@ -174,7 +174,7 @@ cum: cum!,
     );
     final field = MockFieldElement(name: 'testField', type: fieldType);
     final element = MockClassElement2(
-      unnamedConstructor2: MockConstructorElement2(
+      unnamedConstructor: MockConstructorElement2(
         parameters: [MockFormalParameterElement(name: 'testField', type: fieldType)],
       ),
       fields: [field],
@@ -198,7 +198,7 @@ cum: cum!,
     );
     final field = MockFieldElement(name: 'testField', type: fieldType);
     final element = MockClassElement2(
-      unnamedConstructor2: MockConstructorElement2(
+      unnamedConstructor: MockConstructorElement2(
         parameters: [MockFormalParameterElement(name: 'testField', type: fieldType)],
       ),
       fields: [field],
@@ -224,7 +224,7 @@ cum: cum!,
       type: MockDartType(displayString: 'String'),
     );
     final element = MockClassElement2(
-      unnamedConstructor2: MockConstructorElement2(
+      unnamedConstructor: MockConstructorElement2(
         parameters: [
           parameter, // This parameter is not a field
           MockFormalParameterElement(
@@ -258,7 +258,7 @@ cum: cum!,
       type: MockDartType(displayString: 'String'),
     );
     final element = MockClassElement2(
-      unnamedConstructor2: MockConstructorElement2(
+      unnamedConstructor: MockConstructorElement2(
         parameters: [
           parameter, // This parameter is not a field
           MockFormalParameterElement(

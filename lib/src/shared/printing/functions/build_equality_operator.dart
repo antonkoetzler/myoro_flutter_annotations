@@ -1,8 +1,9 @@
-import 'package:analyzer/dart/element/element2.dart';
+import 'package:analyzer/dart/element/element.dart';
 import 'package:myoro_flutter_annotations/src/exports.dart';
 
 /// Builds the == operator override of a class.
-void buildEqualityOperator(StringBuffer buffer, ClassElement2 element) {
+void buildEqualityOperator(StringBuffer buffer, ClassElement element) {
+  // ignore: deprecated_member_use — isSynthetic kept for analyzer 8.x; use isOrigin* when min analyzer is 10+
   final fields = element.mergedFields.where((field) => !field.isStatic && !field.isSynthetic).toList();
 
   // Start the function.
@@ -13,7 +14,7 @@ void buildEqualityOperator(StringBuffer buffer, ClassElement2 element) {
   buffer.writeln('return other is ${element.nameWithTypeParameters} &&');
   buffer.writeln('other.runtimeType == runtimeType${fields.isEmpty ? ';' : ' &&'}');
   for (int i = 0; i < fields.length; i++) {
-    final fieldName = fields[i].name3;
+    final fieldName = fields[i].name ?? '';
     buffer.writeln('other.$fieldName == self.$fieldName${(i == fields.length - 1) ? ';' : ' &&'}');
   }
 

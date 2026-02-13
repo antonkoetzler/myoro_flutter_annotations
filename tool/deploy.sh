@@ -8,9 +8,13 @@ if [[ $# -ne 1 ]] || [[ ! "$1" =~ ^(patch|minor|major)$ ]]; then
   exit 1
 fi
 
-# Get version number
+# Get version number (read-only; validated before any writes)
 version_line=$(grep "^version:" pubspec.yaml)
 current_version=$(echo "$version_line" | awk '{print $2}')
+if [[ -z "$version_line" ]] || [[ ! "$current_version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+  echo "Could not parse version from pubspec.yaml (got: '$current_version'). Aborting."
+  exit 1
+fi
 IFS='.' read -r major minor patch <<< "$current_version"
 
 option="$1"
@@ -29,10 +33,15 @@ case "$option" in
     ;;
 esac
 
-# Set new version being deployed to pubspec.lock
 new_version="${major}.${minor}.${patch}"
-sed -i.bak "s/^version: .*/version: $new_version/" pubspec.yaml
-rm pubspec.yaml.bak
+
+# All checks below must pass before any file writes
+echo "Running dart analyze (root)..."
+dart analyze . || exit 1
+echo "Running dart analyze (example)..."
+(cd example && dart analyze .) || exit 1
+echo "Running build_runner in example..."
+(cd example && dart run build_runner build --delete-conflicting-outputs) || exit 1
 
 # Extract lines from STAGELOG.md starting from line 3
 stagelog=$(tail -n +3 STAGELOG.md)
@@ -42,6 +51,17 @@ if [[ -z "$stagelog" ]]; then
   echo "No staging notes to add. Aborting."
   exit 1
 fi
+
+if [[ ! -f CHANGELOG.md ]] || ! grep -q '^# CHANGELOG$' CHANGELOG.md; then
+  echo "CHANGELOG.md missing or missing '# CHANGELOG' heading. Aborting."
+  exit 1
+fi
+
+# --- Writes below ---
+
+# Set new version being deployed to pubspec.yaml
+sed -i.bak "s/^version: .*/version: $new_version/" pubspec.yaml
+rm -f pubspec.yaml.bak
 
 # Insert into CHANGELOG.md two lines after # CHANGELOG
 awk -v ver="## ${new_version}" -v notes="$stagelog" '
@@ -61,11 +81,6 @@ BEGIN { inserted = 0 }
 
 # Preserve first two lines of STAGELOG.md
 head -n 1 STAGELOG.md > STAGELOG.tmp && mv STAGELOG.tmp STAGELOG.md
-
-# Update examples before pushing
-cd example
-dart run build_runner build --delete-conflicting-outputs
-cd ..
 
 # Format code.
 bash tool/format_and_fix.sh

@@ -1,6 +1,6 @@
 name: myoro_flutter_annotations
 description: A code generation library for models and theme extensions.
-version: 1.4.11
+version: 1.4.12
 repository: https://github.com/antonkoetzler/myoro_flutter_annotations
 homepage: https://github.com/antonkoetzler/myoro_flutter_annotations
 issue_tracker: https://github.com/antonkoetzler/myoro_flutter_annotations/issues
@@ -15,15 +15,15 @@ topics:
   
 dependencies:
   build_runner: ^2.4.15
-  source_gen: ^3.1.0
-  analyzer: ^7.4.0
-  build: ^3.0.2
+  source_gen: ^4.2.0
+  analyzer: ">=4.0.0 <11.0.0"
+  build: ^4.0.4
   dart_style: ^3.1.0
   pub_semver: ^2.2.0
 
 dev_dependencies:
   lints: ^6.0.0
-  test: ^1.24.0
+  test: ^1.25.0
   build_test: ^3.2.0
   mocktail: ^1.0.4
   faker: ^2.2.0

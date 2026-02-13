@@ -1,9 +1,8 @@
 import 'package:analyzer/dart/element/element.dart';
-import 'package:analyzer/dart/element/element2.dart';
 import 'package:mocktail/mocktail.dart';
 
 /// [ConstructorElement] mock.
-final class MockConstructorElement2 extends Mock implements ConstructorElement2 {
+final class MockConstructorElement2 extends Mock implements ConstructorElement {
   MockConstructorElement2._();
 
   factory MockConstructorElement2({List<FormalParameterElement> parameters = const []}) {

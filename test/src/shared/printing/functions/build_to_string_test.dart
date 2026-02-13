@@ -22,8 +22,8 @@ void main() {
       ..writeln('@override')
       ..writeln('String toString() =>')
       ..writeln('\'${element.nameWithTypeParameters}(\\n\'');
-    for (final field in element.fields2) {
-      buffer.writeln('\'  ${field.name3}: \${self.${field.name3}},\\n\'');
+    for (final field in element.fields) {
+      buffer.writeln('\'  ${field.name}: \${self.${field.name}},\\n\'');
     }
     buffer.writeln('\');\';');
 

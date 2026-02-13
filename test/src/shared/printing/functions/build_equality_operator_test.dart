@@ -15,7 +15,7 @@ void main() {
     expect(buffer.toString(), '''
 @override
 bool operator ==(Object other) {
-return other is ${element.name3} &&
+return other is ${element.name} &&
 other.runtimeType == runtimeType;
 }
 ''');
@@ -38,10 +38,10 @@ other.runtimeType == runtimeType;
       ..writeln('bool operator ==(Object other) {')
       ..writeln('return other is ${element.nameWithTypeParameters} &&')
       ..writeln('other.runtimeType == runtimeType &&');
-    final fieldsLength = element.fields2.length;
+    final fieldsLength = element.fields.length;
     for (int i = 0; i < fieldsLength; i++) {
-      final field = element.fields2[i];
-      buffer.writeln('other.${field.name3} == self.${field.name3}${(i == fieldsLength - 1) ? ';' : ' &&'}');
+      final field = element.fields[i];
+      buffer.writeln('other.${field.name} == self.${field.name}${(i == fieldsLength - 1) ? ';' : ' &&'}');
     }
     buffer.writeln('}');
 

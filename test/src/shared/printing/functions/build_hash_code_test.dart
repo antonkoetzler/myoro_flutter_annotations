@@ -1,4 +1,4 @@
-import 'package:analyzer/dart/element/element2.dart';
+import 'package:analyzer/dart/element/element.dart';
 import 'package:faker/faker.dart';
 import 'package:myoro_flutter_annotations/src/exports.dart';
 import 'package:test/test.dart';
@@ -9,7 +9,7 @@ import '../../../../mocks/field_element_2.mocks.dart';
 void main() {
   final buffer = StringBuffer();
 
-  void testHashCode(ClassElement2 element, void Function() body) {
+  void testHashCode(ClassElement element, void Function() body) {
     buildHashCode(buffer..clear(), element);
     final hashCode = buffer.toString();
 
@@ -23,9 +23,9 @@ void main() {
     expect(hashCode, buffer.toString());
   }
 
-  void localWriteFields(List<FieldElement2> fields) {
+  void localWriteFields(List<FieldElement> fields) {
     for (final field in fields) {
-      buffer.writeln('self.${field.name3},');
+      buffer.writeln('self.${field.name},');
     }
   }
 
@@ -38,7 +38,7 @@ void main() {
     final element = MockClassElement2(fields: [MockFieldElement()]);
     testHashCode(element, () {
       buffer.writeln('return Object.hashAll([');
-      localWriteFields(element.fields2);
+      localWriteFields(element.fields);
       buffer.writeln(']);');
     });
   });
@@ -52,7 +52,7 @@ void main() {
     );
     testHashCode(element, () {
       buffer.writeln('return Object.hashAll([');
-      localWriteFields(element.fields2);
+      localWriteFields(element.fields);
       buffer.writeln(']);');
     });
   });
@@ -66,7 +66,7 @@ void main() {
     );
     testHashCode(element, () {
       buffer.writeln('return Object.hash(');
-      localWriteFields(element.fields2);
+      localWriteFields(element.fields);
       buffer.writeln(');');
     });
   });
